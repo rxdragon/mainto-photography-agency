@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'work'
+  name: 'manage'
 }
 </script>
 <style scoped lang="less">

@@ -19,16 +19,10 @@
                                 </div>
                                 <span class="ant-upload-list-item-actions" style="top: 120px">
                                     <i class="anticon anticon-eye-o" @click="previewPicture(item.response.url)">
-                                        <svg viewBox="64 64 896 896" data-icon="eye" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class="">
-                                            <path d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 0 0 0 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z">
-                                            </path>
-                                        </svg>
+                                        <a-icon type="eye" />
                                     </i>
                                     <i class="anticon anticon-delete" @click="deletePicture(item, index)">
-                                        <svg viewBox="64 64 896 896" data-icon="delete" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class="">
-                                            <path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z">
-                                            </path>
-                                        </svg>
+                                        <a-icon type="delete" />
                                     </i>
                                 </span>
                             </div>
@@ -49,11 +43,11 @@
                                 <a-select placeholder="拼接类型" style="width: 55%" v-model="spliceValue" @change="spliceChange(item)">
                                     <a-select-option v-for="(item, index) in splitArray" :key="index" :value="item">{{item}}</a-select-option>
                                 </a-select>
-                                <a-input-number style="width: 40%; margin-left: 4%;" :min="1" :max="99" v-model="splitIndex" placeholder="拼接序号" />
+                                <a-input-number tyle="width: 40%; margin-left: 4%;" :min="1" :max="99" v-model="splitIndex" placeholder="拼接序号" />
                             </p>
                         </li>
                     </ul>
-                    <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card" @change="handleChange" :showUploadList="false">
+                    <a-upload :action="uploadConfig.address" listType="picture-card" @change="handleChange" :showUploadList="false">
                         <div>
                             <a-icon :type="loading ? 'loading' : 'plus'" />
                             <div class="ant-upload-text">点击上传</div>
@@ -120,7 +114,7 @@
                 </div>
             </div>
             <div class="order-info">
-                <h4><span class="line"></span><span>修图要求</span></h4>
+                <h4><span class="line"></span><span>取片日期</span></h4>
                 <div class="card">
                     <ul class='head-title'>
                         <li>取片时间</li>
@@ -169,6 +163,9 @@ export default {
             },
             productValue: undefined,
             spliceValue: undefined,
+            uploadConfig: {
+                address: 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
+            }
         }
     },
     methods: {
