@@ -6,6 +6,7 @@ const work = () => import('./views/work/index.vue')
 const workRecord = () => import('./views/work/record.vue')
 const recordDetail = () => import('./views/work/recordDetail.vue')
 const product = () => import('./views/product/index.vue')
+const addProduct = () => import('./views/product/addProduct.vue')
 const manage = () => import('./views/manage/index.vue')
 const custom = () => import('./views/custom/index.vue')
 
@@ -31,6 +32,10 @@ export const routes = [
   {
     path: '/product',
     component: product
+  },
+  {
+    path: '/addProduct',
+    component: addProduct
   },
   {
     path: '/manage',

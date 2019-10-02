@@ -5,51 +5,32 @@
                 <span class="tip">产品管理</span>
             </a-col>
             <a-col :span="12" style="text-align: right">
-                <a-button type="primary">新增产品</a-button>
+                <a-button type="primary" @click="routerView('/addProduct')">新增产品</a-button>
             </a-col>
         </a-row>
         <a-row class="tab">
             <a-tabs defaultActiveKey="1" @change="callback">
                 <a-tab-pane tab="审核通过" key="1">
-                    <a-row class="search">
-                        <a-col :span="8" class="date">
-                            <span class="tip">审核通过时间: </span>
-                            <a-range-picker />
-                        </a-col>
-                        <a-col :span="3" style="text-align: right;">
-                            <a-button type="primary">查 询</a-button>
-                        </a-col>
-                    </a-row>
-                    <a-table class="table" :columns="columns" :dataSource="data" :pagination="false">
-                        <span slot="status" slot-scope="record">
-                            <span v-if="record.key === '1'">启用</span>
-                            <span v-else-if="record.key === '2'">禁用</span>
-                        </span>
-                        <span slot="action" slot-scope="record">
-                            <div v-if="record.key === '1'">
-                                <a-button type="danger" ghost>禁用</a-button>
-                                <a-button type="primary" @click="reviewDetail(record)" class="btnDetail">详 情</a-button>
-                            </div>
-                            <div v-else-if="record.key === '2'">
-                                <a-button type="primary" ghost>启用</a-button>
-                                <a-button type="primary" @click="reviewDetail(record)" class="btnDetail">详 情</a-button>
-                            </div>
-                        </span>
-                    </a-table>
-                    <a-pagination class="pagination" showQuickJumper :defaultCurrent="2" :total="500" />
+                    <passedTab :columns="passedColumns" :data="passseddata" />
+                    <a-pagination class="pagination" :defaultCurrent="1" :total="passseddata.length" />
                 </a-tab-pane>
                 <a-tab-pane tab="待审核" key="2" forceRender>
+                    <notpassTab :columns="notpassedColumns" :data="notpassdata" />
+                    <a-pagination class="pagination" :defaultCurrent="1" :total="passseddata.length" />
                 </a-tab-pane>
             </a-tabs>
         </a-row>
     </div>
 </template>
 <script>
+import passedTab from './components/passedTab.vue'
+import notpassTab from './components/notpassTab.vue'
 export default {
     data() {
         return {
-            checkTab: 2,
-            columns: [{
+            passseddata: [],
+            notpassdata: [],
+            passedColumns: [{
                 title: '产品名称',
                 dataIndex: 'name',
                 width: 300,
@@ -69,16 +50,49 @@ export default {
                 scopedSlots: { customRender: 'action' },
                 width: 200,
                 align: 'center'
-            }]
+            }],
+            notpassedColumns: [{
+                title: '产品名称',
+                dataIndex: 'name',
+                width: 300,
+                align: 'center'
+            }, {
+                title: '生成时间',
+                dataIndex: 'date',
+                width: 300,
+                align: 'center'
+            }, {
+                title: '审核状态',
+                scopedSlots: { customRender: 'status' },
+                width: 200,
+                align: 'center'
+            }, {
+                title: '拒绝原因',
+                dataIndex: 'note',
+                width: 200,
+                align: 'center'
+            }, {
+                title: '操作',
+                scopedSlots: { customRender: 'action' },
+                width: 200,
+                align: 'center'
+            }],
         }
+    },
+    components: {
+        passedTab,
+        notpassTab
     },
     methods: {
         callback(key) {
             console.log(key)
+        },
+        routerView (address) {
+            this.$router.push({ path: address })
         }
     },
     created() {
-        this.data = [{
+        this.passseddata = [{
             key: '1',
             name: '花颜照',
             date: '2019/08/07 13:30',
@@ -86,6 +100,18 @@ export default {
             key: '2',
             name: '证件照',
             date: '2019/08/07 13:30',
+        }]
+
+        this.notpassdata = [{
+            key: '1',
+            name: '花颜照',
+            date: '2019/08/07 13:30',
+            note: '',
+        }, {
+            key: '2',
+            name: '证件照',
+            date: '2019/08/07 13:30',
+            note: '修得不好'
         }]
     }
 }
@@ -107,27 +133,6 @@ export default {
     .tab {
         margin-top: 20px;
         text-align: left;
-
-        .search {
-            margin-top: 10px;
-
-            .date {
-                white-space: nowrap;
-
-                .tip {
-                    margin-right: 20px;
-                }
-            }
-        }
-
-        .table {
-            margin-top: 20px;
-            min-height: 200px;
-
-            .btnDetail {
-                margin-left: 20px;
-            }
-        }
 
         .pagination {
             text-align: right;

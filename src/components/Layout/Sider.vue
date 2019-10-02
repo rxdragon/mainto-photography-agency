@@ -53,7 +53,15 @@ export default {
                     this.openKeys = ['work']
                     this.selectKeys = ['record']
                     break
+                case '/recordDetail':
+                    this.openKeys = ['work']
+                    this.selectKeys = ['record']
+                    break
                 case '/product':
+                    this.openKeys = []
+                    this.selectKeys = ['product']
+                    break
+                case '/addProduct':
                     this.openKeys = []
                     this.selectKeys = ['product']
                     break
