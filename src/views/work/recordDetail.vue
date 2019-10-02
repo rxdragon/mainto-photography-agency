@@ -25,7 +25,7 @@
                     <li v-for="(item, index) in pictures" :key="index">
                         <p class="head">{{item.product}}</p>
                         <a-row type="flex" justify="start" class="pirtureWrap">
-                            <a-col :span="4" class="item" v-for="(childItem, childIndex) in item.list">
+                            <a-col :span="4" class="item" v-for="(childItem, childIndex) in item.list" :key="childIndex">
                                 <img :src="childItem">
                             </a-col>
                         

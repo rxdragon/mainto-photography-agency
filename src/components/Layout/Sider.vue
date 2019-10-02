@@ -65,6 +65,10 @@ export default {
                     this.openKeys = []
                     this.selectKeys = ['product']
                     break
+                case '/productDetail':
+                    this.openKeys = []
+                    this.selectKeys = ['product']
+                    break
                 case '/customs':
                     this.openKeys = []
                     this.selectKeys = ['customs']

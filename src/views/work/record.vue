@@ -62,7 +62,7 @@ export default {
         }
     },
     methods: {
-        reviewDetail(record) {
+        reviewDetail() {
             this.$router.push({ path: '/recordDetail' })
         }
     },

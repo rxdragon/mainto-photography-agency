@@ -40,9 +40,6 @@ export default {
         data: Array,
     },
     methods: {
-        callback(key) {
-            console.log(key)
-        }
     },
     created() {}
 }
