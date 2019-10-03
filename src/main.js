@@ -5,10 +5,9 @@ import router from './router'
 import store from './store/index'
 import 'ant-design-vue/dist/antd.css'
 import './assets/style/reset.css'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
-moment.locale('zh-cn')
 
+Vue.prototype.routeView = (address) => { router.push({ path: address }) }
+Vue.prototype.routeBack = () => { router.go(-1) }
 
 Vue.use(Antd)
 Vue.config.productionTip = false

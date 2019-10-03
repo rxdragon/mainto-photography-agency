@@ -9,7 +9,9 @@ const product = () => import('./views/product/index.vue')
 const productDetail = () => import('./views/product/productDetail.vue')
 const addProduct = () => import('./views/product/addProduct.vue')
 const manage = () => import('./views/manage/index.vue')
+const manageAccount = () => import('./views/manage/account.vue')
 const custom = () => import('./views/custom/index.vue')
+const customDetail = () => import('./views/custom/detail.vue')
 
 Vue.use(Router)
 
@@ -47,8 +49,16 @@ export const routes = [
     component: manage
   },
   {
+    path: '/manageAccount',
+    component: manageAccount
+  },
+  {
     path: '/customs',
     component: custom
+  },
+  {
+    path: '/customDetail',
+    component: customDetail
   }
 ]
 
