@@ -21,6 +21,7 @@ import Sider from './components/Layout/Sider.vue'
 import Header from './components/Layout/Header.vue'
 
 export default {
+  name: 'app',
   data() {
     return {
       locale: zhCN,
@@ -40,8 +41,7 @@ export default {
   components: {
     Sider,
     Header
-  },
-  name: 'app'
+  }
 }
 </script>
 <style>

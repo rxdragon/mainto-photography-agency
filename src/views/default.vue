@@ -6,13 +6,17 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import Api from '@/api/index.js'
 export default {
+  name: 'default',
   computed: {
-    name: 'default',
     ...mapGetters([
       'getUser',
     ])
-  }
+  },
+  async created () {
+    const result = await Api.product.list()
+  },
 }
 </script>
 <style scoped lang="less">
