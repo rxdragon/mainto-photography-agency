@@ -19,6 +19,7 @@
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 import Sider from './components/Layout/Sider.vue'
 import Header from './components/Layout/Header.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'app',
@@ -41,6 +42,12 @@ export default {
   components: {
     Sider,
     Header
+  },
+  methods: {
+    ...mapActions(['initUpyun'])
+  },
+  async created() {
+    this.initUpyun()
   }
 }
 </script>

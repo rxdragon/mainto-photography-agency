@@ -47,12 +47,13 @@
             </p>
           </li>
         </ul>
-        <a-upload :action="uploadConfig.address" listType="picture-card" @change="handleChange" :showUploadList="false">
+        <a-upload :action="upyunAction" :data="getUpyun" listType="picture-card" @change="handleChange" :showUploadList="false">
           <div>
             <a-icon :type="loading ? 'loading' : 'plus'" />
             <div class="ant-upload-text">点击上传</div>
           </div>
         </a-upload>
+        {{upyunAction}}
         <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
           <img alt="example" style="width: 100%" :src="previewImage" />
         </a-modal>
@@ -61,6 +62,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'upload',
   data() {
@@ -75,9 +77,12 @@ export default {
       loading: false,
       productValue: undefined,
       spliceValue: undefined,
-      uploadConfig: {
-        address: 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
-      }
+    }
+  },
+  computed: {
+    ...mapGetters(['getUpyun']),
+    upyunAction () {
+      return `https://v0.api.upyun.com/${this.getUpyun.bucket}`
     }
   },
   methods: {

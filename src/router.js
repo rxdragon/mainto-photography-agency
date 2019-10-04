@@ -29,7 +29,8 @@ export const routes = [
     component: workRecord
   },
   {
-    path: '/recordDetail',
+    name: 'recordDetail',
+    path: '/recordDetail/:id',
     component: recordDetail
   },
   {

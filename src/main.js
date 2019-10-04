@@ -5,6 +5,8 @@ import router from './router'
 import store from './store/index'
 import 'ant-design-vue/dist/antd.css'
 import './assets/style/reset.css'
+import promiseFinally from 'promise.prototype.finally'
+promiseFinally.shim()
 
 Vue.prototype.routeView = (address) => { router.push({ path: address }) }
 Vue.prototype.routeBack = () => { router.go(-1) }
