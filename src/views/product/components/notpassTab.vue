@@ -3,37 +3,37 @@
     <a-row class="search">
       <a-col :span="8" class="date">
         <span class="tip">选择状态: </span>
-        <a-select defaultValue="0" style="width: 50%">
-          <a-select-option value="0">全部</a-select-option>
-          <a-select-option value="1">待审核</a-select-option>
-          <a-select-option value="2">审核拒绝</a-select-option>
+        <a-select defaultValue="" v-model="selectValue" style="width: 50%">
+          <a-select-option value="">全部</a-select-option>
+          <a-select-option value="wait_review">待审核</a-select-option>
+          <a-select-option value="refuse">审核拒绝</a-select-option>
         </a-select>
       </a-col>
       <a-col :span="1" style="text-align: right;">
-        <a-button type="primary">查 询</a-button>
+        <a-button type="primary" @click="searchProduct">查 询</a-button>
       </a-col>
     </a-row>
-    <a-table class="table" :columns="columns" :dataSource="data" :pagination="false">
+    <a-table class="table" :columns="columns" :dataSource="dataSource" :rowKey="bindKey" :pagination="false" :loading="loading">
       <span slot="status" slot-scope="record">
-        <span v-if="record.key === '1'">待审核</span>
-        <span v-else-if="record.key === '2'">审核拒绝</span>
+        <span>{{stateText[record.state]}}</span>
       </span>
       <span slot="action" slot-scope="record">
-        <div v-if="record.key === '1'">
-          <a-button type="primary" @click="routeView('/productDetail')">详 情</a-button>
-        </div>
-        <div v-else-if="record.key === '2'">
-          <a-button type="danger" ghost>重新提交</a-button>
+        <div>
+          <a-button type="primary" v-if="record.state !== 'refuse'">详 情</a-button>
+          <a-button type="danger" v-else ghost @click="resubmit(record)">重新提交</a-button>
         </div>
       </span>
     </a-table>
+    <a-pagination class="pagination" :current="page.index" :defaultCurrent="1" @change="searchProduct" :total="dataSource.length" />
   </div>
 </template>
 <script>
+import Api from '@/api/index.js'
 export default {
   name: 'notpassTab',
   data() {
     return {
+      dataSource: [],
       columns: [{
         title: '产品名称',
         dataIndex: 'name',
@@ -41,7 +41,7 @@ export default {
         align: 'center'
       }, {
         title: '生成时间',
-        dataIndex: 'date',
+        dataIndex: 'created_at',
         width: 300,
         align: 'center'
       }, {
@@ -51,7 +51,7 @@ export default {
         align: 'center'
       }, {
         title: '拒绝原因',
-        dataIndex: 'note',
+        dataIndex: 'refuse_reason',
         width: 200,
         align: 'center'
       }, {
@@ -59,19 +59,49 @@ export default {
         scopedSlots: { customRender: 'action' },
         width: 200,
         align: 'center'
-      }]
+      }],
+      stateText: {
+        wait_review: '等待审核',
+        refuse: '审核拒绝'
+      },
+      selectValue: '',
+      page: {
+        size: 10,
+        index: 1
+      },
+      loading: false
     }
   },
-  props: {
-    data: Array
+  computed: {
+    searchParams() {
+      return {
+        state: this.selectValue,
+        page: this.page.index,
+        pageSize: this.page.size
+      }
+    }
   },
   methods: {
-    routeView(address) {
-      this.$router.push({ path: address })
+    bindKey(record, index) {
+      return index
+    },
+    resubmit(record) {
+      this.$router.push({
+        name: 'addProduct',
+        query: { productId: record.id }
+      })
+    },
+    searchProduct() {
+      this.loading = true
+      Api.product.list(this.searchParams).then((res) => {
+        this.dataSource = res.msg.items
+      }).finally(() => {
+        this.loading = false
+      })
     }
   },
   created() {
-    console.log('未通过')
+    this.searchProduct()
   }
 }
 </script>

@@ -125,7 +125,6 @@ export default {
         orderNum: this.$route.params.id
       }).then((res) => {
         this.product = res.msg
-        console.log(this.product)
       }).finally(() => {
         this.loading = false
       })

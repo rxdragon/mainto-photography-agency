@@ -14,8 +14,7 @@
           <passedTab />
         </a-tab-pane>
         <a-tab-pane tab="待审核" key="2" forceRender>
-          <notpassTab :data="notpassdata" />
-          <a-pagination class="pagination" :defaultCurrent="1" :total="passseddata.length" />
+          <notpassTab />
         </a-tab-pane>
       </a-tabs>
     </a-row>
@@ -25,29 +24,9 @@
 import PassedTab from './components/PassedTab.vue'
 import NotpassTab from './components/NotpassTab.vue'
 export default {
-  data() {
-    return {
-      passseddata: [],
-      notpassdata: []
-    }
-  },
   components: {
     PassedTab,
     NotpassTab
-  },
-  methods: {},
-  created() {
-    this.notpassdata = [{
-      key: '1',
-      name: '花颜照',
-      date: '2019/08/07 13:30',
-      note: '',
-    }, {
-      key: '2',
-      name: '证件照',
-      date: '2019/08/07 13:30',
-      note: '修得不好'
-    }]
   }
 }
 </script>

@@ -24,7 +24,14 @@
               </p>
             </span>
             <span slot="action" slot-scope="record">
-              <a-button class="withdraw" v-if="hasRetouchStream(record.stream_nums)" type="danger" ghost>撤回</a-button>
+              <a-button class="withdraw"
+                v-if="hasRetouchStream(record.stream_nums)" 
+                @click="cancelOrder(record)"
+                type="danger"
+                ghost
+              >
+                撤回
+              </a-button>
               <a-button type="primary" @click="viewsDetail(record)">详 情</a-button>
             </span>
           </a-table>
@@ -37,7 +44,6 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
 import Api from '@/api/index.js'
 export default {
   name: 'workRecord',
@@ -100,6 +106,16 @@ export default {
         if (stream.state === 'wait_retouch') { return true }
       }
       return false
+    },
+    cancelOrder (record) {
+      this.loading = true
+      Api.work.cancel({
+        orderNum: record.order_num
+      }).then(() => {
+        this.$message.success('订单撤回成功', 3, this.searchOrder)
+      }).finally(() => {
+        this.loading = false
+      })
     },
     dateChange(date, dateString) {
       this.search.date = dateString

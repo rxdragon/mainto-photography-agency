@@ -21,7 +21,7 @@
       </a-row>
       <a-table class="table" :columns="columns" :dataSource="data" :pagination="false">
         <span slot="action" slot-scope="record">
-          <a-button type="primary" @click="routeView('/customDetail')">详 情</a-button>
+          <a-button type="primary" @click="routeView(record)">详 情</a-button>
         </span>
       </a-table>
       <a-pagination class="pagination" :defaultCurrent="1" :total="data.length" />

@@ -16,12 +16,12 @@
       <span slot="action" slot-scope="record">
         <div>
           <a-button type="danger" ghost v-if="record.state === 'enable'" @click="switchState(record)">禁用</a-button>
-          <a-button type="primary"ghost v-else-if="record.state === 'disable'" @click="switchState(record)">启用</a-button>
+          <a-button type="primary" ghost v-else-if="record.state === 'disable'" @click="switchState(record)">启用</a-button>
           <a-button type="primary" @click="viewDetail(record)" class="btnDetail">详 情</a-button>
         </div>
       </span>
     </a-table>
-    <a-pagination class="pagination" :defaultCurrent="1" :total="200" />
+    <a-pagination class="pagination" :current="page.index" @change="searchProduct" :defaultCurrent="1" :total="dataSource.length" />
   </div>
 </template>
 <script>
@@ -86,7 +86,7 @@ export default {
     switchState (record) {
       Api.product.switch({
         id: record.id
-      }).then((res) => {
+      }).then(() => {
          this.$message.success('更改状态成功', 3, this.searchProduct)
       })
     },
@@ -96,7 +96,7 @@ export default {
     dateChange(date, dateString) {
       this.date = dateString
     },
-    searchProduct(address) {
+    searchProduct() {
       this.loading = true
       Api.product.list(this.searchParams).then((res) => {
         this.dataSource = res.msg.items
