@@ -92,7 +92,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getOrder']),
     bindKey(record, index) {
       return index
     },
@@ -111,7 +110,7 @@ export default {
     },
     searchOrder() {
       this.loading = true
-      Api.work.getOrder(this.searchParams).then((res) => {
+      Api.work.list(this.searchParams).then((res) => {
         this.data = res.msg.items
       }).finally(() => {
         this.loading = false

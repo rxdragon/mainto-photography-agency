@@ -1,6 +1,10 @@
 <template>
   <div id="productDetail">
-    <a-row class="title">
+    <div class="spin-content" v-if="loading">
+      <a-spin size="large" />
+    </div>
+    <div class="container"  v-if="!loading">
+          <a-row class="title">
       <a-col :span="12">
         <span class="tip">产品详情</span>
       </a-col>
@@ -11,7 +15,7 @@
           <span class="tip name">产品名称: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip name">{{detail.name}}</p>
+          <p class="tip name">{{product.name}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -19,7 +23,7 @@
           <span class="tip">修图要求: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip note">{{detail.note}}</p>
+          <p class="tip note">{{product.retouch_require}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -39,7 +43,7 @@
           <span class="tip name">修图标准: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip name">{{detail.type}}</p>
+          <p class="tip name">{{product.retouch_standard}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -55,7 +59,7 @@
           <span class="tip name">模版占位: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip name">{{detail.needTemp}}</p>
+          <p class="tip name">{{product.need_template}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -63,7 +67,7 @@
           <span class="tip name">需要拼接: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip name">{{detail.needSplit}}</p>
+          <p class="tip name">{{product.need_splicing}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -95,57 +99,40 @@
           <span class="tip">备注: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip note">{{detail.note}}</p>
+          <p class="tip note">{{product.remark}}</p>
         </a-col>
       </a-row>
     </section>
+    </div>
   </div>
 </template>
 <script>
+import Api from '@/api/index.js'
 export default {
   data() {
     return {
+      loading: false,
+      product: {},
       detail: {
-        name: '花颜照',
-        note: '写的特比好',
-        type: '蓝标',
-        level: '一类产品',
-        needTemp: '需要',
-        needSplit: '是',
         pictrue: ['https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png']
-      },
-      previewVisible: false,
-      previewImage: '',
-      fileList: [{
-        uid: '-1',
-        name: 'xxx.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      }],
-      data: [{
-        title: '1',
-      }, {
-        title: '2',
-      }, {
-        title: '3',
-      }, {
-        title: '4',
-      }, {
-        title: '5',
-      }]
+      }
     }
   },
   methods: {
-    handleCancel() {
-      this.previewVisible = false
-    },
-    handlePreview(file) {
-      this.previewImage = file.url || file.thumbUrl
-      this.previewVisible = true
-    },
-    handleChange({ fileList }) {
-      this.fileList = fileList
+    reviewProduct() {
+      this.loading = true
+      Api.product.detail({
+        orderNum: this.$route.params.id
+      }).then((res) => {
+        this.product = res.msg
+        console.log(this.product)
+      }).finally(() => {
+        this.loading = false
+      })
     }
+  },
+  created() {
+    this.reviewProduct()
   }
 }
 </script>

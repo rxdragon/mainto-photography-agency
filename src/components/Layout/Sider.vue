@@ -29,23 +29,23 @@
 </template>
 <script>
 const RouteConfig = [{
-  path: ['/manage', '/manageAccount'],
+  path: ['manage', 'manageAccount'],
   selectedKeys: ['account'],
   openKeys: ['manage']
 }, {
-  path: ['/workRecord', '/recordDetail'],
+  path: ['workRecord', 'recordDetail'],
   selectedKeys: ['record'],
   openKeys: ['work']
 }, {
-  path: ['/work'],
+  path: ['work'],
   selectedKeys: ['upload'],
   openKeys: ['work']
 }, {
-  path: ['/product', '/addProduct', 'productDetail'],
+  path: ['product', 'addProduct', 'productDetail'],
   selectedKeys: ['product'],
   openKeys: []
 }, {
-  path: ['/customs', '/customDetail'],
+  path: ['customs', 'customDetail'],
   selectedKeys: ['customs'],
   openKeys: []
 }]
@@ -60,7 +60,7 @@ export default {
   },
   watch: {
     '$route': function(route) {
-      this.checkRoute(route.path)
+      this.checkRoute(route.name)
     }
   },
   methods: {

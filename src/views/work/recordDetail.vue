@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     reviewOrder() {
-      Api.work.orderDetail({
+      Api.work.detail({
         orderNum: this.$route.params.id
       }).then((res) => {
         this.order = res.msg

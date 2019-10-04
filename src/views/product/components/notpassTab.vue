@@ -33,18 +33,46 @@
 export default {
   name: 'notpassTab',
   data() {
-    return {}
+    return {
+      columns: [{
+        title: '产品名称',
+        dataIndex: 'name',
+        width: 300,
+        align: 'center'
+      }, {
+        title: '生成时间',
+        dataIndex: 'date',
+        width: 300,
+        align: 'center'
+      }, {
+        title: '审核状态',
+        scopedSlots: { customRender: 'status' },
+        width: 200,
+        align: 'center'
+      }, {
+        title: '拒绝原因',
+        dataIndex: 'note',
+        width: 200,
+        align: 'center'
+      }, {
+        title: '操作',
+        scopedSlots: { customRender: 'action' },
+        width: 200,
+        align: 'center'
+      }]
+    }
   },
   props: {
-    columns: Array,
-    data: Array,
+    data: Array
   },
   methods: {
     routeView(address) {
       this.$router.push({ path: address })
     }
   },
-  created() {}
+  created() {
+    console.log('未通过')
+  }
 }
 </script>
 <style lang="less">

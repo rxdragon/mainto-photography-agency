@@ -22,43 +22,52 @@ export const routes = [
   },
   {
     path: '/work',
+    name: 'work',
     component: work
   },
   {
     path: '/workRecord',
+    name: 'workRecord',
     component: workRecord
   },
   {
-    name: 'recordDetail',
     path: '/recordDetail/:id',
+    name: 'recordDetail',
     component: recordDetail
   },
   {
     path: '/product',
+    name: 'product',
     component: product
   },
   {
-    path: '/productDetail',
+    path: '/productDetail/:id',
+    name: 'productDetail',
     component: productDetail
   },
   {
     path: '/addProduct',
+    name: 'addProduct',
     component: addProduct
   },
   {
     path: '/manage',
+    name: 'manage',
     component: manage
   },
   {
     path: '/manageAccount',
+    name: 'manageAccount',
     component: manageAccount
   },
   {
     path: '/customs',
+    name: 'customs',
     component: custom
   },
   {
     path: '/customDetail',
+    name: 'customDetail',
     component: customDetail
   }
 ]

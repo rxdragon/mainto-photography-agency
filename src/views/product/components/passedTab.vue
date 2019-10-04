@@ -3,46 +3,111 @@
     <a-row class="search">
       <a-col :span="8" class="date">
         <span class="tip">选择日期: </span>
-        <a-range-picker />
+        <a-range-picker @change="dateChange" />
       </a-col>
       <a-col :span="3" style="text-align: right;">
-        <a-button type="primary">查 询</a-button>
+        <a-button type="primary" @click="searchProduct">查 询</a-button>
       </a-col>
     </a-row>
-    <a-table class="table" :columns="columns" :dataSource="data" :pagination="false">
+    <a-table class="table" :columns="columns" :dataSource="dataSource" :rowKey="bindKey" :pagination="false" :loading="loading">
       <span slot="status" slot-scope="record">
-        <span v-if="record.key === '1'">启用</span>
-        <span v-else-if="record.key === '2'">禁用</span>
+        <span>{{stateText[record.state] || '状态异常'}}</span>
       </span>
       <span slot="action" slot-scope="record">
-        <div v-if="record.key === '1'">
-          <a-button type="danger" ghost>禁用</a-button>
-          <a-button type="primary" @click="routeView('/productDetail')" class="btnDetail">详 情</a-button>
-        </div>
-        <div v-else-if="record.key === '2'">
-          <a-button type="primary" ghost>启用</a-button>
-          <a-button type="primary" @click="routeView('/productDetail')" class="btnDetail">详 情</a-button>
+        <div>
+          <a-button type="danger" ghost v-if="record.state === 'enable'" @click="switchState(record)">禁用</a-button>
+          <a-button type="primary"ghost v-else-if="record.state === 'disable'" @click="switchState(record)">启用</a-button>
+          <a-button type="primary" @click="viewDetail(record)" class="btnDetail">详 情</a-button>
         </div>
       </span>
     </a-table>
+    <a-pagination class="pagination" :defaultCurrent="1" :total="200" />
   </div>
 </template>
 <script>
+import Api from '@/api/index.js'
 export default {
   name: 'passedTab',
   data() {
-    return {}
-  },
-  props: {
-    columns: Array,
-    data: Array,
-  },
-  methods: {
-    routeView(address) {
-      this.$router.push({ path: address })
+    return {
+      dataSource: [],
+      columns: [{
+        title: '产品名称',
+        dataIndex: 'name',
+        width: 300,
+        align: 'center'
+      }, {
+        title: '审核通过时间',
+        dataIndex: 'review_pass_at',
+        width: 300,
+        align: 'center'
+      }, {
+        title: '状态',
+        scopedSlots: { customRender: 'status' },
+        width: 200,
+        align: 'center'
+      }, {
+        title: '操作',
+        scopedSlots: { customRender: 'action' },
+        width: 200,
+        align: 'center'
+      }],
+      stateText: {
+        disable: '禁用',
+        enable: '启用',
+        refuse: '已删除'
+      },
+      date: [],
+      page: {
+        size: 10,
+        index: 1
+      },
+      loading: false
     }
   },
-  created() {}
+  computed: {
+    searchParams() {
+      return {
+        reviewPassAtStart: this.date[0] || '',
+        reviewPassAtEnd: this.date[1] || '',
+        state: 'pass',
+        page: this.page.index,
+        pageSize: this.page.size
+      }
+    }
+  },
+  methods: {
+    viewDetail (record) {
+      this.$router.push({
+        name: 'productDetail',
+        params: {id: record.id}
+      })
+    },
+    switchState (record) {
+      Api.product.switch({
+        id: record.id
+      }).then((res) => {
+         this.$message.success('更改状态成功', 3, this.searchProduct)
+      })
+    },
+    bindKey(record, index) {
+      return index
+    },
+    dateChange(date, dateString) {
+      this.date = dateString
+    },
+    searchProduct(address) {
+      this.loading = true
+      Api.product.list(this.searchParams).then((res) => {
+        this.dataSource = res.msg.items
+      }).finally(() => {
+        this.loading = false
+      })
+    }
+  },
+  created() {
+    this.searchProduct()
+  }
 }
 </script>
 <style lang="less">

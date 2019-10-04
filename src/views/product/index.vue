@@ -11,11 +11,10 @@
     <a-row class="tab">
       <a-tabs defaultActiveKey="1">
         <a-tab-pane tab="审核通过" key="1">
-          <passedTab :columns="passedColumns" :data="passseddata" />
-          <a-pagination class="pagination" :defaultCurrent="1" :total="passseddata.length" />
+          <passedTab />
         </a-tab-pane>
         <a-tab-pane tab="待审核" key="2" forceRender>
-          <notpassTab :columns="notpassedColumns" :data="notpassdata" />
+          <notpassTab :data="notpassdata" />
           <a-pagination class="pagination" :defaultCurrent="1" :total="passseddata.length" />
         </a-tab-pane>
       </a-tabs>
@@ -29,54 +28,7 @@ export default {
   data() {
     return {
       passseddata: [],
-      notpassdata: [],
-      passedColumns: [{
-        title: '产品名称',
-        dataIndex: 'name',
-        width: 300,
-        align: 'center'
-      }, {
-        title: '审核通过时间',
-        dataIndex: 'date',
-        width: 300,
-        align: 'center'
-      }, {
-        title: '状态',
-        scopedSlots: { customRender: 'status' },
-        width: 200,
-        align: 'center'
-      }, {
-        title: '操作',
-        scopedSlots: { customRender: 'action' },
-        width: 200,
-        align: 'center'
-      }],
-      notpassedColumns: [{
-        title: '产品名称',
-        dataIndex: 'name',
-        width: 300,
-        align: 'center'
-      }, {
-        title: '生成时间',
-        dataIndex: 'date',
-        width: 300,
-        align: 'center'
-      }, {
-        title: '审核状态',
-        scopedSlots: { customRender: 'status' },
-        width: 200,
-        align: 'center'
-      }, {
-        title: '拒绝原因',
-        dataIndex: 'note',
-        width: 200,
-        align: 'center'
-      }, {
-        title: '操作',
-        scopedSlots: { customRender: 'action' },
-        width: 200,
-        align: 'center'
-      }],
+      notpassdata: []
     }
   },
   components: {
@@ -85,16 +37,6 @@ export default {
   },
   methods: {},
   created() {
-    this.passseddata = [{
-      key: '1',
-      name: '花颜照',
-      date: '2019/08/07 13:30',
-    }, {
-      key: '2',
-      name: '证件照',
-      date: '2019/08/07 13:30',
-    }]
-
     this.notpassdata = [{
       key: '1',
       name: '花颜照',
