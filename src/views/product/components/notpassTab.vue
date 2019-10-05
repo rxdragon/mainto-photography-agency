@@ -88,7 +88,12 @@ export default {
     resubmit(record) {
       this.$router.push({
         name: 'addProduct',
-        query: { productId: record.id }
+        query: {
+          id: record.id,
+          name: record.name,
+          standard: record.retouch_require,
+          url: record.simple_photo_paths
+        }
       })
     },
     searchProduct() {

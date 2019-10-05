@@ -32,7 +32,11 @@
         </a-col>
         <a-col :span="22">
           <a-row>
-            <a-col class="pictureWrap" :span="6" v-for="(item, index) in detail.pictrue" :key="index">
+            <a-col 
+              class="pictureWrap"
+              :span="6"
+              v-for="(item, index) in product.simple_image_url"
+              :key="index">
               <img :src="item">
             </a-col>
           </a-row>
@@ -51,7 +55,7 @@
           <span class="tip name">权重等级: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip name">{{detail.level}}</p>
+          <p class="tip name">{{weightState[product.weight_level]}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -59,7 +63,7 @@
           <span class="tip name">模版占位: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip name">{{product.need_template}}</p>
+          <p class="tip name">{{product.need_template === 0 ? '不需要' : '需要'}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -67,7 +71,7 @@
           <span class="tip name">需要拼接: </span>
         </a-col>
         <a-col :span="6">
-          <p class="tip name">{{product.need_splicing}}</p>
+          <p class="tip name">{{product.need_splicing === 0 ? '不需要' : '需要'}}</p>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -76,8 +80,8 @@
         </a-col>
         <a-col :span="20">
           <ul class="profit">
-            <li v-for="(item, index) in 20" :key="index">
-              <span class="head">{{`${item}人`}}</span><span>{{item}}</span>
+            <li v-for="(item, index) in product.normal_income_config" :key="index">
+              <span class="head">{{`${index}人`}}</span><span>{{item}}</span>
             </li>
           </ul>
         </a-col>
@@ -88,8 +92,8 @@
         </a-col>
         <a-col :span="20">
           <ul class="profit">
-            <li v-for="(item, index) in 20" :key="index">
-              <span class="head">{{`${item}人`}}</span><span>{{item}}</span>
+            <li v-for="(item, index) in product.splicing_income_config" :key="index">
+              <span class="head">{{`${index}人`}}</span><span>{{item}}</span>
             </li>
           </ul>
         </a-col>
@@ -111,11 +115,15 @@ import Api from '@/api/index.js'
 export default {
   data() {
     return {
+      weightState: {
+        weight_first: '一类产品',
+        weight_second: '二类产品',
+        weight_third: '三类产品',
+        weight_fourth: '四类产品',
+        weight_fifth: '五类产品'
+      },
       loading: false,
-      product: {},
-      detail: {
-        pictrue: ['https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png']
-      }
+      product: {}
     }
   },
   methods: {

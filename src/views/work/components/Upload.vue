@@ -43,17 +43,22 @@
               <a-select placeholder="拼接类型" style="width: 55%" v-model="spliceValue" @change="spliceChange(item)">
                 <a-select-option v-for="(item, index) in splitArray" :key="index" :value="item">{{item}}</a-select-option>
               </a-select>
-              <a-input-number tyle="width: 40%; margin-left: 4%;" :min="1" :max="99" v-model="splitIndex" placeholder="拼接序号" />
+              <a-input-number style="width: 40%; margin-left: 4%;" :min="1" :max="99" v-model="splitIndex" placeholder="拼接序号" />
             </p>
           </li>
         </ul>
-        <a-upload :action="upyunAction" :data="getUpyun" listType="picture-card" @change="handleChange" :showUploadList="false">
+        <a-upload
+          :headers="uploadHeader"
+          :action="upyunAction"
+          :data="getUpyun"
+          listType="picture-card"
+          @change="handleChange"
+          :showUploadList="false">
           <div>
             <a-icon :type="loading ? 'loading' : 'plus'" />
             <div class="ant-upload-text">点击上传</div>
           </div>
         </a-upload>
-        {{upyunAction}}
         <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
           <img alt="example" style="width: 100%" :src="previewImage" />
         </a-modal>
@@ -67,6 +72,9 @@ export default {
   name: 'upload',
   data() {
     return {
+      uploadHeader:{
+        'X-Requested-With': null
+      },
       previewVisible: false,
       previewImage: '',
       fileList: [],
