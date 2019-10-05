@@ -37,9 +37,12 @@
           </a-table>
         </template>
       </div>
-      <a-pagination class="pagination" :defaultCurrent="search.page.index" :total="data.length" @change="pageChange" />
-    </section>
-    <section class="footer">
+      <a-pagination 
+        class="pagination"
+        :defaultCurrent="search.page.index"
+        :total="data.length"
+        @change="pageChange"
+      />
     </section>
   </div>
 </template>

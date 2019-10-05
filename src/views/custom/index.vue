@@ -1,25 +1,37 @@
 <template>
-  <div id='custom'>
+  <div id="custom">
     <h3>客片中心</h3>
     <section class='content'>
       <a-row class="search">
         <a-col :span="8">
           <span class="tip">上传时间: </span>
-          <a-range-picker class="wrap" />
+          <a-range-picker class="wrap" @change="dateChange" />
         </a-col>
         <a-col :span="7">
           <span class="tip">订单标题: </span>
-          <a-input class="wrap" placeholder="请输入订单标题" />
+          <a-input class="wrap" placeholder="请输入订单标题" v-model="search.title" />
         </a-col>
         <a-col :span="7">
           <span class="tip">订单号: </span>
-          <a-input class="wrap" placeholder="请输入订单标号" />
+          <a-input class="wrap" placeholder="请输入订单标号" v-model="search.number" />
         </a-col>
         <a-col :span="2">
-          <a-button type="primary">查 询</a-button>
+          <a-button type="primary" @click="searchOrder">查 询</a-button>
         </a-col>
       </a-row>
-      <a-table class="table" :columns="columns" :dataSource="data" :pagination="false">
+      <a-table
+        class="table"
+        :loading="loading"
+        :rowKey="bindKey" 
+        :columns="columns"
+        :dataSource="data"
+        :pagination="false"
+        >
+        <span slot="stream_nums" slot-scope="record">
+          <p v-for="(item, index) in record.stream_nums" :key="index">
+            {{`${item.stream_num}(${item.state})`}}
+          </p>
+        </span>
         <span slot="action" slot-scope="record">
           <a-button type="primary" @click="routeView(record)">详 情</a-button>
         </span>
@@ -29,27 +41,22 @@
   </div>
 </template>
 <script>
+import Api from '@/api/index.js'
 export default {
   name: 'custom',
   data() {
     return {
-      data: [{
-        key: '1',
-        title: '测试标题1',
-        date: '2019/08/07 13:30',
-        number: '123123123123',
-        cameramen: '甘道夫',
-        serial: 'dsc123123123123',
-        note: '',
-      }, {
-        key: '2',
-        title: '测试标题2',
-        date: '2019/08/07 13:30',
-        number: '123123123123',
-        cameramen: '哈皮',
-        serial: 'dsc123123123123',
-        note: '修得不好'
-      }],
+      data: [],
+      search: {
+        date: [],
+        title: '',
+        number: '',
+        page: {
+          index: 1,
+          size: 10
+        }
+      },
+      loading: false,
       columns: [{
         title: '订单标题',
         width: 300,
@@ -58,12 +65,12 @@ export default {
       }, {
         title: '订单号',
         width: 300,
-        dataIndex: 'number',
+        dataIndex: 'order_num',
         align: 'center'
       }, {
         title: '上传时间',
         width: 200,
-        dataIndex: 'date',
+        dataIndex: 'updated_at',
         align: 'center'
       }, {
         title: '摄影师',
@@ -72,8 +79,8 @@ export default {
         align: 'center'
       }, {
         title: '流水号',
-        width: 200,
-        dataIndex: 'serial',
+        width: 300,
+        scopedSlots: { customRender: 'stream_nums' },
         align: 'center'
       }, {
         title: '操作',
@@ -83,8 +90,43 @@ export default {
       }]
     }
   },
-  methods: {},
-  created() {}
+  computed: {
+    searchParams() {
+      return {
+        createdAtStart: this.search.date[0] || '',
+        createdAtEnd: this.search.date[1] || '',
+        title: this.search.title,
+        orderNum: this.search.number,
+        page: this.search.page.index,
+        pageSize: this.search.page.size
+      }
+    }
+  },
+  methods: {
+    bindKey(record, index) {
+      return index
+    },
+    dateChange(date, dateString) {
+      this.search.date = dateString
+    },
+    routeView (record) {
+      this.$router.push({
+        name: 'customDetail',
+        params: {id: record.order_num}
+      })
+    },
+    searchOrder() {
+      this.loading = true
+      Api.work.list(this.searchParams).then((res) => {
+        this.data = res.msg.items
+      }).finally(() => {
+        this.loading = false
+      })
+    },
+  },
+  created() {
+    this.searchOrder()
+  }
 }
 </script>
 <style lang="less">

@@ -66,7 +66,7 @@ export const routes = [
     component: custom
   },
   {
-    path: '/customDetail',
+    path: '/customDetail/:id',
     name: 'customDetail',
     component: customDetail
   }

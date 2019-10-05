@@ -88,7 +88,7 @@ export default {
   methods: {
     sumbitAdd() {
       this.loading = true
-      this.addSubmit(this.addParams).then((res) => {
+      this.addSubmit(this.addParams).then(() => {
         this.$message.success('产品添加成功', 3)
       }).finally(() => {
         this.loading = false
