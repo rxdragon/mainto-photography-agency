@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import user from './user/index.js'
 import work from './work/index.js'
 import upyun from './upyun/index.js'
-
+import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -11,7 +11,10 @@ const store = new Vuex.Store({
     user,
     upyun,
     work
-  }
+  },
+  plugins: [
+    createPersistedState({ storage: window.sessionStorage })
+  ]
 })
 
 export default store
