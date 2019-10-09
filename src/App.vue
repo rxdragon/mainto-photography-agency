@@ -1,7 +1,7 @@
 <template>
   <a-locale-provider :locale="locale">
     <div id="app">
-      <a-layout>
+      <a-layout v-if="getUser.id">
         <Header />
         <a-layout :style="bodyStyle">
           <Sider />
@@ -12,15 +12,16 @@
           </a-layout-content>
         </a-layout>
       </a-layout>
+      <Welcome v-else />
     </div>
   </a-locale-provider>
 </template>
 <script>
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 import Sider from './components/Layout/Sider.vue'
+import Welcome from './views/welcome/index.vue'
 import Header from './components/Layout/Header.vue'
-import { mapActions } from 'vuex'
-
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'app',
   data() {
@@ -39,9 +40,13 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['getUser'])
+  },
   components: {
     Sider,
-    Header
+    Header,
+    Welcome
   },
   methods: {
     ...mapActions(['initUpyun'])

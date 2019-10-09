@@ -1,12 +1,12 @@
 <template>
-  <a-layout-header :style="{ color: '#fff', background: '#273159', position: 'fixed', zIndex: '999', width: '100%'}">
+  <a-layout-header :style="style">
     <section>
       <a-icon type="google" />
       云端拍摄中心
     </section>
     <section :style="{ textAlign: 'right' }">
-      <span>{{getUser.job}}</span>
-      <a-tag color="blue" class="organization">{{getUser.name}}</a-tag>
+      <span>{{getUser.nick}}</span>
+      <a-tag color="blue" class="organization">{{getUser.username}}</a-tag>
       <a-tag color="red">退出</a-tag>
     </section>
   </a-layout-header>
@@ -20,6 +20,7 @@ export default {
     return {
       selectedKeys: [],
       openKeys: [],
+      style: { color: '#fff', background: '#273159', position: 'fixed', zIndex: '999', width: '100%' }
     }
   },
   computed: {

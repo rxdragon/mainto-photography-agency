@@ -16,7 +16,7 @@
           <span class="tip name">账号: </span>
         </a-col>
         <a-col :span="6">
-          <a-input addonBefore="DC:" placeholder="请填写账号" v-model="account.name" />
+          <a-input addonBefore="DC:" placeholder="请填写账号" v-model="account.username" />
         </a-col>
       </a-row>
       <a-row class="item">
