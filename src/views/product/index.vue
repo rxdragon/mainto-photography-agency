@@ -21,8 +21,8 @@
   </div>
 </template>
 <script>
-import PassedTab from './components/PassedTab.vue'
-import NotpassTab from './components/NotpassTab.vue'
+import PassedTab from './components/passedTab.vue'
+import NotpassTab from './components/notpassTab.vue'
 export default {
   components: {
     PassedTab,
