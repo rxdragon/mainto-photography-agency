@@ -1,0 +1,42 @@
+image: node:10.0.0
+
+before_script:
+  - yarn install
+
+# Cache modules in between jobs
+cache:
+  key: one-cache-between-branch
+  paths:
+    - node_modules/
+
+stages:
+  - deploy
+
+master_deploy:
+  stage: deploy
+  script:
+    - yarn run build
+    - node upload.js $build_operator $build_password $build_bucket $build_path $sourcefolder
+  environment:
+    name: production
+  only:
+    - master
+
+dev_deploy:
+  stage: deploy
+  script:
+    - yarn run opsbuild
+    - node upload.js $ops_operator $ops_password $ops_bucket $develop_path $sourcefolder
+  environment:
+    name: develop_production
+    url: http://fed.dev.hzmantu.com/ops-photography-agency/index.html
+  only:
+    - dev
+
+ops_deploy:
+  stage: deploy
+  script:
+    - yarn run opsbuild
+    - node upload.js $ops_operator $ops_password $ops_bucket $ops_path $sourcefolder
+  only:
+    - /^release-(\d+\.){2,3}\d+$/
