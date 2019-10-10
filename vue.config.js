@@ -9,6 +9,10 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   indexPath: 'index.html',
+  filenameHashing: true,
+  lintOnSave: true,
+  productionSourceMap: false,
+  integrity: false,
   chainWebpack: (config) => {
     config.resolve.alias.set('@', resolve('src'))
   }
