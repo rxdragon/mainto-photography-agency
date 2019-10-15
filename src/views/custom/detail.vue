@@ -21,7 +21,7 @@
                 </a-col>
                 <a-col :span="12">
                   <p class="head">上传人</p>
-                  <p class="iconLine"><span></span>大葱摄影师</p>
+                  <p class="iconLine"><span></span>{{order.photographer}}</p>
                 </a-col>
               </a-row>
             </li>

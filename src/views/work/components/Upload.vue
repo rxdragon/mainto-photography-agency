@@ -50,7 +50,6 @@
         <a-upload
           :headers="uploadHeader"
           :action="upyunAction"
-          :data="getUpyun"
           listType="picture-card"
           @change="handleChange"
           :showUploadList="false">
@@ -90,7 +89,7 @@ export default {
   computed: {
     ...mapGetters(['getUpyun']),
     upyunAction () {
-      return `https://v0.api.upyun.com/${this.getUpyun.bucket}`
+      return 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
     }
   },
   methods: {

@@ -95,7 +95,7 @@ export default {
       this.loading = true
       Api.manage.disable({
         id: record.id
-      }).then((res) => {}).finally(() => {
+      }).finally(() => {
         this.loading = false
       })
     },
@@ -103,7 +103,7 @@ export default {
       this.loading = true
       Api.manage.enable({
         id: record.id
-      }).then((res) => {}).finally(() => {
+      }).finally(() => {
         this.loading = false
       })
     },

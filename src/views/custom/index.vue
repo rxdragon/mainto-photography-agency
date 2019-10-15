@@ -75,7 +75,7 @@ export default {
       }, {
         title: '摄影师',
         width: 200,
-        dataIndex: 'cameramen',
+        dataIndex: 'photographer',
         align: 'center'
       }, {
         title: '流水号',
