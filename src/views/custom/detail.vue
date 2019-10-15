@@ -7,7 +7,10 @@
       <h3>客片详情</h3>
       <section class='content'>
         <div class="orderInfo">
-          <h4><span class="line"></span><span>订单信息</span></h4>
+          <h4>
+            <span class="line"></span>
+            <span>订单信息</span>
+          </h4>
           <ul>
             <li>
               <p class="head">订单标题</p>
@@ -33,7 +36,11 @@
         </div>
         <div class="pictureInfo">
           <h4>
-            <span class="line"></span><span>订单信息</span>
+            <span class="line"></span><span>照片信息</span>
+            <div class="float-button">
+              <a-button type="primary" class="origin" @click="createZip('first')">原片下载</a-button>
+              <a-button type="primary" @click="createZip('complete')">云端成片下载</a-button>
+            </div>
           </h4>
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
@@ -56,6 +63,9 @@
 </template>
 <script>
 import Api from '@/api/index.js'
+import JsZip from 'jszip'
+import * as utils from '@/util'
+import moment from 'moment'
 export default {
   name: 'custom',
   data() {
@@ -65,6 +75,26 @@ export default {
         first_photo: '原片',
         complete_photo: '云端成片'
       }
+    }
+  },
+  computed: {
+    photoQueue() {
+      let photoList = {
+        firstArr: [],
+        completeArr: []
+      }
+      if (!this.order.streams.length) { return list }
+      this.order.streams.map((item) => {
+        let itemList = item.photos
+        itemList.map((item) => {
+          if (item.version === 'complete_photo') {
+            photoList.completeArr.push(item.path)
+          } else if (item.version === 'first_photo') {
+            photoList.firstArr.push(item.path)
+          }
+        })
+      })
+      return photoList
     }
   },
   methods: {
@@ -77,6 +107,23 @@ export default {
       }).finally(() => {
         this.loading = false
       })
+    },
+    createZip(type) {
+      const PHOTOQUEUE = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
+      let zip = new JsZip()
+      let fold = zip.folder('原片')
+      let transArr = []
+      PHOTOQUEUE.map((obj) => {
+        transArr.push(utils.getRemoteImg(obj).then(res => {
+          fold.file(`${moment().format('YYYY-MM-DD HH-mm-ss')}.png`, res, { base64: true })
+        }))
+      })
+      Promise.all(transArr).then(() => {
+        zip.generateAsync({ type: 'blob' }).then(content => {
+          utils.saveAs(content, `原片 ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
+        })
+      })
+
     }
   },
   created() {
