@@ -10,7 +10,7 @@
           <span>订单标题: </span>
           <a-input placeholder="请输入订单标题" style="width: 75%;" v-model="search.title" />
         </a-col>
-        <a-col :span="4" style="text-align: right;">
+        <a-col :span="2" style="text-align: right;">
           <a-button type="primary" @click="searchOrder">查 询</a-button>
         </a-col>
       </a-row>
@@ -23,15 +23,11 @@
               </p>
             </span>
             <span slot="action" slot-scope="record">
-              <a-button class="withdraw"
-                v-if="hasRetouchStream(record.stream_nums)" 
-                @click="cancelOrder(record)"
-                type="danger"
-                ghost
-              >
-                撤回
-              </a-button>
-              <a-button type="primary" @click="viewsDetail(record)">详 情</a-button>
+              <span class="cancel" v-if="hasRetouchStream(record.stream_nums)">
+                <a href="javascript:;" @click="cancelOrder(record)">撤回</a>
+                <a-divider type="vertical" />
+              </span>
+              <a href="javascript:;"  @click="viewsDetail(record)">详情</a>
             </span>
           </a-table>
         </template>
@@ -57,26 +53,27 @@ export default {
         title: '订单标题',
         dataIndex: 'title',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '订单号',
         dataIndex: 'order_num',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '上传时间',
         dataIndex: 'created_at',
+        align: 'left',
         width: 200
       }, {
         title: '流水号',
         scopedSlots: { customRender: 'stream_nums' },
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '操作',
         scopedSlots: { customRender: 'action' },
         width: 200,
-        align: 'center'
+        align: 'right'
       }],
       search: {
         date: [],

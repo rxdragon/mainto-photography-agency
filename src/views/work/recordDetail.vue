@@ -4,32 +4,33 @@
       <a-spin size="large" />
     </div>
     <div class="container" v-if="!loading">
-      <h3>拍摄详情</h3>
       <section class='content'>
         <div class="orderInfo">
           <h4><span class="line"></span><span>订单信息</span></h4>
-          <ul>
-            <li>
-              <p class="head">订单标题</p>
-              <p>{{order.title}}</p>
-            </li>
-            <li>
-              <p class="head">拍摄产品</p>
-              <p>{{order.products.join('、') }}</p>
-            </li>
-            <li>
-              <p class="head">修图备注</p>
-              <p>{{order.retouch_note}}</p>
-            </li>
-          </ul>
+          <a-row class="item">
+            <a-col :span="12">
+              <span>订单标题: </span>
+              <p class="text">{{order.title}}</p>
+            </a-col>
+            <a-col :span="10">
+              <span>订单产品: </span>
+              <p class="text">{{order.products.join('、')}}</p>
+            </a-col>
+          </a-row>
+          <a-row class="item">
+            <span class="head">修图备注:</span>
+            <p class="text">{{order.retouch_note}}</p>
+          </a-row>
         </div>
         <div class="pictureInfo">
           <h4><span class="line"></span><span>照片信息</span></h4>
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
-              <p class="head">{{item.product}}</p>
+              <div class="alert-wrap">
+                <a-alert :message="item.product" type="info" />
+              </div>
               <a-row type="flex" justify="start" class="pirtureWrap">
-                <a-col :span="8" class="item" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
+                <a-col :span="6" class="item" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
                   <img :src="childItem.path">
                 </a-col>
               </a-row>
