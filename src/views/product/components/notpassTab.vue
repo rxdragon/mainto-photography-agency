@@ -19,8 +19,11 @@
       </span>
       <span slot="action" slot-scope="record">
         <div>
-          <a-button type="primary" v-if="record.state !== 'refuse'">详 情</a-button>
-          <a-button type="danger" v-else ghost @click="resubmit(record)">重新提交</a-button>
+          <span class="cancel" v-if="record.state === 'refuse'">
+            <a href="javascript:;" @click="resubmit(record)">重新提交</a>
+            <a-divider type="vertical" />
+          </span>
+          <a href="javascript:;" @click="viewDetail(record)">详情</a>
         </div>
       </span>
     </a-table>
@@ -38,27 +41,27 @@ export default {
         title: '产品名称',
         dataIndex: 'name',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '生成时间',
         dataIndex: 'created_at',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '审核状态',
         scopedSlots: { customRender: 'status' },
         width: 200,
-        align: 'center'
+        align: 'left'
       }, {
         title: '拒绝原因',
         dataIndex: 'refuse_reason',
         width: 200,
-        align: 'center'
+        align: 'left'
       }, {
         title: '操作',
         scopedSlots: { customRender: 'action' },
         width: 200,
-        align: 'center'
+        align: 'right'
       }],
       stateText: {
         wait_review: '等待审核',
@@ -94,6 +97,12 @@ export default {
           standard: record.retouch_require,
           url: record.simple_photo_paths
         }
+      })
+    },
+    viewDetail(record) {
+      this.$router.push({
+        name: 'productDetail',
+        params: { id: record.id }
       })
     },
     searchProduct() {

@@ -11,13 +11,22 @@
     </a-row>
     <a-table class="table" :columns="columns" :dataSource="dataSource" :rowKey="bindKey" :pagination="false" :loading="loading">
       <span slot="status" slot-scope="record">
-        <span>{{stateText[record.state] || '状态异常'}}</span>
+        <span>
+          <a-badge status="processing" />
+          {{stateText[record.state] || '状态异常'}}
+        </span>
       </span>
       <span slot="action" slot-scope="record">
         <div>
-          <a-button type="danger" ghost v-if="record.state === 'enable'" @click="switchState(record)">禁用</a-button>
-          <a-button type="primary" ghost v-else-if="record.state === 'disable'" @click="switchState(record)">启用</a-button>
-          <a-button type="primary" @click="viewDetail(record)" class="btnDetail">详 情</a-button>
+          <span class="cancel" v-if="record.state === 'enable'">
+            <a href="javascript:;" style="color: #F5222D;" @click="switchState(record)">禁用</a>
+            <a-divider type="vertical" />
+          </span>
+          <span class="cancel" v-else-if="record.state === 'disable'">
+            <a href="javascript:;" style="color: #52C41A;" @click="switchState(record)">启用</a>
+            <a-divider type="vertical" />
+          </span>
+          <a href="javascript:;" @click="viewDetail(record)">详情</a>
         </div>
       </span>
     </a-table>
@@ -35,22 +44,22 @@ export default {
         title: '产品名称',
         dataIndex: 'name',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '审核通过时间',
         dataIndex: 'review_pass_at',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '状态',
         scopedSlots: { customRender: 'status' },
         width: 200,
-        align: 'center'
+        align: 'left'
       }, {
         title: '操作',
         scopedSlots: { customRender: 'action' },
         width: 200,
-        align: 'center'
+        align: 'right'
       }],
       stateText: {
         disable: '禁用',
@@ -77,17 +86,17 @@ export default {
     }
   },
   methods: {
-    viewDetail (record) {
+    viewDetail(record) {
       this.$router.push({
         name: 'productDetail',
-        params: {id: record.id}
+        params: { id: record.id }
       })
     },
-    switchState (record) {
+    switchState(record) {
       Api.product.switch({
         id: record.id
       }).then(() => {
-         this.$message.success('更改状态成功', 3, this.searchProduct)
+        this.$message.success('更改状态成功', 3, this.searchProduct)
       })
     },
     bindKey(record, index) {
