@@ -4,11 +4,6 @@
       <a-spin size="large" />
     </div>
     <div class="contailner" v-if="!loading">
-      <a-row class="title">
-        <a-col :span="12">
-          <span class="tip">新增产品</span>
-        </a-col>
-      </a-row>
       <section class="form">
         <a-row class="item">
           <a-col :span="2">
@@ -41,7 +36,6 @@
             </div>
             <a-button type="primary" class="submit" @click="sumbitAdd">
               提交审核
-              <a-icon type="cloud" />
             </a-button>
           </a-col>
         </a-row>

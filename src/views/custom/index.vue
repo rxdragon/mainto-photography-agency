@@ -1,6 +1,5 @@
 <template>
   <div id="custom">
-    <h3>客片中心</h3>
     <section class='content'>
       <a-row class="search">
         <a-col :span="8">
@@ -33,7 +32,7 @@
           </p>
         </span>
         <span slot="action" slot-scope="record">
-          <a-button type="primary" @click="routeView(record)">详 情</a-button>
+          <a href="javascript:;"  @click="routeView(record)">详 情</a>
         </span>
       </a-table>
       <a-pagination class="pagination" :defaultCurrent="1" :total="data.length" />
@@ -61,32 +60,32 @@ export default {
         title: '订单标题',
         width: 300,
         dataIndex: 'title',
-        align: 'center'
+        align: 'left'
       }, {
         title: '订单号',
         width: 300,
         dataIndex: 'order_num',
-        align: 'center'
+        align: 'left'
       }, {
         title: '上传时间',
         width: 200,
         dataIndex: 'updated_at',
-        align: 'center'
+        align: 'left'
       }, {
         title: '摄影师',
         width: 200,
         dataIndex: 'photographer',
-        align: 'center'
+        align: 'left'
       }, {
         title: '流水号',
         width: 300,
         scopedSlots: { customRender: 'stream_nums' },
-        align: 'center'
+        align: 'left'
       }, {
         title: '操作',
         scopedSlots: { customRender: 'action' },
         width: 100,
-        align: 'center'
+        align: 'right'
       }]
     }
   },
