@@ -5,6 +5,9 @@ const user = {
   list() {
     return axios.get(`${base.url}/manage/banner/getList`)
   },
+  loginOut() {
+    return axios.get(`${base.loginOut}/manage_auth/logout`)
+  },
   loginAuth(params, config = {}) {
     return axios.post(`${base.devUrl}/manage_auth/cloud3rdLogin`, params, config)
   },

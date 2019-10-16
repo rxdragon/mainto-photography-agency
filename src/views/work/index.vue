@@ -58,7 +58,6 @@
             <a-radio :value="'other_day'">隔日取片</a-radio>
             <a-radio :value="'the_day'">择日取片</a-radio>
           </a-radio-group>
-          </a-radio-group>
         </a-row>
       </div>
     </section>

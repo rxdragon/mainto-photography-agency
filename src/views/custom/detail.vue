@@ -82,7 +82,7 @@ export default {
         firstArr: [],
         completeArr: []
       }
-      if (!this.order.streams.length) { return list }
+      if (!this.order.streams.length) { return [] }
       this.order.streams.map((item) => {
         let itemList = item.photos
         itemList.map((item) => {

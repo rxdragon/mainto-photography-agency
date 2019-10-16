@@ -1,15 +1,5 @@
 <template>
   <div id="account">
-    <a-row class="title">
-      <a-col :span="12">
-        <span class="tip">
-          {{hasQuery === true ? '编辑子账号' : '添加子账号'}}
-        </span>
-      </a-col>
-      <a-col :span="12" style="text-align: right">
-        <a-button type="primary" @click="routeBack">返回</a-button>
-      </a-col>
-    </a-row>
     <a-row class="form">
       <a-row class="item">
         <a-col :span="2">

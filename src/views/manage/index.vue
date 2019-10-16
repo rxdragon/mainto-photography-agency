@@ -15,9 +15,15 @@
         </span>
         <span slot="action" slot-scope="record">
           <div>
-            <a-button type="primary" class="edit" @click="reviewDetail(record)">编 辑</a-button>
-            <a-button v-if="record.state === 'disable'" type="primary" @click="enableSubuser(record)" ghost>启 用</a-button>
-            <a-button v-else-if="record.state === 'enabled'" type="danger" @click="disableSubuser(record)" ghost>禁 用</a-button>
+            <div class="button-group" v-if="record.state === 'disable'">
+              <a href="javascript:;" style="color: #52C41A" @click="enableSubuser(record)">启 用</a>
+              <a-divider type="vertical" />
+            </div>
+            <div class="button-group" v-else-if="record.state === 'enabled'">
+              <a href="javascript:;" style="color: #f5222d" @click="disableSubuser(record)" ghost>禁 用</a>
+              <a-divider type="vertical" />
+            </div>
+            <a href="javascript:;" class="edit" @click="reviewDetail(record)">编 辑</a>
           </div>
         </span>
       </a-table>
@@ -41,27 +47,27 @@ export default {
         title: '账号',
         dataIndex: 'username',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '摄影师姓名',
         dataIndex: 'nick',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '创建时间',
         dataIndex: 'created_at',
         width: 200,
-        align: 'center'
+        align: 'left'
       }, {
         title: '状态',
         scopedSlots: { customRender: 'state' },
         width: 200,
-        align: 'center'
+        align: 'left'
       }, {
         title: '操作',
         scopedSlots: { customRender: 'action' },
         width: 200,
-        align: 'center'
+        align: 'right'
       }],
       page: {
         size: 10,
