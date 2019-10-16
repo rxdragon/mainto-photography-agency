@@ -7,18 +7,18 @@
           <li class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info">
-                <img :src="item.response.url" style="height: 220px;">
+                <img :src="item.response.url" style="height: 250px;">
+                <p class="picture-name">{{`文件名: ${item.name}`}}</p>
               </div>
               <span class="ant-upload-list-item-actions" style="top: 120px">
                 <i class="anticon anticon-eye-o" @click="previewPicture(item.response.url)"> <a-icon type="eye" /></i>
                 <i class="anticon anticon-delete" @click="deletePicture(item, index)"><a-icon type="delete" /></i>
               </span>
             </div>
-            <p class="picture-name">{{`文件名: ${item.name}`}}</p>
             <p class="picture-count">
               选择人数:
               <a-input-number
-                style="width: 68%;"
+                style="width: 70%;"
                 :min="0" 
                 :max="99"
                 v-model="count"
@@ -31,7 +31,7 @@
               <a-select 
                 placeholder="请选择产品类型" 
                 v-model="productValue" 
-                style="width: 68%"
+                style="width: 70%"
                 @change="productChange(item)
               ">
                 <a-select-option value="123">证件照</a-select-option>
@@ -40,7 +40,7 @@
               </a-select>
             </p>
             <p class="picture-product">
-              <a-select placeholder="拼接类型" style="width: 55%" v-model="spliceValue" @change="spliceChange(item)">
+              <a-select placeholder="选择拼接类型" style="width: 55%" v-model="spliceValue" @change="spliceChange(item)">
                 <a-select-option v-for="(item, index) in splitArray" :key="index" :value="item">{{item}}</a-select-option>
               </a-select>
               <a-input-number style="width: 40%; margin-left: 4%;" :min="1" :max="99" v-model="splitIndex" placeholder="拼接序号" />

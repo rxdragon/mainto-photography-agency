@@ -1,10 +1,7 @@
 <template>
-  <a-layout-header :style="style">
-    <section>
-      <a-icon type="google" />
-      云端拍摄中心
-    </section>
-    <section :style="{ textAlign: 'right' }">
+  <a-layout-header style="background: #fff; padding: 0">
+    <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="triggerCollapsed" />
+    <section :style="{ float: 'right', marginRight: '10px'}">
       <span>{{getUser.nick}}</span>
       <a-tag color="blue" class="organization">{{getUser.username}}</a-tag>
       <a-tag color="red">退出</a-tag>
@@ -18,22 +15,25 @@ export default {
   name: 'Header',
   data() {
     return {
-      selectedKeys: [],
-      openKeys: [],
-      style: { color: '#fff', background: '#273159', position: 'fixed', zIndex: '999', width: '100%' }
+      collapsed: false
     }
   },
   computed: {
     ...mapGetters([
       'getUser',
     ])
+  },
+  methods: {
+    triggerCollapsed () {
+      this.collapsed = !this.collapsed
+      this.$emit('collapsedEvent', this.collapsed)
+    }
   }
 }
 </script>
 <style scoped lang="less">
 section {
-  display: inline-block;
-  width: 50%;
+  height: 64px;
 
   .organization {
     margin: auto 20px;

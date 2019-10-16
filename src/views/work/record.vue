@@ -1,6 +1,5 @@
 <template>
   <div id='workRecord'>
-    <h3>历史上传记录</h3>
     <section class='content'>
       <a-row class="search">
         <a-col :span="10">

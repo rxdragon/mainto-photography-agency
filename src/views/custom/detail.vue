@@ -7,10 +7,7 @@
       <h3>客片详情</h3>
       <section class='content'>
         <div class="orderInfo">
-          <h4>
-            <span class="line"></span>
-            <span>订单信息</span>
-          </h4>
+          <h4><span class="line"></span><span>订单信息</span></h4>
           <ul>
             <li>
               <p class="head">订单标题</p>
@@ -36,11 +33,7 @@
         </div>
         <div class="pictureInfo">
           <h4>
-            <span class="line"></span><span>照片信息</span>
-            <div class="float-button">
-              <a-button type="primary" class="origin" @click="createZip('first')">原片下载</a-button>
-              <a-button type="primary" @click="createZip('complete')">云端成片下载</a-button>
-            </div>
+            <span class="line"></span><span>订单信息</span>
           </h4>
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
@@ -57,6 +50,7 @@
             </li>
           </ul>
         </div>
+        <a-button type="primary" @click="createZip">一键 下载</a-button>
       </section>
     </div>
   </div>
@@ -64,8 +58,6 @@
 <script>
 import Api from '@/api/index.js'
 import JsZip from 'jszip'
-import * as utils from '@/util'
-import moment from 'moment'
 export default {
   name: 'custom',
   data() {
@@ -79,22 +71,15 @@ export default {
   },
   computed: {
     photoQueue() {
-      let photoList = {
-        firstArr: [],
-        completeArr: []
-      }
+      let list = []
       if (!this.order.streams.length) { return list }
       this.order.streams.map((item) => {
         let itemList = item.photos
         itemList.map((item) => {
-          if (item.version === 'complete_photo') {
-            photoList.completeArr.push(item.path)
-          } else if (item.version === 'first_photo') {
-            photoList.firstArr.push(item.path)
-          }
+          list.push(item.path)
         })
       })
-      return photoList
+      return list
     }
   },
   methods: {
@@ -108,22 +93,28 @@ export default {
         this.loading = false
       })
     },
-    createZip(type) {
-      const PHOTOQUEUE = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
+    createZip() {
       let zip = new JsZip()
-      let fold = zip.folder('原片')
-      let transArr = []
-      PHOTOQUEUE.map((obj) => {
-        transArr.push(utils.getRemoteImg(obj).then(res => {
-          fold.file(`${moment().format('YYYY-MM-DD HH-mm-ss')}.png`, res, { base64: true })
-        }))
+      let fold = zip.folder('下载')
+      this.photoQueue.map((obj) => {
+        zip.file('file.png', obj);
       })
-      Promise.all(transArr).then(() => {
-        zip.generateAsync({ type: 'blob' }).then(content => {
-          utils.saveAs(content, `原片 ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
-        })
-      })
-
+      zip.generateAsync({
+        type: 'blob'
+      }).then(function(content) {
+        var filename = 'test.zip';
+        // 创建隐藏的可下载链接
+        var eleLink = document.createElement('a');
+        eleLink.download = filename;
+        eleLink.style.display = 'none';
+        // 下载内容转变成blob地址
+        eleLink.href = URL.createObjectURL(content);
+        // 触发点击
+        document.body.appendChild(eleLink);
+        eleLink.click();
+        // 然后移除
+        document.body.removeChild(eleLink);
+      });
     }
   },
   created() {
