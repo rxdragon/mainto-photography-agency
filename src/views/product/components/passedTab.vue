@@ -77,6 +77,8 @@ export default {
   computed: {
     searchParams() {
       return {
+        state: 'pass',
+        name: '',
         reviewPassAtStart: this.date[0] || '',
         reviewPassAtEnd: this.date[1] || '',
         state: 'pass',

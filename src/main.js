@@ -7,7 +7,7 @@ import 'ant-design-vue/dist/antd.css'
 import './assets/style/reset.css'
 import promiseFinally from 'promise.prototype.finally'
 promiseFinally.shim()
-
+sessionStorage.clear()
 Vue.prototype.routeView = (address) => { router.push({ path: address }) }
 Vue.prototype.routeBack = () => { router.go(-1) }
 

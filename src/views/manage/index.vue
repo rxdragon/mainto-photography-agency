@@ -2,7 +2,7 @@
   <div id="manage">
     <a-row class="title">
       <a-col :span="12">
-        <span class="tip">产品管理</span>
+        <span class="tip">账号管理</span>
       </a-col>
       <a-col :span="12" style="text-align: right">
         <a-button type="primary" @click="routeView('/manageAccount')">添加子账号</a-button>
@@ -71,7 +71,8 @@ export default {
       }],
       page: {
         size: 10,
-        index: 1
+        index: 1,
+        state: 'enabled'
       }
     }
   },

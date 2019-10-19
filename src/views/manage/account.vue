@@ -56,11 +56,11 @@ export default {
     submit() {
       if (!this.hasQuery) {
         Api.manage.create(this.account).then(() => {
-          this.$message.success('账号创建成功', 3)
+          this.$message.success('账号创建成功', 3, this.routeBack)
         })
       } else {
         Api.manage.edit(this.account).then(() => {
-          this.$message.success('账号修改成功', 3)
+          this.$message.success('账号修改成功', 3, this.routeBack)
         })
       }
     },

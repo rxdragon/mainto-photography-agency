@@ -104,7 +104,7 @@ export default {
     reviewProduct() {
       this.loading = true
       Api.product.detail({
-        orderNum: this.$route.params.id
+        id: this.$route.params.id
       }).then((res) => {
         this.product = res.msg
       }).finally(() => {

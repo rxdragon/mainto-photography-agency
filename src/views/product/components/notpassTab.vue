@@ -78,7 +78,10 @@ export default {
   computed: {
     searchParams() {
       return {
-        state: this.selectValue,
+        state: 'not_pass',
+        name: '',
+        reviewPassAtStart: '',
+        reviewPassAtEnd: '',
         page: this.page.index,
         pageSize: this.page.size
       }

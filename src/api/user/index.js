@@ -2,17 +2,14 @@ import base from '../config';
 import axios from '@/axios/index'
 
 const user = {
-  list() {
-    return axios.get(`${base.url}/manage/banner/getList`)
-  },
   loginOut() {
-    return axios.get(`${base.loginOut}/manage_auth/logout`)
+    return axios.get(`${base.manage_auth}/logout`)
   },
   loginAuth(params, config = {}) {
-    return axios.post(`${base.devUrl}/manage_auth/cloud3rdLogin`, params, config)
+    return axios.post(`${base.manage_auth}/cloud3rdLogin`, params, config)
   },
   getInfo() {
-    return axios.get(`${base.url}/project_cloud3rd/retoucher/userInfo`)
+    return axios.get(`${base.url}/retoucher/userInfo`)
   }
 }
 export default user

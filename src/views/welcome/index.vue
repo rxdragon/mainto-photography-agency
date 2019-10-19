@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       captchaId: '2049380082',
-      username: 'RETOUCHER',
+      username: 'PHTOTOGRAPHER',
       password: null,
       rules: {
         userName: ['userName', { rules: [{ required: true, message: '账号不能为空!' }] }],

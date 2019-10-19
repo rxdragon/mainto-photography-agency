@@ -92,6 +92,7 @@ export default {
   computed: {
     searchParams() {
       return {
+        type: 'global',
         createdAtStart: this.search.date[0] || '',
         createdAtEnd: this.search.date[1] || '',
         title: this.search.title,

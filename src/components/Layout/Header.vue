@@ -40,7 +40,7 @@ export default {
     confirm() {
       Api.user.loginOut().then((res) => {
         if (res.success) {
-          this.$message.success('登出中...', 2,  () => {
+          this.$message.success('登出中...', 2, () => {
             window.sessionStorage.clear()
             window.location.reload()
           });

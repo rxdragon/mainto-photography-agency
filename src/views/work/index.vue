@@ -5,14 +5,14 @@
       <div class="upload">
         <h4><span class="line"></span><span>发布照片</span></h4>
         <a-alert v-if="visible" message="温馨提示" description="1、若要进行照片拼接，需选择标签对照片标记；如标签“拼接A”先后标记了照片1、2，则表示这两张照片需先后被拼接在一起" type="info" closable :afterClose="handleClose" :style="{textAlign: 'left', marginBottom: '24px'}" />
-        <Upload />
+        <Upload ref="uploadChild" @sendPhotos="getPhotos"/>
       </div>
       <div class="order-info">
         <h4><span class="line"></span><span>订单信息</span></h4>
         <a-row>
           <a-col :span="24" class="child-item">
             <span class="title">订单标题: </span>
-            <a-input placeholder="请输入订单标题" style="width: 93%;" v-model="orderInfo.title" />
+            <a-input placeholder="请输入订单标题" style="width: 80%;" v-model="orderInfo.title" />
           </a-col>
         </a-row>
       </div>
@@ -21,19 +21,19 @@
         <a-row class="child-item">
           <span class="title">眼睛增幅: </span>
           <a-radio-group v-model="orderInfo.claim.eyes">
-            <a-radio :value="'bigger'">大</a-radio>
+            <a-radio :value="'big'">大</a-radio>
             <a-radio :value="'middle'">中</a-radio>
             <a-radio :value="'small'">小</a-radio>
-            <a-radio :value="'null'">无</a-radio>
+            <a-radio :value="'not_required'">无</a-radio>
           </a-radio-group>
         </a-row>
         <a-row class="child-item">
           <span class="title">瘦脸幅度: </span>
           <a-radio-group v-model="orderInfo.claim.face">
-            <a-radio :value="'bigger'">大</a-radio>
+            <a-radio :value="'big'">大</a-radio>
             <a-radio :value="'middle'">中</a-radio>
             <a-radio :value="'small'">小</a-radio>
-            <a-radio :value="'null'">无</a-radio>
+            <a-radio :value="'not_required'">无</a-radio>
           </a-radio-group>
         </a-row>
         <a-row class="child-item">
@@ -46,7 +46,7 @@
         <a-row class="child-item">
           <a-col :span="24">
             <span class="title">修图备注: </span>
-            <a-input placeholder="请输入修图备注" style="width: 93%;" v-model="orderInfo.retouchNote" />
+            <a-input placeholder="请输入修图备注" style="width: 80%;" v-model="orderInfo.retouchNote" />
           </a-col>
         </a-row>
       </div>
@@ -62,16 +62,19 @@
       </div>
     </section>
     <section class="footer">
-      <a-button type="primary">提交云端</a-button>
+      <a-button type="primary" @click="submitCloud">提交云端</a-button>
     </section>
   </div>
 </template>
 <script>
+import Api from '@/api/index.js'
 import Upload from "./components/Upload.vue"
 export default {
   name: 'work',
   data() {
     return {
+      photoList: [],
+      submit: false,
       visible: true,
       orderInfo: {
         title: '',
@@ -91,6 +94,35 @@ export default {
   methods: {
     handleClose() {
       this.visible = false
+    },
+    getPhotos(photos) {
+      photos.map((item) => {
+        this.photoList.push({
+          productId: item.product_id,
+          path: item.response.url,
+          peopleNum: item.people_num,
+          spliceMark: item.splice_mark,
+          splicePosition: item.splice_position,
+          type: Boolean(item.splice_position) === true ? 'splice' : 'normal'
+        })
+      })
+    },
+    async submitCloud() {
+      this.$refs.uploadChild.getChildPhotos()
+      let params = {
+        title: this.orderInfo.title,
+        retouchNote: this.orderInfo.retouchNote,
+        takeTime: this.orderInfo.takeTime,
+        photoData: this.photoList,
+        retouchClaim: {
+          eye: this.orderInfo.claim.eyes,
+          face: this.orderInfo.claim.face,
+          pimples: this.orderInfo.claim.pimples
+        }
+      }
+      Api.work.add(params).then((res) => {
+        console.log(res)
+      })
     }
   }
 }

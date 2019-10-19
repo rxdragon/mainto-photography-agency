@@ -27,7 +27,13 @@
           </a-col>
           <a-col :span="22">
             <div class="clearfix">
-              <a-upload :headers="uploadHeader" :action="upyunAction" listType="picture-card" :fileList="product.fileList" @change="handleChange">
+              <a-upload
+              :data="getUpyun"
+              :headers="uploadHeader" 
+              :action="upyunAction" 
+              listType="picture-card" 
+              :fileList="product.fileList" 
+              @change="handleChange">
                 <div>
                   <a-icon type="plus" />
                   <div class="ant-upload-text">Upload</div>
@@ -64,9 +70,10 @@ export default {
     ...mapGetters(['getUpyun']),
     addParams() {
       return {
+        id: this.$route.query.id || '',
         name: this.product.name,
         retouchRequire: this.product.standard,
-        simplePhotoPaths: this.product.fileList.map(item => item.url)
+        simplePhotoPaths: ['http://fed.dev.hzmantu.com/kidsActivity/childPlan/get_coupon_bg.png']
       }
     },
     upyunAction() {
@@ -83,13 +90,24 @@ export default {
     sumbitAdd() {
       this.loading = true
       this.addSubmit(this.addParams).then(() => {
-        this.$message.success('产品添加成功', 3)
+        this.$message.success('产品添加成功', 3, this.routeBack)
       }).finally(() => {
         this.loading = false
       })
     },
-    handleChange({ fileList }) {
+    handleChange({ file, fileList }) {
       this.fileList = fileList
+      // if (file.status === 'uploading') {
+      //   this.loading = true
+      // } else if (file.status === 'done') {
+      //   this.imgList.push(Object.assign(file, {
+      //     people_num: '',
+      //     splice_mark: '',
+      //     splice_position: '',
+      //     product_id: ''
+      //   }))
+      //   this.loading = false
+      // }
     },
     initQuery() {
       this.product = {
@@ -99,6 +117,7 @@ export default {
           return { uid: item, name: this.$route.query.name, url: item }
         }))
       }
+      console.log(this.product)
     }
   },
   created() {
