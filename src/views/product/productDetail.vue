@@ -9,8 +9,8 @@
       </a-row>
       <section class="form">
         <a-row :span="24" class="item">
-          <a-col class="pictureWrap" :span="5" :offset="1" v-for="(item, index) in product.simple_image_url" :key="index">
-            <img :src="item">
+          <a-col class="pictureWrap" :span="5" :offset="1" v-for="(item, index) in product.simple_images" :key="index">
+            <img :src="`${item}`">
           </a-col>
         </a-row>
         <a-row class="item">
@@ -49,7 +49,7 @@
           </a-col>
         </a-row>
         <a-row class="cut">
-          <a-col class="title" :span="24">
+          <a-col class="title" :span="24" v-if="product.normal_income_config">
             <h4><span class="line"></span><span>非拼接收益</span></h4>
           </a-col>
           <a-col :span="24" class="item">
@@ -60,7 +60,7 @@
             </ul>
           </a-col>
         </a-row>
-        <a-row class="cut">
+        <a-row class="cut" v-if="product.splicing_income_config">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>拼接收益</span></h4>
           </a-col>

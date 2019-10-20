@@ -44,12 +44,12 @@
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
               <a-alert :message="item.product" type="info" />
-              <a-row type="flex" justify="start" class="pirtureWrap">
-                <a-col :span="8" class="item" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                  <img :src="childItem.path">
+              <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
+                <a-col :span="8" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
+                  <img :src="`${photoHost}${photoItem.path}`">
                   <p class="tip">
                     <span class="mask"></span>
-                    <span class="text">{{versionState[childItem.version]}}</span>
+                    <span class="text">{{versionState[photoItem.version]}}</span>
                   </p>
                 </a-col>
               </a-row>
@@ -70,27 +70,26 @@ export default {
   data() {
     return {
       loading: false,
+      photoHost: 'http://fed.dev.hzmantu.com',
       versionState: {
-        first_photo: '原片',
+        original_photo: '原片',
         complete_photo: '云端成片'
       }
     }
   },
   computed: {
     photoQueue() {
-      let photoList = {
-        firstArr: [],
-        completeArr: []
-      }
-      if (!this.order.streams.length) { return [] }
+      let photoList = { firstArr: [], completeArr: [] }
       this.order.streams.map((item) => {
         let itemList = item.photos
         itemList.map((item) => {
-          if (item.version === 'complete_photo') {
-            photoList.completeArr.push(item.path)
-          } else if (item.version === 'first_photo') {
-            photoList.firstArr.push(item.path)
-          }
+          item.map((photoItem) => {
+            if (photoItem.version === 'complete_photo') {
+              photoList.completeArr.push(`${this.photoHost}${photoItem.path}`)
+            } else if (photoItem.version === 'original_photo') {
+              photoList.firstArr.push(`${this.photoHost}${photoItem.path}`)
+            }
+          })
         })
       })
       return photoList
@@ -122,7 +121,6 @@ export default {
           utils.saveAs(content, `原片 ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
         })
       })
-
     }
   },
   created() {

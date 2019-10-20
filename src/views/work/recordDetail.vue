@@ -29,9 +29,9 @@
               <div class="alert-wrap">
                 <a-alert :message="item.product" type="info" />
               </div>
-              <a-row type="flex" justify="start" class="pirtureWrap">
-                <a-col :span="6" class="item" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                  <img :src="childItem.path">
+              <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
+                <a-col :span="6" class="item" v-for="(photoItem, photoIndex) in childItem">
+                  <img :src="`${photoHost}${photoItem.path}`">
                 </a-col>
               </a-row>
             </li>
@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       order: {},
+      photoHost: 'https://fed.dev.hzmantu.com/',
       loading: true
     }
   },

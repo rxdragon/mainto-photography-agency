@@ -5,7 +5,7 @@
       <div class="upload">
         <h4><span class="line"></span><span>发布照片</span></h4>
         <a-alert v-if="visible" message="温馨提示" description="1、若要进行照片拼接，需选择标签对照片标记；如标签“拼接A”先后标记了照片1、2，则表示这两张照片需先后被拼接在一起" type="info" closable :afterClose="handleClose" :style="{textAlign: 'left', marginBottom: '24px'}" />
-        <Upload ref="uploadChild" @sendPhotos="getPhotos"/>
+        <Upload ref="uploadChild" @sendPhotos="getPhotos" />
       </div>
       <div class="order-info">
         <h4><span class="line"></span><span>订单信息</span></h4>
@@ -120,8 +120,12 @@ export default {
           pimples: this.orderInfo.claim.pimples
         }
       }
+      
+      this.$emit('loading', true)
       Api.work.add(params).then((res) => {
         console.log(res)
+      }).finally(() => {
+        this.$emit('loading', false)
       })
     }
   }

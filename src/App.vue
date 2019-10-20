@@ -3,11 +3,12 @@
     <div id="app">
       <a-layout id="components-layout-demo-custom-trigger" v-if="getUser.id">
         <Sider :collapsed="collapsed" />
-        <a-layout>
+        <a-layout style="position: relative;">
           <Header @collapsedEvent="collapsedHandle" />
           <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
-            <router-view />
+            <router-view @loading="sendLoding"/>
           </a-layout-content>
+          <div class="loading-wrap" v-if="loading"> <a-spin /></div>
         </a-layout>
       </a-layout>
       <Welcome v-else />
@@ -24,6 +25,7 @@ export default {
   name: 'app',
   data() {
     return {
+      loading: false,
       collapsed: false,
       locale: zhCN,
       bodyStyle: {
@@ -48,6 +50,9 @@ export default {
   },
   methods: {
     ...mapActions(['initUpyun']),
+    sendLoding (state) {
+      this.loading = state
+    },
     collapsedHandle(type) {
       this.collapsed = type
     }
@@ -58,6 +63,23 @@ export default {
 }
 </script>
 <style>
+.loading-wrap {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.loading-wrap .ant-spin-spinning {
+  position: absolute;
+  top: 45%;
+}
+
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;

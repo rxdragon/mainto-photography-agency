@@ -24,7 +24,7 @@
             <p class="picture-product">
               选择产品:
               <a-select placeholder="请选择产品类型" style="width: 70%" v-model="item.product_id">
-                <a-select-option v-for="child in productList.msg" :value="child.cloud_product_id">{{child.name}}</a-select-option>
+                <a-select-option v-for="(child, childIndex) in productList.msg" :key="childIndex" :value="child.cloud_product_id">{{child.name}}</a-select-option>
               </a-select>
             </p>
             <p class="picture-product" v-if="needSplit(item)">

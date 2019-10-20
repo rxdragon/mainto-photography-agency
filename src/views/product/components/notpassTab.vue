@@ -4,7 +4,7 @@
       <a-col :span="8" class="date">
         <span class="tip">选择状态: </span>
         <a-select defaultValue="" v-model="selectValue" style="width: 50%">
-          <a-select-option value="">全部</a-select-option>
+          <a-select-option value="not_pass">全部</a-select-option>
           <a-select-option value="wait_review">待审核</a-select-option>
           <a-select-option value="refuse">审核拒绝</a-select-option>
         </a-select>
@@ -67,7 +67,7 @@ export default {
         wait_review: '等待审核',
         refuse: '审核拒绝'
       },
-      selectValue: '',
+      selectValue: 'not_pass',
       page: {
         size: 10,
         index: 1
@@ -78,7 +78,7 @@ export default {
   computed: {
     searchParams() {
       return {
-        state: 'not_pass',
+        state: this.selectValue,
         name: '',
         reviewPassAtStart: '',
         reviewPassAtEnd: '',

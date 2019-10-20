@@ -81,7 +81,6 @@ export default {
         name: '',
         reviewPassAtStart: this.date[0] || '',
         reviewPassAtEnd: this.date[1] || '',
-        state: 'pass',
         page: this.page.index,
         pageSize: this.page.size
       }
@@ -98,7 +97,7 @@ export default {
       Api.product.switch({
         id: record.id
       }).then(() => {
-        this.$message.success('更改状态成功', 3, this.searchProduct)
+        this.$message.success('更改状态成功', 1, this.searchProduct)
       })
     },
     bindKey(record, index) {

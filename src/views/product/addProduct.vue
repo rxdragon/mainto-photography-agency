@@ -28,12 +28,13 @@
           <a-col :span="22">
             <div class="clearfix">
               <a-upload
-              :data="getUpyun"
-              :headers="uploadHeader" 
-              :action="upyunAction" 
-              listType="picture-card" 
-              :fileList="product.fileList" 
-              @change="handleChange">
+                :data="getUpyun"
+                :headers="uploadHeader"
+                :action="upyunAction"
+                listType="picture-card"
+                :fileList="fileList"
+                @preview="handlePreview"
+                @change="handleChange">
                 <div>
                   <a-icon type="plus" />
                   <div class="ant-upload-text">Upload</div>
@@ -44,6 +45,9 @@
               提交审核
             </a-button>
           </a-col>
+          <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+            <img alt="example" style="width: 100%" :src="previewImage" />
+          </a-modal>
         </a-row>
       </section>
     </div>
@@ -56,10 +60,12 @@ export default {
   data() {
     return {
       loading: false,
+      previewImage: '',
+      previewVisible: false,
+      fileList:[],
       product: {
         name: '',
-        standard: '',
-        fileList: []
+        standard: ''
       },
       uploadHeader: {
         'X-Requested-With': null
@@ -68,12 +74,14 @@ export default {
   },
   computed: {
     ...mapGetters(['getUpyun']),
-    addParams() {
+    params() {
       return {
         id: this.$route.query.id || '',
         name: this.product.name,
         retouchRequire: this.product.standard,
-        simplePhotoPaths: ['http://fed.dev.hzmantu.com/kidsActivity/childPlan/get_coupon_bg.png']
+        simplePhotoPaths: this.fileList.map((item) => {
+          return item.url || item.response.url
+        })
       }
     },
     upyunAction() {
@@ -87,37 +95,29 @@ export default {
     }
   },
   methods: {
+    handleCancel() {
+      this.previewVisible = false;
+    },
+    handlePreview(file) {
+      this.previewImage = file.url || file.thumbUrl
+      this.previewVisible = true
+    },
+    handleChange({ fileList }) {
+      this.fileList = fileList
+    },
     sumbitAdd() {
       this.loading = true
-      this.addSubmit(this.addParams).then(() => {
-        this.$message.success('产品添加成功', 3, this.routeBack)
+      this.addSubmit(this.params).then(() => {
+        this.$message.success('产品添加成功', 2, this.routeBack)
       }).finally(() => {
         this.loading = false
       })
     },
-    handleChange({ file, fileList }) {
-      this.fileList = fileList
-      // if (file.status === 'uploading') {
-      //   this.loading = true
-      // } else if (file.status === 'done') {
-      //   this.imgList.push(Object.assign(file, {
-      //     people_num: '',
-      //     splice_mark: '',
-      //     splice_position: '',
-      //     product_id: ''
-      //   }))
-      //   this.loading = false
-      // }
-    },
     initQuery() {
       this.product = {
         name: this.$route.query.name,
-        standard: this.$route.query.standard,
-        fileList: this.$route.query.url.map((item => {
-          return { uid: item, name: this.$route.query.name, url: item }
-        }))
+        standard: this.$route.query.standard
       }
-      console.log(this.product)
     }
   },
   created() {
