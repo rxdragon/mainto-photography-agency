@@ -1,6 +1,15 @@
 import axios from 'axios'
 import store from '../store'
 
+const errorHandle = (status) => {
+  switch (status) {
+    case 401:
+      window.sessionStorage.clear()
+      window.location.reload()
+      break
+  }
+}
+
 var instance = axios.create({ timeout: 1000 * 12 })
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
@@ -21,6 +30,7 @@ instance.interceptors.response.use(
   error => {
     const { response } = error
     if (response) {
+      errorHandle(response.status)
       return Promise.reject(response)
     }
   }

@@ -1,8 +1,10 @@
 <template>
   <div class="login-wrap">
     <div class="form-wrap">
-      <a-icon type="cloud" class="logo" />
-      <p>云端图像处理中心</p>
+      <div class="img-wrap">
+        <img :src="logo">
+      </div>
+      <p>云端拍摄中心</p>
       <a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="validForm">
         <a-form-item>
           <a-input @change="e => username = e.target.value" v-decorator="rules.userName" placeholder="请输入登录账号">
@@ -29,6 +31,7 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
+      logo: require("@/assets/img/single-logo.png"),
       captchaId: '2049380082',
       username: 'PHTOTOGRAPHER',
       password: null,

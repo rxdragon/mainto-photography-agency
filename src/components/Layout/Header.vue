@@ -4,9 +4,7 @@
     <section :style="{ float: 'right', marginRight: '10px'}">
       <span>{{getUser.nick}}</span>
       <a-tag color="#1769FF" class="organization">{{getUser.username}}</a-tag>
-      <a-popconfirm title="确认退出本次登录?" placement="topLeft" @confirm="confirm" okText="是" cancelText="否">
-        <icon-font class="out" type="icon-tuichu" />
-      </a-popconfirm>
+      <icon-font class="out" type="icon-tuichu" @click="showConfirm" />
     </section>
   </a-layout-header>
 </template>
@@ -37,16 +35,22 @@ export default {
       this.collapsed = !this.collapsed
       this.$emit('collapsedEvent', this.collapsed)
     },
-    confirm() {
-      Api.user.loginOut().then((res) => {
-        if (res.success) {
-          this.$message.success('登出中...', 2, () => {
-            window.sessionStorage.clear()
-            window.location.reload()
-          });
+    showConfirm() {
+      const VM = this
+      this.$confirm({
+        title: '是否确认退出?',
+        onOk() {
+          Api.user.loginOut().then((res) => {
+            if (res.success) {
+              VM.$message.success('登出中...', 2, () => {
+                window.sessionStorage.clear()
+                window.location.reload()
+              });
+            }
+          })
         }
       })
-    },
+    }
   }
 }
 </script>
