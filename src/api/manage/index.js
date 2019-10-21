@@ -6,10 +6,10 @@ const manage = {
     return axios.get(`${base.url}/photographer/subuser/list`, {params})
   },
   disable(params) {
-    return axios.post(`${base.url}/retoucher/subuser/disable`, params)
+    return axios.post(`${base.url}/photographer/subuser/disable`, params)
   },
   enable(params) {
-    return axios.post(`${base.url}/retoucher/subuser/enable`, params)
+    return axios.post(`${base.url}/photographer/subuser/enable`, params)
   },
   create(params) {
     return axios.post(`${base.url}/photographer/subuser/add`, params)

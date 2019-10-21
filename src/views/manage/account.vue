@@ -14,7 +14,8 @@
           <span class="tip name">登录密码: </span>
         </a-col>
         <a-col :span="6">
-          <a-input placeholder="未有特殊密码要求可用填写" v-model="account.password" />
+          <a-input type="password" v-model="account.password" placeholder="未有特殊密码要求可用填写">
+          </a-input>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -54,13 +55,18 @@ export default {
   },
   methods: {
     submit() {
+      this.$emit('loading', true)
       if (!this.hasQuery) {
         Api.manage.create(this.account).then(() => {
-          this.$message.success('账号创建成功', 3, this.routeBack)
+          this.$message.success('账号创建成功', 1, this.routeBack)
+        }).finally(() => {
+          this.$emit('loading', false)
         })
       } else {
         Api.manage.edit(this.account).then(() => {
-          this.$message.success('账号修改成功', 3, this.routeBack)
+          this.$message.success('账号修改成功', 1, this.routeBack)
+        }).finally(() => {
+          this.$emit('loading', false)
         })
       }
     },

@@ -15,7 +15,7 @@
         </span>
         <span slot="action" slot-scope="record">
           <div>
-            <div class="button-group" v-if="record.state === 'disable'">
+            <div class="button-group" v-if="record.state === 'disabled'">
               <a href="javascript:;" style="color: #52C41A" @click="enableSubuser(record)">启 用</a>
               <a-divider type="vertical" />
             </div>
@@ -40,7 +40,7 @@ export default {
       dataSource: [],
       stateText: {
         'enabled': '启用',
-        'disable': '禁用'
+        'disabled': '禁用'
       },
       loading: false,
       columns: [{
@@ -72,7 +72,7 @@ export default {
       page: {
         size: 10,
         index: 1,
-        state: 'enabled'
+        state: ''
       }
     }
   },
@@ -102,6 +102,8 @@ export default {
       this.loading = true
       Api.manage.disable({
         id: record.id
+      }).then(() => {
+        this.$message.success('账号禁用成功', 1, this.searchSubuser)
       }).finally(() => {
         this.loading = false
       })
@@ -110,6 +112,8 @@ export default {
       this.loading = true
       Api.manage.enable({
         id: record.id
+      }).then(() => {
+        this.$message.success('账号启用成功', 1, this.searchSubuser)
       }).finally(() => {
         this.loading = false
       })

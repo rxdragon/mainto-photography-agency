@@ -55,8 +55,8 @@
         <a-row class="child-item">
           <a-radio-group v-model="orderInfo.takeTime" :style="{ width: '100%' }">
             <a-radio :value="'today'">当日取片</a-radio>
-            <a-radio :value="'other_day'">隔日取片</a-radio>
-            <a-radio :value="'the_day'">择日取片</a-radio>
+            <a-radio :value="'tomorrow'">隔日取片</a-radio>
+            <a-radio :value="'other_day'">择日取片</a-radio>
           </a-radio-group>
         </a-row>
       </div>
@@ -98,8 +98,8 @@ export default {
     getPhotos(photos) {
       photos.map((item) => {
         this.photoList.push({
-          productId: item.product_id,
-          path: item.response.url,
+          productId: item.product_id + '',
+          path: item.response.url.replace(/\/(\S*)\//, ''),
           peopleNum: item.people_num,
           spliceMark: item.splice_mark,
           splicePosition: item.splice_position,
@@ -120,10 +120,11 @@ export default {
           pimples: this.orderInfo.claim.pimples
         }
       }
-      
       this.$emit('loading', true)
       Api.work.add(params).then((res) => {
-        console.log(res)
+        this.$message.success('订单提交成功', 2, this.routeBack)
+      }).catch((e) => {
+         this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.$emit('loading', false)
       })

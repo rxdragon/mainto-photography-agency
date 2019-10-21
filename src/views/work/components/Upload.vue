@@ -6,7 +6,7 @@
         <ul class="ant-upload-list ant-upload-list-picture-card" v-for="(item, index) in imgList" :key="index">
           <li class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
-              <div class="ant-upload-list-item-info">
+              <div class="ant-upload-list-item-info" style="text-align: center;">
                 <img :src="`${photoHost}${item.response.url}`" style="height: 250px;">
                 <p class="picture-name">{{`文件名: ${item.name}`}}</p>
               </div>
@@ -55,7 +55,7 @@ export default {
   name: 'upload',
   data() {
     return {
-      photoHost: 'https://fed.dev.hzmantu.com/',
+      photoHost: 'https://fed.dev.hzmantu.com',
       productList: [],
       uploadHeader: {
         'X-Requested-With': null
@@ -99,7 +99,7 @@ export default {
       this.imgList.splice(index, 1)
     },
     previewPicture(url) {
-      this.previewImage = url
+      this.previewImage = `${this.photoHost}${url}`
       this.previewVisible = true
     },
     handleCancel() {

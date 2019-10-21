@@ -45,7 +45,7 @@
             <li v-for="(item, index) in order.streams" :key="index">
               <a-alert :message="item.product" type="info" />
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                <a-col :span="8" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
+                <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" v-if="photoItem.version !== 'first_photo'">
                   <img :src="`${photoHost}${photoItem.path}`">
                   <p class="tip">
                     <span class="mask"></span>
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       loading: false,
-      photoHost: 'http://fed.dev.hzmantu.com',
+      photoHost: 'http://fed.dev.hzmantu.com/',
       versionState: {
         original_photo: '原片',
         complete_photo: '云端成片'
@@ -108,8 +108,9 @@ export default {
     },
     createZip(type) {
       const PHOTOQUEUE = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
+      const FOLDER = type === 'first' ? '原片' : '成片'
       let zip = new JsZip()
-      let fold = zip.folder('原片')
+      let fold = zip.folder(FOLDER)
       let transArr = []
       PHOTOQUEUE.map((obj) => {
         transArr.push(utils.getRemoteImg(obj).then(res => {
@@ -118,7 +119,7 @@ export default {
       })
       Promise.all(transArr).then(() => {
         zip.generateAsync({ type: 'blob' }).then(content => {
-          utils.saveAs(content, `原片 ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
+          utils.saveAs(content, `${FOLDER} ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
         })
       })
     }

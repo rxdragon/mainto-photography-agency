@@ -2,7 +2,7 @@
   <div id="custom">
     <section class='content'>
       <a-row class="search">
-        <a-col :span="8">
+        <a-col :span="7">
           <span class="tip">上传时间: </span>
           <a-range-picker class="wrap" @change="dateChange" />
         </a-col>
@@ -28,7 +28,7 @@
         >
         <span slot="stream_nums" slot-scope="record">
           <p v-for="(item, index) in record.stream_nums" :key="index">
-            {{`${item.stream_num}(${item.state})`}}
+            {{`${item.stream_num} (${transText[item.state]})`}}
           </p>
         </span>
         <span slot="action" slot-scope="record">
@@ -46,6 +46,12 @@ export default {
   data() {
     return {
       data: [],
+      transText: {
+        wait_retouch: '等待修片',
+        finish: '修图完成',
+        retouching: '修片中',
+        wait_review: '等待审核'
+      },
       search: {
         date: [],
         title: '',

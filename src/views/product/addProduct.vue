@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     handleCancel() {
-      this.previewVisible = false;
+      this.previewVisible = false
     },
     handlePreview(file) {
       this.previewImage = file.url || file.thumbUrl
