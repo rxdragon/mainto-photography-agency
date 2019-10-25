@@ -35,7 +35,7 @@
             </p>
           </li>
         </ul>
-        <a-upload :headers="uploadHeader" :action="upyunAction" listType="picture-card" @change="handleChange" :data="getUpyun" :showUploadList="false">
+        <a-upload accept="image/*" :headers="uploadHeader" :action="upyunAction" :beforeUpload="checkFile" listType="picture-card" @change="handleChange" :data="getUpyun" :showUploadList="false">
           <div>
             <a-icon :type="loading ? 'loading' : 'plus'" />
             <div class="ant-upload-text">点击上传</div>
@@ -51,6 +51,7 @@
 <script>
 import Api from '@/api/index.js'
 import { mapGetters } from 'vuex'
+import * as utils from '@/util'
 export default {
   name: 'upload',
   data() {
@@ -78,10 +79,19 @@ export default {
       return `https://v0.api.upyun.com/${this.getUpyun.bucket}`
     }
   },
-  watch: {
-    complete() {}
-  },
   methods: {
+    async checkFile(file) {
+      let md5 = await utils.getFileMd5(file)
+      return new Promise((resolve, reject) => {
+        for (let item of this.imgList) {
+          if (item.name === file.name || md5 === item.md5) {
+            this.$message.error('重复照片上传');
+            return reject(false)
+          }
+        }
+        return resolve(true)
+      })
+    },
     getChildPhotos() {
       this.$emit('sendPhotos', this.imgList)
     },
@@ -105,16 +115,18 @@ export default {
     handleCancel() {
       this.previewVisible = false
     },
-    handleChange({ file, fileList }) {
+    async handleChange({ file, fileList }) {
       this.fileList = fileList
       if (file.status === 'uploading') {
         this.loading = true
       } else if (file.status === 'done') {
+        const md5 = await utils.getFile(`${this.photoHost}${file.response.url}`)
         this.imgList.push(Object.assign(file, {
           people_num: 0,
           splice_mark: undefined,
           splice_position: undefined,
-          product_id: undefined
+          product_id: undefined,
+          md5: md5
         }))
         this.loading = false
       }

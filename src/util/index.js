@@ -1,12 +1,14 @@
+import md5 from 'js-md5'
+
 // 获取图片地址
-export function getUglifyImg (url, needUglify=false) {
+export function getUglifyImg(url, needUglify = false) {
   let fullUrl = process.env.VUE_APP_UPYUN_HOST + url
   if (needUglify) return fullUrl + '!thumb.small.50'
   return fullUrl
 }
 
 // 转化成64位格式图片
-export function getBase64Image (img, removeBase64) {
+export function getBase64Image(img, removeBase64) {
   let canvas = document.createElement('canvas')
   canvas.width = img.width
   canvas.height = img.height
@@ -19,7 +21,7 @@ export function getBase64Image (img, removeBase64) {
 }
 
 // 获取远程图片资源
-export function getRemoteImg (url, removeBase64 = true) {
+export function getRemoteImg(url, removeBase64 = true) {
   return new Promise(resolve => {
     let image = new Image()
     image.crossOrigin = "Anonymous"
@@ -48,18 +50,18 @@ export const saveAs = (obj, fileName) => {
     tmpa.href = URL.createObjectURL(obj)
   }
   tmpa.click()
-  setTimeout(function () {
+  setTimeout(function() {
     URL.revokeObjectURL(obj)
   }, 100)
 }
 
-export function getBase64 (img, callback) {
+export function getBase64(img, callback) {
   const reader = new FileReader()
   reader.addEventListener('load', () => callback(reader.result))
   reader.readAsDataURL(img)
 }
 
-export function base64ToBlob (code) {
+export function base64ToBlob(code) {
   let parts = code.split(';base64,')
   let contentType = parts[0].split(':')[1]
   let raw = window.atob(parts[1])
@@ -70,12 +72,63 @@ export function base64ToBlob (code) {
   for (let i = 0; i < rawLength; ++i) {
     uInt8Array[i] = raw.charCodeAt(i)
   }
-  return new Blob([uInt8Array], {type: contentType})
+  return new Blob([uInt8Array], { type: contentType })
 }
 
 // 下载单张图片
-export function downOneImg (imgObj) {
+export function downOneImg(imgObj) {
   getRemoteImg(imgObj.url, false).then(res => {
     saveAs(base64ToBlob(res), imgObj.name)
+  })
+}
+
+// 转换链接
+function toDataUrl(src) {
+  return new Promise((resolve, reject) => {
+    src += '?t=cross_origin.*'
+    let xhr = new XMLHttpRequest()
+    xhr.responseType = 'blob'
+    xhr.onload = (rsp) => {
+      if (rsp.target.status === 200) {
+        resolve(rsp.target.response)
+      } else {
+        reject('error')
+      }
+    }
+    xhr.onerror = (err) => {
+      reject(err)
+    }
+    xhr.open('GET', src, true)
+    xhr.send()
+  })
+}
+
+// 获取文件md5信息
+export function getFile(url) {
+  return new Promise(resolve => {
+    toDataUrl(url).then(res => {
+      let render = new FileReader()
+      render.readAsArrayBuffer(res)
+      render.addEventListener('load', e => {
+        let buffer = e.target.result
+        let md = md5(buffer)
+        resolve(md)
+      })
+    }).catch(() => {
+      resolve('')
+    })
+  })
+}
+
+// 文件对象转md5
+export function getFileMd5(file) {
+  return new Promise(resolve => {
+    let reader = new FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.addEventListener('load', e => {
+      let buffer = e.target.result
+      let md = md5(buffer)
+      resolve(md)
+    })
   })
 }
