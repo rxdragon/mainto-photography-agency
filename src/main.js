@@ -10,7 +10,6 @@ promiseFinally.shim()
 sessionStorage.clear()
 Vue.prototype.routeView = (address) => { router.push({ path: address }) }
 Vue.prototype.routeBack = () => { router.go(-1) }
-
 Vue.use(Antd)
 Vue.config.productionTip = false
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '../store'
-
+import { errorCode } from '../errorCode.js'
 const errorHandle = (status) => {
   switch (status) {
     case 401:
@@ -31,6 +31,7 @@ instance.interceptors.response.use(
     const { response } = error
     if (response) {
       errorHandle(response.status)
+      response.data.error_msg = errorCode.getMsg(response.data)
       return Promise.reject(response)
     }
   }

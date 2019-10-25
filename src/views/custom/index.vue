@@ -12,7 +12,7 @@
         </a-col>
         <a-col :span="7">
           <span class="tip">订单号: </span>
-          <a-input class="wrap" placeholder="请输入订单标号" v-model="search.number" />
+          <a-input class="wrap" placeholder="请输入订单号" v-model="search.number" />
         </a-col>
         <a-col :span="2">
           <a-button type="primary" @click="searchOrder">查 询</a-button>

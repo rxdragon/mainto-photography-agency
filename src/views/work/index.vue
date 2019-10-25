@@ -88,6 +88,21 @@ export default {
       }
     }
   },
+  computed: {
+    params() {
+      return {
+        title: this.orderInfo.title,
+        retouchNote: this.orderInfo.retouchNote,
+        takeTime: this.orderInfo.takeTime,
+        photoData: this.photoList,
+        retouchClaim: {
+          eye: this.orderInfo.claim.eyes,
+          face: this.orderInfo.claim.face,
+          pimples: this.orderInfo.claim.pimples
+        }
+      }
+    }
+  },
   components: {
     Upload
   },
@@ -96,6 +111,7 @@ export default {
       this.visible = false
     },
     getPhotos(photos) {
+      this.photoList = []
       photos.map((item) => {
         this.photoList.push({
           productId: item.product_id + '',
@@ -107,24 +123,25 @@ export default {
         })
       })
     },
-    async submitCloud() {
-      this.$refs.uploadChild.getChildPhotos()
-      let params = {
-        title: this.orderInfo.title,
-        retouchNote: this.orderInfo.retouchNote,
-        takeTime: this.orderInfo.takeTime,
-        photoData: this.photoList,
-        retouchClaim: {
-          eye: this.orderInfo.claim.eyes,
-          face: this.orderInfo.claim.face,
-          pimples: this.orderInfo.claim.pimples
+    emptyParams() {
+      for (let item in this.params) {
+        if (!this.params[item]) {
+          return false
         }
       }
+      return true
+    },
+    async submitCloud() {
+      this.$refs.uploadChild.getChildPhotos()
+       // TODO: 后续增补Verification模块
+      if (!this.emptyParams()) { return this.$message.error("请填写完整信息") }
       this.$emit('loading', true)
-      Api.work.add(params).then((res) => {
+      Api.work.add(this.params).then(() => {
         this.$message.success('订单提交成功', 2, this.routeBack)
       }).catch((e) => {
-         this.$message.error(e.data.error_msg)
+        // TODO: 等待error码接入
+        let tips = e.data.error_msg || '系统异常'
+        this.$message.error(tips)
       }).finally(() => {
         this.$emit('loading', false)
       })

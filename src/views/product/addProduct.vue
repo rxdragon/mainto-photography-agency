@@ -7,7 +7,7 @@
       <section class="form">
         <a-row class="item">
           <a-col :span="2">
-            <span class="tip name">产品名称: </span>
+            <span class="tip name"><b>*</b> 产品名称: </span>
           </a-col>
           <a-col :span="6">
             <a-input placeholder="填写产品名称" v-model="product.name" />
@@ -15,7 +15,7 @@
         </a-row>
         <a-row class="item">
           <a-col :span="2">
-            <span class="tip">修图要求: </span>
+            <span class="tip"><b>*</b>  修图要求: </span>
           </a-col>
           <a-col :span="6">
             <a-textarea placeholder="请输入修图要求" :rows="4" v-model="product.standard" />
@@ -23,11 +23,12 @@
         </a-row>
         <a-row class="item">
           <a-col :span="2">
-            <span class="tip">样片素材: </span>
+            <span class="tip"><b>*</b> 样片素材: </span>
           </a-col>
           <a-col :span="22">
             <div class="clearfix">
               <a-upload
+                accept="image/*"
                 :data="getUpyun"
                 :headers="uploadHeader"
                 :action="upyunAction"
@@ -106,9 +107,14 @@ export default {
       this.fileList = fileList
     },
     sumbitAdd() {
+      // TODO: 后续增补Verification模块
+      if (!this.product.name || !this.product.standard || !this.fileList.length) {
+        this.$message.error('请填写完整信息')
+        return false
+      }
       this.loading = true
       this.addSubmit(this.params).then(() => {
-        this.$message.success('产品添加成功', 2, this.routeBack)
+        this.$message.success('产品添加成功', 1, this.routeBack)
       }).finally(() => {
         this.loading = false
       })
