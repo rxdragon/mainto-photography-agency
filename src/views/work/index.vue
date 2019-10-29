@@ -125,15 +125,13 @@ export default {
     },
     emptyParams() {
       for (let item in this.params) {
-        if (!this.params[item]) {
-          return false
-        }
+        if (!this.params[item]) { return false }
       }
       return true
     },
     async submitCloud() {
       this.$refs.uploadChild.getChildPhotos()
-       // TODO: 后续增补Verification模块
+      // TODO: 后续增补Verification模块
       if (!this.emptyParams()) { return this.$message.error("请填写完整信息") }
       this.$emit('loading', true)
       Api.work.add(this.params).then(() => {

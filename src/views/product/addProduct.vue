@@ -81,7 +81,7 @@ export default {
         name: this.product.name,
         retouchRequire: this.product.standard,
         simplePhotoPaths: this.fileList.map((item) => {
-          return item.url || item.response.url
+          return item.url.replace(/\/(\S*)\//, '') || item.response.url.replace(/\/(\S*)\//, '')
         })
       }
     },
