@@ -35,7 +35,16 @@
             </p>
           </li>
         </ul>
-        <a-upload accept="image/*" :headers="uploadHeader" :action="upyunAction" :beforeUpload="checkFile" listType="picture-card" @change="handleChange" :data="getUpyun" :showUploadList="false">
+        <a-upload
+          accept="image/*"
+          :multiple='true'
+          :headers="uploadHeader"
+          :action="upyunAction"
+          :beforeUpload="checkFile"
+          listType="picture-card"
+          @change="handleChange"
+          :data="getUpyun"
+          :showUploadList="false">
           <div>
             <a-icon :type="loading ? 'loading' : 'plus'" />
             <div class="ant-upload-text">点击上传</div>

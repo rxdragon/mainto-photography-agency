@@ -45,7 +45,7 @@
             <li v-for="(item, index) in order.streams" :key="index">
               <a-alert :message="item.product" type="info" />
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" v-if="photoItem.version !== 'first_photo'">
+                <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" v-show="photoItem.version !== 'first_photo'">
                   <img :src="`${photoHost}${photoItem.path}`">
                   <p class="tip">
                     <span class="mask"></span>

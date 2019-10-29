@@ -30,7 +30,7 @@
                 <a-alert :message="item.product" type="info" />
               </div>
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                <a-col :span="6" class="item" v-for="(photoItem, photoIndex) in childItem">
+                <a-col :span="6" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
                   <img :src="`${photoHost}${photoItem.path}`">
                 </a-col>
               </a-row>
