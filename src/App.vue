@@ -6,9 +6,11 @@
         <a-layout style="position: relative;">
           <Header @collapsedEvent="collapsedHandle" />
           <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
-            <router-view @loading="sendLoding"/>
+            <router-view @loading="sendLoding" />
           </a-layout-content>
-          <div class="loading-wrap" v-if="loading"> <a-spin /></div>
+          <div class="loading-wrap" v-if="loading">
+            <a-spin />
+          </div>
         </a-layout>
       </a-layout>
       <Welcome v-else />
@@ -50,7 +52,7 @@ export default {
   },
   methods: {
     ...mapActions(['initUpyun']),
-    sendLoding (state) {
+    sendLoding(state) {
       this.loading = state
     },
     collapsedHandle(type) {
@@ -58,7 +60,9 @@ export default {
     }
   },
   async created() {
-    this.initUpyun()
+    if (this.getUser.id) {
+      this.initUpyun()
+    }
   }
 }
 </script>
