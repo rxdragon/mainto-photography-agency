@@ -22,7 +22,7 @@ import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 import Sider from './components/Layout/Sider.vue'
 import Welcome from './views/welcome/index.vue'
 import Header from './components/Layout/Header.vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   data() {
@@ -43,7 +43,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getUser'])
+    ...mapGetters(['getUser']),
   },
   components: {
     Sider,
@@ -51,17 +51,11 @@ export default {
     Welcome
   },
   methods: {
-    ...mapActions(['initUpyun']),
     sendLoding(state) {
       this.loading = state
     },
     collapsedHandle(type) {
       this.collapsed = type
-    }
-  },
-  async created() {
-    if (this.getUser.id) {
-      this.initUpyun()
     }
   }
 }

@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUserInfo']),
+    ...mapActions(['setUserInfo', 'initUpyun']),
     // 验证表单
     validForm(e) {
       e.preventDefault()
@@ -63,14 +63,16 @@ export default {
         headers: { 'X-Expose-Headers': 'X-Stream-Id, x-stream-id' }
       }).then(() => {
         Api.user.getInfo().then((res) => {
+          this.initUpyun()
           this.setUserInfo(res.msg)
-        }).finally(() => {
-          this.loading = false
         })
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
+      }).finally(() => {
+        this.loading = false
       })
     }
   },
-  created() {},
   mounted() {
     this.form = this.$form.createForm(this)
     window.callback = res => {
