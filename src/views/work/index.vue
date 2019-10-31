@@ -135,7 +135,19 @@ export default {
       if (!this.emptyParams()) { return this.$message.error("请填写完整信息") }
       this.$emit('loading', true)
       Api.work.add(this.params).then(() => {
-        this.$message.success('订单提交成功', 2)
+        this.$message.success('订单提交成功', 2, () => {
+          this.$refs.uploadChild.imgList = []
+          this.orderInfo = {
+            title: '',
+            retouchNote: '',
+            takeTime: '',
+            claim: {
+              eyes: 0,
+              face: 0,
+              pimples: ''
+            }
+          }
+        })
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {
