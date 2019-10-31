@@ -135,11 +135,9 @@ export default {
       if (!this.emptyParams()) { return this.$message.error("请填写完整信息") }
       this.$emit('loading', true)
       Api.work.add(this.params).then(() => {
-        this.$message.success('订单提交成功', 2, this.routeBack)
+        this.$message.success('订单提交成功', 2)
       }).catch((e) => {
-        // TODO: 等待error码接入
-        let tips = e.data.error_msg || '系统异常'
-        this.$message.error(tips)
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.$emit('loading', false)
       })

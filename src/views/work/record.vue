@@ -112,7 +112,7 @@ export default {
       Api.work.cancel({
         orderNum: record.order_num
       }).then(() => {
-        this.$message.success('订单撤回成功', 3, this.searchOrder)
+        this.$message.success('订单撤回成功', 2, this.searchOrder)
       }).finally(() => {
         this.loading = false
       })
