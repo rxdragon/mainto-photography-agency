@@ -1,56 +1,44 @@
 <template>
   <div id="addProduct">
-    <div class="spin-content" v-if="loading">
-      <a-spin size="large" />
-    </div>
-    <div class="contailner" v-if="!loading">
-      <section class="form">
-        <a-row class="item">
-          <a-col :span="2">
-            <span class="tip name"><b>*</b> 产品名称: </span>
-          </a-col>
-          <a-col :span="6">
-            <a-input placeholder="填写产品名称" v-model="product.name" />
-          </a-col>
-        </a-row>
-        <a-row class="item">
-          <a-col :span="2">
-            <span class="tip"><b>*</b>  修图要求: </span>
-          </a-col>
-          <a-col :span="6">
-            <a-textarea placeholder="请输入修图要求" :rows="4" v-model="product.standard" />
-          </a-col>
-        </a-row>
-        <a-row class="item">
-          <a-col :span="2">
-            <span class="tip"><b>*</b> 样片素材: </span>
-          </a-col>
-          <a-col :span="22">
-            <div class="clearfix">
-              <a-upload
-                accept="image/*"
-                :data="getUpyun"
-                :multiple='true'
-                :headers="uploadHeader"
-                :action="upyunAction"
-                listType="picture-card"
-                :fileList="fileList"
-                @preview="handlePreview"
-                @change="handleChange">
-                <div>
-                  <a-icon type="plus" />
-                  <div class="ant-upload-text">Upload</div>
-                </div>
-              </a-upload>
-            </div>
-            <a-button type="primary" class="submit" @click="sumbitAdd">
-              提交审核
-            </a-button>
-          </a-col>
-          <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-            <img alt="example" style="width: 100%" :src="previewImage" />
-          </a-modal>
-        </a-row>
+    <div class="contailner"">
+      <section class=" form">
+      <a-row class="item">
+        <a-col :span="2">
+          <span class="tip name"><b>*</b> 产品名称: </span>
+        </a-col>
+        <a-col :span="6">
+          <a-input placeholder="填写产品名称" v-model="product.name" />
+        </a-col>
+      </a-row>
+      <a-row class="item">
+        <a-col :span="2">
+          <span class="tip"><b>*</b> 修图要求: </span>
+        </a-col>
+        <a-col :span="6">
+          <a-textarea placeholder="请输入修图要求" :rows="4" v-model="product.standard" />
+        </a-col>
+      </a-row>
+      <a-row class="item">
+        <a-col :span="2">
+          <span class="tip"><b>*</b> 样片素材: </span>
+        </a-col>
+        <a-col :span="22">
+          <div class="clearfix">
+            <a-upload accept="image/*" :data="getUpyun" :multiple='true' :headers="uploadHeader" :action="upyunAction" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
+              <div>
+                <a-icon type="plus" />
+                <div class="ant-upload-text">Upload</div>
+              </div>
+            </a-upload>
+          </div>
+          <a-button type="primary" class="submit" @click="sumbitAdd" :disabled="loading">
+            提交审核
+          </a-button>
+        </a-col>
+        <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+          <img alt="example" style="width: 100%" :src="previewImage" />
+        </a-modal>
+      </a-row>
       </section>
     </div>
   </div>
@@ -61,10 +49,9 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      loading: false,
       previewImage: '',
       previewVisible: false,
-      fileList:[],
+      fileList: [],
       product: {
         name: '',
         standard: ''
@@ -82,7 +69,7 @@ export default {
         name: this.product.name,
         retouchRequire: this.product.standard,
         simplePhotoPaths: this.fileList.map((item) => {
-          let url = item.ur || item.response.url
+          let url = item.url || item.response.url
           return url.replace(/\/(\S*)\//, '')
         })
       }
@@ -114,11 +101,13 @@ export default {
         this.$message.error('请填写完整信息')
         return false
       }
-      this.loading = true
+      this.$emit('loading', true)
       this.addSubmit(this.params).then(() => {
-        this.$message.success('产品添加成功', 1, this.routeBack)
+        this.product = { name: '', standard: '' }
+        this.fileList = []
+        this.$message.success('产品添加成功', 1)
       }).finally(() => {
-        this.loading = false
+        this.$emit('loading', false)
       })
     },
     initQuery() {

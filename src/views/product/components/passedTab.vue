@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-row class="search">
-      <a-col :span="8" class="date">
+      <a-col :span="10" class="date">
         <span class="tip">选择日期: </span>
         <a-range-picker @change="dateChange" />
       </a-col>
