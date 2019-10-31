@@ -89,7 +89,7 @@ export default {
       photoHost: 'https://fed.dev.hzmantu.com/upload_dev/',
       standardText: {
         blue: '蓝标',
-        gold: '金标'
+        master: '大师店'
       },
       weightState: {
         weight_first: '一类产品',
