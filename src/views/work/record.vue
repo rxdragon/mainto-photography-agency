@@ -2,7 +2,7 @@
   <div id='workRecord'>
     <section class='content'>
       <a-row class="search">
-        <a-col :span="10">
+        <a-col :span="12">
           <span>选择日期: </span>
           <a-range-picker @change="dateChange" />
         </a-col>

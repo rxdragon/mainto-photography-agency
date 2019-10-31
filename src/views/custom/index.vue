@@ -2,15 +2,15 @@
   <div id="custom">
     <section class='content'>
       <a-row class="search">
-        <a-col :span="7">
+        <a-col :span="8">
           <span class="tip">上传时间: </span>
           <a-range-picker class="wrap" @change="dateChange" />
         </a-col>
-        <a-col :span="7">
+        <a-col :span="8">
           <span class="tip">订单标题: </span>
           <a-input class="wrap" placeholder="请输入订单标题" v-model="search.title" />
         </a-col>
-        <a-col :span="7">
+        <a-col :span="6">
           <span class="tip">订单号: </span>
           <a-input class="wrap" placeholder="请输入订单号" v-model="search.number" />
         </a-col>

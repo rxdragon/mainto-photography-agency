@@ -85,6 +85,42 @@
 
     .item {
       padding: 0 20px;
+
+      .img-wrap {
+        position: relative;
+      }
+
+      .img-wrap:hover {
+        .mask {
+          transition: all .5s;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #333;
+          opacity: .8;
+
+          .bigger-icon {
+            display: block;
+          }
+
+        }
+      }
+
+      .bigger-icon {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        color: #fff;
+        font-size: 20px;
+        transform: translate(-50%, -50%);
+      }
+
+      .bigger-icon:hover {
+        cursor: pointer;
+      }
     }
 
     .tip.name,

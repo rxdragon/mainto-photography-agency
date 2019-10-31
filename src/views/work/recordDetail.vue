@@ -61,7 +61,8 @@ export default {
       previewVisible: false,
       versionState: {
         original_photo: '原片',
-        complete_photo: '云端成片'
+        complete_photo: '云端成片',
+        first_photo: '一次成片',
       },
       photoHost: 'https://fed.dev.hzmantu.com/upload_dev/',
       loading: true

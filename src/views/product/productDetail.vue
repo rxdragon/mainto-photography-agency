@@ -1,13 +1,21 @@
 <template>
   <div id="productDetail">
-    <div class="container">
+    <div class="spin-content" v-if="loading">
+      <a-spin size="large" />
+    </div>
+    <div class="container" v-else>
       <a-row class="title">
         <h4><span class="line"></span><span>样片素材</span></h4>
       </a-row>
       <section class="form">
         <a-row :span="24" class="item">
           <a-col class="pictureWrap" :span="6" :offset="1" v-for="(item, index) in product.simple_images" :key="index">
-            <img :src="`${photoHost}${item}`">
+            <div class="img-wrap">
+              <img :src="`${photoHost}${item}`">
+              <div class="mask">
+                <a-icon type="eye" class="bigger-icon" @click="showModel(item)" />
+              </div>
+            </div>
           </a-col>
         </a-row>
         <a-row class="item">
@@ -77,6 +85,9 @@
             <p class="tip note">{{product.remark}}</p>
           </a-col>
         </a-row>
+        <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
+          <img style="width: 100%" :src="previewImage" />
+        </a-modal>
       </section>
     </div>
   </div>
@@ -87,6 +98,8 @@ export default {
   data() {
     return {
       photoHost: 'https://fed.dev.hzmantu.com/upload_dev/',
+      previewVisible: false,
+      previewImage: '',
       standardText: {
         blue: '蓝标',
         master: '大师店'
@@ -98,19 +111,23 @@ export default {
         weight_fourth: '四类产品',
         weight_fifth: '五类产品'
       },
-      loading: false,
+      loading: true,
       product: {}
     }
   },
   methods: {
+    showModel(url) {
+      this.previewImage = `${this.photoHost}${url}`
+      this.previewVisible = true
+    },
     reviewProduct() {
-      this.$emit('loading', true)
+      this.loading = true
       Api.product.detail({
         id: this.$route.params.id
       }).then((res) => {
         this.product = res.msg
       }).finally(() => {
-        this.$emit('loading', false)
+        this.loading = false
       })
     }
   },
