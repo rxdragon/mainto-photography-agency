@@ -83,9 +83,7 @@ export default {
         default:
           text = '首页'
       }
-      console.log(text)
       return text
-
     },
     triggerCollapsed() {
       this.collapsed = !this.collapsed

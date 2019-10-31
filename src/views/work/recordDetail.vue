@@ -69,7 +69,7 @@ export default {
     }
   },
   methods: {
-    showModel (url) {
+    showModel(url) {
       this.previewImage = `${this.photoHost}${url}`
       this.previewVisible = true
     },
@@ -78,6 +78,8 @@ export default {
         orderNum: this.$route.params.id
       }).then((res) => {
         this.order = res.msg
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })

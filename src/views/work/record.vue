@@ -4,7 +4,7 @@
       <a-row class="search">
         <a-col :span="12">
           <span>选择日期: </span>
-          <a-range-picker @change="dateChange" />
+          <a-range-picker @change="dateChange" :disabledDate="disabledDate" />
         </a-col>
         <a-col :span="8">
           <span>订单标题: </span>
@@ -27,22 +27,18 @@
                 <a href="javascript:;" @click="cancelOrder(record)">撤回</a>
                 <a-divider type="vertical" />
               </span>
-              <a href="javascript:;"  @click="viewsDetail(record)">详情</a>
+              <a href="javascript:;" @click="viewsDetail(record)">详情</a>
             </span>
           </a-table>
         </template>
       </div>
-      <a-pagination 
-        class="pagination"
-        :defaultCurrent="search.page.index"
-        :total="data.length"
-        @change="pageChange"
-      />
+      <a-pagination class="pagination" :defaultCurrent="search.page.index" :total="data.length" @change="pageChange" />
     </section>
   </div>
 </template>
 <script>
 import Api from '@/api/index.js'
+import moment from 'moment'
 export default {
   name: 'workRecord',
   data() {
@@ -98,6 +94,9 @@ export default {
     }
   },
   methods: {
+    disabledDate(current) {
+      return current && current > moment().endOf('day')
+    },
     bindKey(record, index) {
       return index
     },
@@ -107,7 +106,7 @@ export default {
       }
       return false
     },
-    cancelOrder (record) {
+    cancelOrder(record) {
       this.loading = true
       Api.work.cancel({
         orderNum: record.order_num
@@ -135,7 +134,7 @@ export default {
     viewsDetail(record) {
       this.$router.push({
         name: 'recordDetail',
-        params: {id: record.order_num}
+        params: { id: record.order_num }
       })
     }
   },

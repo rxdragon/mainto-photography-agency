@@ -2,43 +2,43 @@
   <div id="addProduct">
     <div class="contailner">
       <section class="form">
-      <a-row class="item">
-        <a-col :span="2">
-          <span class="tip name"><b>*</b> 产品名称: </span>
-        </a-col>
-        <a-col :span="6">
-          <a-input placeholder="填写产品名称" v-model="product.name" />
-        </a-col>
-      </a-row>
-      <a-row class="item">
-        <a-col :span="2">
-          <span class="tip"><b>*</b> 修图要求: </span>
-        </a-col>
-        <a-col :span="6">
-          <a-textarea placeholder="请输入修图要求" :rows="4" v-model="product.standard" />
-        </a-col>
-      </a-row>
-      <a-row class="item">
-        <a-col :span="2">
-          <span class="tip"><b>*</b> 样片素材: </span>
-        </a-col>
-        <a-col :span="22">
-          <div class="clearfix">
-            <a-upload accept="image/*" :data="getUpyun" :multiple='true' :headers="uploadHeader" :action="upyunAction" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
-              <div>
-                <a-icon type="plus" />
-                <div class="ant-upload-text">Upload</div>
-              </div>
-            </a-upload>
-          </div>
-          <a-button type="primary" class="submit" @click="sumbitAdd" :disabled="loading">
-            提交审核
-          </a-button>
-        </a-col>
-        <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-          <img alt="example" style="width: 100%" :src="previewImage" />
-        </a-modal>
-      </a-row>
+        <a-row class="item">
+          <a-col :span="2">
+            <span class="tip name"><b>*</b> 产品名称: </span>
+          </a-col>
+          <a-col :span="6">
+            <a-input placeholder="填写产品名称" v-model="product.name" />
+          </a-col>
+        </a-row>
+        <a-row class="item">
+          <a-col :span="2">
+            <span class="tip"><b>*</b> 修图要求: </span>
+          </a-col>
+          <a-col :span="6">
+            <a-textarea placeholder="请输入修图要求" :rows="4" v-model="product.standard" />
+          </a-col>
+        </a-row>
+        <a-row class="item">
+          <a-col :span="2">
+            <span class="tip"><b>*</b> 样片素材: </span>
+          </a-col>
+          <a-col :span="22">
+            <div class="clearfix">
+              <a-upload accept="image/*" :data="getUpyun" :multiple='true' :headers="uploadHeader" :action="upyunAction" listType="picture-card" :fileList="fileList" @preview="handlePreview" @change="handleChange">
+                <div>
+                  <a-icon type="plus" />
+                  <div class="ant-upload-text">Upload</div>
+                </div>
+              </a-upload>
+            </div>
+            <a-button type="primary" class="submit" @click="sumbitAdd" :disabled="loading">
+              提交审核
+            </a-button>
+          </a-col>
+          <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
+            <img alt="example" style="width: 100%" :src="previewImage" />
+          </a-modal>
+        </a-row>
       </section>
     </div>
   </div>
@@ -103,6 +103,8 @@ export default {
         this.product = { name: '', standard: '' }
         this.fileList = []
         this.$message.success('产品添加成功', 1)
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.$emit('loading', false)
       })

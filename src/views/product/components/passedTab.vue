@@ -3,7 +3,7 @@
     <a-row class="search">
       <a-col :span="10" class="date">
         <span class="tip">选择日期: </span>
-        <a-range-picker @change="dateChange" />
+        <a-range-picker @change="dateChange" :disabledDate="disabledDate" />
       </a-col>
       <a-col :span="3" style="text-align: right;">
         <a-button type="primary" @click="searchProduct">查 询</a-button>
@@ -35,6 +35,8 @@
 </template>
 <script>
 import Api from '@/api/index.js'
+import moment from 'moment'
+
 export default {
   name: 'passedTab',
   data() {
@@ -87,6 +89,9 @@ export default {
     }
   },
   methods: {
+    disabledDate(current) {
+      return current && current > moment().endOf('day')
+    },
     viewDetail(record) {
       this.$router.push({
         name: 'productDetail',

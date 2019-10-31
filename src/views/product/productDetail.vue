@@ -126,6 +126,8 @@ export default {
         id: this.$route.params.id
       }).then((res) => {
         this.product = res.msg
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })

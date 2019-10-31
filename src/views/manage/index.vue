@@ -104,6 +104,8 @@ export default {
         id: record.id
       }).then(() => {
         this.$message.success('账号禁用成功', 1, this.searchSubuser)
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })
@@ -114,6 +116,8 @@ export default {
         id: record.id
       }).then(() => {
         this.$message.success('账号启用成功', 1, this.searchSubuser)
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })

@@ -14,7 +14,7 @@
           <span class="tip name">登录密码: </span>
         </a-col>
         <a-col :span="6">
-          <a-input type="password" v-model="account.password" placeholder="未有特殊密码要求可用填写">
+          <a-input type="password" v-model="account.password" placeholder="未有特殊密码要求可不用填写">
           </a-input>
         </a-col>
       </a-row>
@@ -65,6 +65,8 @@ export default {
       } else {
         Api.manage.edit(this.account).then(() => {
           this.$message.success('账号修改成功', 1, this.routeBack)
+        }).catch((e) => {
+          this.$message.error(e.data.error_msg)
         }).finally(() => {
           this.$emit('loading', false)
         })
