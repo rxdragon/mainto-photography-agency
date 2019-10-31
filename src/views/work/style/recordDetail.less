@@ -65,6 +65,50 @@
 
           .item {
             margin: 0 20px 20px 0;
+
+            .version {
+              color: #fff;
+              padding: 10px;
+              background-color: #333;
+              opacity: .8;
+              transform: translateY(-100%);
+            }
+
+            .img-wrap {
+              position: relative;
+            }
+
+            .bigger-icon {
+              display: none;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              color: #fff;
+              font-size: 20px;
+              transform: translate(-50%, -50%);
+            }
+
+            .bigger-icon:hover {
+              cursor: pointer;
+            }
+          }
+
+          .item:hover {
+            .mask {
+              transition: all .5s;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: #333;
+              opacity: .8;
+
+              .bigger-icon {
+                display: block;
+              }
+
+            }
           }
 
           p {

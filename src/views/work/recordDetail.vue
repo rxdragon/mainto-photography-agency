@@ -30,16 +30,23 @@
                 <a-alert :message="item.product" type="info" />
               </div>
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                <a-col :span="6" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
-                  <img :src="`${photoHost}${photoItem.path}`">
+                <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
+                  <div class="img-wrap">
+                    <img :src="`${photoHost}${photoItem.path}`">
+                    <div class="mask">
+                      <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
+                    </div>
+                  </div>
+                  <p class="version">{{versionState[photoItem.version]}}</p>
                 </a-col>
               </a-row>
             </li>
           </ul>
         </div>
       </section>
-      <section class="footer">
-      </section>
+      <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
+        <img style="width: 100%" :src="previewImage" />
+      </a-modal>
     </div>
   </div>
 </template>
@@ -50,11 +57,21 @@ export default {
   data() {
     return {
       order: {},
-      photoHost: 'https://fed.dev.hzmantu.com/',
+      previewImage: '',
+      previewVisible: false,
+      versionState: {
+        original_photo: '原片',
+        complete_photo: '云端成片'
+      },
+      photoHost: 'https://fed.dev.hzmantu.com/upload_dev/',
       loading: true
     }
   },
   methods: {
+    showModel (url) {
+      this.previewImage = `${this.photoHost}${url}`
+      this.previewVisible = true
+    },
     reviewOrder() {
       Api.work.detail({
         orderNum: this.$route.params.id
