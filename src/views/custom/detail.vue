@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       loading: false,
-      photoHost: 'http://fed.dev.hzmantu.com/',
+      photoHost: 'http://fed.dev.hzmantu.com/upload_dev/',
       versionState: {
         original_photo: '原片',
         complete_photo: '云端成片'
