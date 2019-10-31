@@ -1,7 +1,7 @@
 <template>
   <div id="addProduct">
-    <div class="contailner"">
-      <section class=" form">
+    <div class="contailner">
+      <section class="form">
       <a-row class="item">
         <a-col :span="2">
           <span class="tip name"><b>*</b> 产品名称: </span>
@@ -35,7 +35,7 @@
             提交审核
           </a-button>
         </a-col>
-        <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+        <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
           <img alt="example" style="width: 100%" :src="previewImage" />
         </a-modal>
       </a-row>
@@ -85,9 +85,6 @@ export default {
     }
   },
   methods: {
-    handleCancel() {
-      this.previewVisible = false
-    },
     handlePreview(file) {
       this.previewImage = file.url || file.thumbUrl
       this.previewVisible = true

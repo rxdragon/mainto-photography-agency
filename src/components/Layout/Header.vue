@@ -1,11 +1,21 @@
 <template>
-  <a-layout-header style="background: #fff; padding: 0">
-    <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="triggerCollapsed" />
-    <section :style="{ float: 'right', marginRight: '10px'}">
-      <span>{{getUser.nick}}</span>
-      <a-tag color="#1769FF" class="organization">{{getUser.username}}</a-tag>
-      <icon-font class="out" type="icon-tuichu" @click="showConfirm" />
-    </section>
+  <a-layout-header id="header" style="">
+    <a-row class="info">
+      <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="triggerCollapsed" />
+      <section :style="{ float: 'right', marginRight: '10px'}">
+        <span>{{getUser.nick}}</span>
+        <a-tag color="#1769FF" class="organization">{{getUser.username}}</a-tag>
+        <icon-font class="out-button" type="icon-tuichu" @click="showConfirm" />
+      </section>
+    </a-row>
+    <a-row class="route-tip">
+      <a-col :span="18" class="title">
+        <h3>{{title}}</h3>
+      </a-col>
+      <a-col :span="5" class="back-button">
+        <a-button type="primary" @click="routeBack">返回</a-button>
+      </a-col>
+    </a-row>
   </a-layout-header>
 </template>
 <script>
@@ -19,6 +29,7 @@ export default {
   name: 'Header',
   data() {
     return {
+      title: '',
       collapsed: false
     }
   },
@@ -30,7 +41,52 @@ export default {
       'getUser',
     ])
   },
+  watch: {
+    '$route': function(route) {
+      this.title = this.switchText(route.name)
+    }
+  },
   methods: {
+    switchText(name) {
+      let text = ''
+      switch (name) {
+        case 'work':
+          text = '上传拍摄'
+          break
+        case 'workRecord':
+          text = '历史记录'
+          break
+        case 'recordDetail':
+          text = '历史详情'
+          break
+        case 'product':
+          text = '产品管理'
+          break
+        case 'addProduct':
+          text = '新增产品'
+          break
+        case 'productDetail':
+          text = '产品详情'
+          break
+        case 'customs':
+          text = '客片中心'
+          break
+        case 'customDetail':
+          text = '客片详情'
+          break
+        case 'manage':
+          text = '子账号管理'
+          break
+        case 'manageAccount':
+          text = '添加子账号'
+          break
+        default:
+          text = '首页'
+      }
+      console.log(text)
+      return text
+
+    },
     triggerCollapsed() {
       this.collapsed = !this.collapsed
       this.$emit('collapsedEvent', this.collapsed)
@@ -45,7 +101,7 @@ export default {
               VM.$message.success('登出中...', 2, () => {
                 window.localStorage.clear()
                 window.location.reload()
-              });
+              })
             }
           })
         }
@@ -55,22 +111,41 @@ export default {
 }
 </script>
 <style scoped lang="less">
-section {
-  height: 64px;
-  font-size: 14px;
+#header {
+  height: 128px;
+  background: #fff;
+  padding: 0;
 
-  .organization {
-    margin: auto 10px;
+  .info {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+
+    section {
+      font-size: 14px;
+
+      .organization {
+        margin: auto 10px;
+      }
+
+      .out-button {
+        font-size: 18px;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+
+      .out-button:hover {
+        cursor: pointer;
+      }
+    }
   }
 
-  .out {
-    font-size: 18px;
-    font-weight: bold;
-    vertical-align: middle;
-  }
+  .route-tip {
+    .title {
+      padding-left: 24px;
+    }
 
-  .out:hover {
-    cursor: pointer;
+    .back-button {
+      text-align: right;
+    }
   }
 }
 </style>
