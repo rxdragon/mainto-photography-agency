@@ -46,7 +46,12 @@
               <a-alert :message="item.product" type="info" />
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
                 <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" v-show="photoItem.version !== 'first_photo'">
-                  <img :src="`${photoHost}${photoItem.path}`">
+                  <div class="img-wrap">
+                    <img :src="`${photoHost}${photoItem.path}`">
+                    <div class="imgMask">
+                      <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
+                    </div>
+                  </div>
                   <p class="tip">
                     <span class="mask"></span>
                     <span class="text">{{versionState[photoItem.version]}}</span>
@@ -56,6 +61,9 @@
             </li>
           </ul>
         </div>
+        <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
+          <img style="width: 100%" :src="previewImage" />
+        </a-modal>
       </section>
     </div>
   </div>
@@ -70,6 +78,8 @@ export default {
   data() {
     return {
       loading: false,
+      previewVisible: false,
+      previewImage: '',
       photoHost: 'http://fed.dev.hzmantu.com/upload_dev/',
       versionState: {
         original_photo: '原片',
@@ -96,6 +106,10 @@ export default {
     }
   },
   methods: {
+    showModel(url) {
+      this.previewImage = `${this.photoHost}${url}`
+      this.previewVisible = true
+    },
     reviewOrder() {
       this.loading = true
       Api.work.detail({
@@ -109,6 +123,7 @@ export default {
     createZip(type) {
       const PHOTOQUEUE = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
       const FOLDER = type === 'first' ? '原片' : '成片'
+      if (PHOTOQUEUE.length === 0) { return this.$message.error(`未找到${FOLDER}资源`) }
       let zip = new JsZip()
       let fold = zip.folder(FOLDER)
       let transArr = []

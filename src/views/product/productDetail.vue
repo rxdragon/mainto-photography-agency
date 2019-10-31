@@ -1,9 +1,6 @@
 <template>
   <div id="productDetail">
-    <div class="spin-content" v-if="loading">
-      <a-spin size="large" />
-    </div>
-    <div class="container" v-if="!loading">
+    <div class="container">
       <a-row class="title">
         <h4><span class="line"></span><span>样片素材</span></h4>
       </a-row>
@@ -49,7 +46,7 @@
           </a-col>
         </a-row>
         <a-row class="cut">
-          <a-col class="title" :span="24" v-if="product.normal_income_config">
+          <a-col class="title" :span="24" v-if="product.normal_income_config.retoucher">
             <h4><span class="line"></span><span>非拼接收益</span></h4>
           </a-col>
           <a-col :span="24" class="item">
@@ -60,7 +57,7 @@
             </ul>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="product.splicing_income_config">
+        <a-row class="cut" v-if="product.splicing_income_config.retoucher">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>拼接收益</span></h4>
           </a-col>
@@ -107,13 +104,13 @@ export default {
   },
   methods: {
     reviewProduct() {
-      this.loading = true
+      this.$emit('loading', true)
       Api.product.detail({
         id: this.$route.params.id
       }).then((res) => {
         this.product = res.msg
       }).finally(() => {
-        this.loading = false
+        this.$emit('loading', false)
       })
     }
   },
