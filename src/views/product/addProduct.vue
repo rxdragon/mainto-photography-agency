@@ -30,6 +30,7 @@
               <a-upload
                 accept="image/*"
                 :data="getUpyun"
+                :multiple='true'
                 :headers="uploadHeader"
                 :action="upyunAction"
                 listType="picture-card"
@@ -81,7 +82,8 @@ export default {
         name: this.product.name,
         retouchRequire: this.product.standard,
         simplePhotoPaths: this.fileList.map((item) => {
-          return item.url.replace(/\/(\S*)\//, '') || item.response.url.replace(/\/(\S*)\//, '')
+          let url = item.ur || item.response.url
+          return url.replace(/\/(\S*)\//, '')
         })
       }
     },
