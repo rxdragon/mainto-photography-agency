@@ -9,7 +9,7 @@ const user = {
     return axios.post(`${base.manage_auth}/cloud3rdLogin`, params, config)
   },
   getInfo() {
-    return axios.get(`${base.url}/retoucher/userInfo`)
+    return axios.get(`${base.url}/userInfo`)
   }
 }
 export default user

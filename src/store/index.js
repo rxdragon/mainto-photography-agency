@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     work
   },
   plugins: [
-    createPersistedState({ storage: window.sessionStorage })
+    createPersistedState()
   ]
 })
 

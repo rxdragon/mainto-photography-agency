@@ -43,7 +43,7 @@ export default {
           Api.user.loginOut().then((res) => {
             if (res.success) {
               VM.$message.success('登出中...', 2, () => {
-                window.sessionStorage.clear()
+                window.localStorage.clear()
                 window.location.reload()
               });
             }

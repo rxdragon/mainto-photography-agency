@@ -9,8 +9,8 @@
       </a-row>
       <section class="form">
         <a-row :span="24" class="item">
-          <a-col class="pictureWrap" :span="5" :offset="1" v-for="(item, index) in product.simple_images" :key="index">
-            <img :src="`${item}`">
+          <a-col class="pictureWrap" :span="6" :offset="1" v-for="(item, index) in product.simple_images" :key="index">
+            <img :src="`${photoHost}${item}`">
           </a-col>
         </a-row>
         <a-row class="item">
@@ -36,7 +36,7 @@
         </a-row>
         <a-row class="parameter item">
           <a-col :span="6">
-            <span class="tip">{{product.retouch_standard}}</span>
+            <span class="tip">{{standardText[product.retouch_standard] || ''}}</span>
           </a-col>
           <a-col :span="6">
             <span class="tip">{{weightState[product.weight_level]}}</span>
@@ -54,7 +54,7 @@
           </a-col>
           <a-col :span="24" class="item">
             <ul class="profit">
-              <li v-for="(item, index) in product.normal_income_config" :key="index">
+              <li v-for="(item, index) in product.normal_income_config.retoucher" :key="index">
                 <span class="head">{{`${index}人`}}</span><span>{{`$ ${item}`}}</span>
               </li>
             </ul>
@@ -66,7 +66,7 @@
           </a-col>
           <a-col :span="24" class="item">
             <ul class="profit">
-              <li v-for="(item, index) in product.splicing_income_config" :key="index">
+              <li v-for="(item, index) in product.splicing_income_config.retoucher" :key="index">
                 <span class="head">{{`${index}人`}}</span><span>{{`$ ${item}`}}</span>
               </li>
             </ul>
@@ -89,6 +89,11 @@ import Api from '@/api/index.js'
 export default {
   data() {
     return {
+      photoHost: 'https://fed.dev.hzmantu.com/upload_dev/',
+      standardText: {
+        blue: '蓝标',
+        gold: '金标'
+      },
       weightState: {
         weight_first: '一类产品',
         weight_second: '二类产品',
