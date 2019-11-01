@@ -46,14 +46,16 @@
               <a-alert :message="item.product" type="info" />
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
                 <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" v-show="photoItem.version !== 'first_photo'">
-                  <div class="img-wrap">
-                    <img :src="`${photoHost}${photoItem.path}`">
+                  <div class="container-wrap">
+                    <div class="img-wrap">
+                      <img :src="`${photoHost}${photoItem.path}`" @load="imgLoad">
+                    </div>
                     <div class="imgMask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
                     </div>
                   </div>
                   <p class="tip">
-                    <span class="mask"></span>
+                    <span class="button" @click="download(`${photoHost}${photoItem.path}`)">下载照片</span>
                     <span class="text">{{versionState[photoItem.version]}}</span>
                   </p>
                 </a-col>
@@ -106,6 +108,15 @@ export default {
     }
   },
   methods: {
+    imgLoad(e) {
+      if (e.target.offsetHeight < e.target.offsetWidth) {
+        e.target.style.width = 'auto'
+        e.target.style.height = '100%'
+      }
+    },
+    download(url) {
+      window.open(`${url}?download`)
+    },
     showModel(url) {
       this.previewImage = `${this.photoHost}${url}`
       this.previewVisible = true

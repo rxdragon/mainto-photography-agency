@@ -28,7 +28,7 @@
         >
         <span slot="stream_nums" slot-scope="record">
           <p v-for="(item, index) in record.stream_nums" :key="index">
-            {{`${item.stream_num} (${transText[item.state]})`}}
+            {{`${item.stream_num} (${transText[item.state] || '状态未知'})`}}
           </p>
         </span>
         <span slot="action" slot-scope="record">
