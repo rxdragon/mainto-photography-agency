@@ -7,7 +7,7 @@
           <li class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info" style="text-align: center;">
-                <img :src="`${getHost}${item.response.url}`">
+                <img :src="`${getHost}${item.response.url}`" @load="imgLoad">
                 <p class="picture-name">{{`文件名: ${item.name}`}}</p>
               </div>
               <span class="ant-upload-list-item-actions" style="top: 120px">
@@ -35,16 +35,7 @@
             </p>
           </li>
         </ul>
-        <a-upload
-          accept="image/*"
-          :multiple='true'
-          :headers="uploadHeader"
-          :action="upyunAction"
-          :beforeUpload="checkFile"
-          listType="picture-card"
-          @change="handleChange"
-          :data="getUpyun"
-          :showUploadList="false">
+        <a-upload accept="image/*" :multiple='true' :headers="uploadHeader" :action="upyunAction" :beforeUpload="checkFile" listType="picture-card" @change="handleChange" :data="getUpyun" :showUploadList="false">
           <div>
             <a-icon :type="loading ? 'loading' : 'plus'" />
             <div class="ant-upload-text">点击上传</div>
@@ -93,6 +84,9 @@ export default {
     }
   },
   methods: {
+    imgLoad(e) {
+      if (e.target.offsetHeight < e.target.offsetWidth) { e.target.style.width = 'auto' }
+    },
     async checkFile(file) {
       let md5 = await utils.getFileMd5(file)
       return new Promise((resolve, reject) => {
