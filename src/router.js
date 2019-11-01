@@ -101,6 +101,10 @@ export const routes = [{
     meta: {
       showButton: true
     }
+  },
+  {
+    path: '*',
+    component: deafault
   }
 ]
 
