@@ -146,7 +146,6 @@ export default {
     },
   },
   async created() {
-    console.log(this.getHost)
     this.productList = await Api.product.listAll()
   }
 }

@@ -11,7 +11,7 @@
         <a-row :span="24" class="item">
           <a-col class="pictureWrap" :span="6" :offset="1" v-for="(item, index) in product.simple_images" :key="index">
             <div class="img-wrap">
-              <img :src="`${photoHost}${item}`">
+              <img :src="`${getHost}${item}`">
               <div class="mask">
                 <a-icon type="eye" class="bigger-icon" @click="showModel(item)" />
               </div>
@@ -93,11 +93,11 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import Api from '@/api/index.js'
 export default {
   data() {
     return {
-      photoHost: 'https://fed.dev.hzmantu.com/upload_dev/',
       previewVisible: false,
       previewImage: '',
       standardText: {
@@ -114,6 +114,9 @@ export default {
       loading: true,
       product: {}
     }
+  },
+  computed: {
+    ...mapGetters(['getHost']),
   },
   methods: {
     showModel(url) {
