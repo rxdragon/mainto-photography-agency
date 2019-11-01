@@ -4,7 +4,7 @@ import { errorCode } from '../errorCode.js'
 const errorHandle = (status) => {
   switch (status) {
     case 401:
-      window.sessionStorage.clear()
+      window.localStorage.clear()
       window.location.reload()
       break
   }
