@@ -9,17 +9,16 @@ export default {
     host: ''
   },
   getters: {
-    getUpyun: state => state.config
+    getUpyun: state => state.config,
+    getHost: state => state.host
   },
   actions: {
     initUpyun({ commit }) {
       Api.upyun.getConfig().then(res => {
         commit('setUpyun', res.msg)
-      })
-    },
-    initHost({ commit }) {
-      Api.upyun.getHost().then(res => {
-        commit('setHost', res.msg)
+        Api.upyun.getHost().then(res => {
+          commit('setHost', res.msg)
+        })
       })
     }
   },

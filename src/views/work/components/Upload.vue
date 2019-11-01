@@ -7,7 +7,7 @@
           <li class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info" style="text-align: center;">
-                <img :src="`${photoHost}${item.response.url}`" style="height: 250px;">
+                <img :src="`${getHost}${item.response.url}`" style="height: 250px;">
                 <p class="picture-name">{{`文件名: ${item.name}`}}</p>
               </div>
               <span class="ant-upload-list-item-actions" style="top: 120px">
@@ -59,13 +59,12 @@
 </template>
 <script>
 import Api from '@/api/index.js'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import * as utils from '@/util'
 export default {
   name: 'upload',
   data() {
     return {
-      photoHost: 'https://fed.dev.hzmantu.com',
       productList: [],
       uploadHeader: {
         'X-Requested-With': null
@@ -84,6 +83,11 @@ export default {
   },
   computed: {
     ...mapGetters(['getUpyun']),
+    ...mapState({
+      getHost: state => {
+        return state.upyun.host.replace(/com\/(\S*)\//, 'com')
+      }
+    }),
     upyunAction() {
       return `https://v0.api.upyun.com/${this.getUpyun.bucket}`
     }
@@ -142,6 +146,7 @@ export default {
     },
   },
   async created() {
+    console.log(this.getHost)
     this.productList = await Api.product.listAll()
   }
 }

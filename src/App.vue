@@ -51,7 +51,7 @@ export default {
     Welcome
   },
   methods: {
-    ...mapActions(['initUpyun']),
+    ...mapActions(['initUpyun', 'initHost']),
     sendLoding(state) {
       this.loading = state
     },
@@ -61,7 +61,7 @@ export default {
   },
   async created() {
     if (this.getUser.id) {
-      this.initUpyun()
+      await this.initUpyun()
     }
   }
 }

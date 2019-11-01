@@ -32,7 +32,7 @@
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
                 <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
                   <div class="img-wrap">
-                    <img :src="`${photoHost}${photoItem.path}`">
+                    <img :src="`${getHost}${photoItem.path}`">
                     <div class="mask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
                     </div>
@@ -52,6 +52,7 @@
 </template>
 <script>
 import Api from '@/api/index.js'
+import { mapGetters } from 'vuex'
 export default {
   name: 'workRecord',
   data() {
@@ -64,9 +65,11 @@ export default {
         complete_photo: '云端成片',
         first_photo: '一次成片',
       },
-      photoHost: 'https://fed.dev.hzmantu.com/upload_dev/',
       loading: true
     }
+  },
+  computed: {
+    ...mapGetters(['getHost']),
   },
   methods: {
     showModel(url) {
@@ -86,6 +89,7 @@ export default {
     }
   },
   created() {
+    console.log(this.getHost)
     this.reviewOrder()
   }
 }
