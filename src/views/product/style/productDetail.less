@@ -86,12 +86,33 @@
     .item {
       padding: 0 20px;
 
-      .img-wrap {
-        position: relative;
+
+      .container-wrap {
+        padding: 6px;
+        width: 250px;
+        background: rgba(250, 250, 250, 1);
+        border-radius: 4px;
+
+        .img-wrap {
+          position: relative;
+          width: 238px;
+          height: 238px;
+          overflow: hidden;
+
+          justify-content: center;
+          align-items: center;
+          display: flex;
+
+          img {
+            position: absolute;
+            top: 0;
+          }
+        }
       }
 
-      .img-wrap:hover {
+      .container-wrap:hover {
         .mask {
+          border-radius: 4px;
           transition: all .5s;
           position: absolute;
           top: 0;
@@ -104,7 +125,6 @@
           .bigger-icon {
             display: block;
           }
-
         }
       }
 

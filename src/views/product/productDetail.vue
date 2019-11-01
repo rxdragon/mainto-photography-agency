@@ -10,8 +10,10 @@
       <section class="form">
         <a-row :span="24" class="item">
           <a-col class="pictureWrap" :span="6" :offset="1" v-for="(item, index) in product.simple_images" :key="index">
-            <div class="img-wrap">
-              <img :src="`${getHost}${item}`">
+            <div class="container-wrap">
+              <div class="img-wrap">
+                <img :src="`${getHost}${item}`" @load="imgLoad">
+              </div>
               <div class="mask">
                 <a-icon type="eye" class="bigger-icon" @click="showModel(item)" />
               </div>
@@ -119,6 +121,12 @@ export default {
     ...mapGetters(['getHost']),
   },
   methods: {
+    imgLoad(e) {
+      if (e.target.offsetHeight < e.target.offsetWidth) {
+        e.target.style.width = 'auto'
+        e.target.style.height = '100%'
+      }
+    },
     showModel(url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
