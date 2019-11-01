@@ -31,20 +31,20 @@
               </div>
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
                 <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
-                  <div class="img-wrap">
-                    <img :src="`${getHost}${photoItem.path}`">
+                  <div class="container">
+                    <div class="img-wrap">
+                        <img :src="`${getHost}${photoItem.path}`">
+                    </div>
                     <div class="mask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
                     </div>
                   </div>
-                  <p class="version" @click="download(`${getHost}${photoItem.path}`, photoItem.path)">{{versionState[photoItem.version]}}</p>
                 </a-col>
               </a-row>
             </li>
           </ul>
         </div>
       </section>
-      <iframe id="ifile" style="display:none"></iframe>
       <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
         <img style="width: 100%" :src="previewImage" />
       </a-modal>
@@ -73,25 +73,6 @@ export default {
     ...mapGetters(['getHost']),
   },
   methods: {
-    download(imgsrc, name) {
-      let image = new Image();
-      // 解决跨域 Canvas 污染问题
-      image.setAttribute("crossOrigin", "anonymous");
-      image.onload = function() {
-        let canvas = document.createElement("canvas");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        let context = canvas.getContext("2d");
-        context.drawImage(image, 0, 0, image.width, image.height)
-        let url = canvas.toDataURL("image/png")
-        let a = document.createElement("a")
-        let event = new MouseEvent("click")
-        a.download = name
-        a.href = url
-        a.dispatchEvent(event)
-      }
-      image.src = imgsrc
-    },
     showModel(url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true

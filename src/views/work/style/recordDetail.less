@@ -62,10 +62,9 @@
         }
 
         li {
+          margin: 0 20px 20px 0;
 
           .item {
-            margin: 0 20px 20px 0;
-
             .version {
               color: #fff;
               padding: 10px;
@@ -74,22 +73,33 @@
               transform: translateY(-100%);
             }
 
-            .img-wrap {
+            .container {
               position: relative;
-            }
+              padding: 6px;
+              width: 250px;
+              background: rgba(250, 250, 250, 1);
+              border-radius: 4px;
 
-            .bigger-icon {
-              display: none;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              color: #fff;
-              font-size: 20px;
-              transform: translate(-50%, -50%);
-            }
+              .img-wrap {
+                position: relative;
+                width: 238px;
+                height: 238px;
+                overflow: hidden;
+              }
 
-            .bigger-icon:hover {
-              cursor: pointer;
+              .bigger-icon {
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                color: #fff;
+                font-size: 20px;
+                transform: translate(-50%, -50%);
+              }
+
+              .bigger-icon:hover {
+                cursor: pointer;
+              }
             }
           }
 
