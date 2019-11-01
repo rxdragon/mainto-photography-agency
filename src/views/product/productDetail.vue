@@ -60,7 +60,7 @@
           <a-col :span="24" class="item">
             <ul class="profit">
               <li v-for="(item, index) in product.normal_income_config.retoucher" :key="index">
-                <span class="head">{{`${index}人`}}</span><span>{{`$ ${item}`}}</span>
+                <span class="head">{{`${index}人`}}</span><span>{{`¥ ${item}`}}</span>
               </li>
             </ul>
           </a-col>
@@ -72,7 +72,7 @@
           <a-col :span="24" class="item">
             <ul class="profit">
               <li v-for="(item, index) in product.splicing_income_config.retoucher" :key="index">
-                <span class="head">{{`${index}人`}}</span><span>{{`$ ${item}`}}</span>
+                <span class="head">{{`${index}人`}}</span><span>{{`¥ ${item}`}}</span>
               </li>
             </ul>
           </a-col>
@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     showModel(url) {
-      this.previewImage = `${this.photoHost}${url}`
+      this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
     },
     reviewProduct() {

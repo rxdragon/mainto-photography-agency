@@ -15,60 +15,92 @@ const customDetail = () => import('./views/custom/detail.vue')
 
 Vue.use(Router)
 
-export const routes = [
-  {
+export const routes = [{
     path: '/',
-    component: deafault
+    component: deafault,
+    meta: {
+      showButton: false
+    }
   },
   {
     path: '/work',
     name: 'work',
-    component: work
+    component: work,
+    meta: {
+      showButton: false
+    }
   },
   {
     path: '/workRecord',
     name: 'workRecord',
-    component: workRecord
+    component: workRecord,
+    meta: {
+      showButton: false
+    }
   },
   {
     path: '/recordDetail/:id',
     name: 'recordDetail',
-    component: recordDetail
+    component: recordDetail,
+    meta: {
+      showButton: true
+    }
   },
   {
     path: '/product',
     name: 'product',
-    component: product
+    component: product,
+    meta: {
+      showButton: false
+    }
   },
   {
     path: '/productDetail/:id',
     name: 'productDetail',
-    component: productDetail
+    component: productDetail,
+    meta: {
+      showButton: true
+    }
   },
   {
     path: '/addProduct',
     name: 'addProduct',
-    component: addProduct
+    component: addProduct,
+    meta: {
+      showButton: true
+    }
   },
   {
     path: '/manage',
     name: 'manage',
-    component: manage
+    component: manage,
+    meta: {
+      showButton: false
+    }
   },
   {
     path: '/manageAccount',
     name: 'manageAccount',
-    component: manageAccount
+    component: manageAccount,
+    meta: {
+      showButton: true
+    }
   },
   {
     path: '/customs',
     name: 'customs',
-    component: custom
+    component: custom,
+    meta: {
+      showButton: false
+    }
   },
   {
     path: '/customDetail/:id',
     name: 'customDetail',
-    component: customDetail
+    component: customDetail,
+    meta: {
+      showButton: true
+    }
   }
 ]
 

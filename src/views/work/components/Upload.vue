@@ -7,7 +7,7 @@
           <li class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info" style="text-align: center;">
-                <img :src="`${getHost}${item.response.url}`" style="height: 250px;">
+                <img :src="`${getHost}${item.response.url}`">
                 <p class="picture-name">{{`文件名: ${item.name}`}}</p>
               </div>
               <span class="ant-upload-list-item-actions" style="top: 120px">
@@ -51,7 +51,7 @@
           </div>
         </a-upload>
         <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-          <img alt="example" style="width: 100%" :src="previewImage" />
+          <img style="width: 100%" :src="previewImage" />
         </a-modal>
       </div>
     </div>
@@ -122,7 +122,7 @@ export default {
       this.imgList.splice(index, 1)
     },
     previewPicture(url) {
-      this.previewImage = `${this.photoHost}${url}`
+      this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
     },
     handleCancel() {
@@ -133,7 +133,7 @@ export default {
       if (file.status === 'uploading') {
         this.loading = true
       } else if (file.status === 'done') {
-        const md5 = await utils.getFile(`${this.photoHost}${file.response.url}`)
+        const md5 = await utils.getFile(`${this.getHost}${file.response.url}`)
         this.imgList.push(Object.assign(file, {
           people_num: 0,
           splice_mark: undefined,

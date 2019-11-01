@@ -12,7 +12,7 @@
       <a-col :span="18" class="title">
         <h3>{{title}}</h3>
       </a-col>
-      <a-col :span="5" class="back-button">
+      <a-col :span="5" class="back-button" v-if="showButton">
         <a-button type="primary" @click="routeBack">返回</a-button>
       </a-col>
     </a-row>
@@ -30,7 +30,8 @@ export default {
   data() {
     return {
       title: '',
-      collapsed: false
+      collapsed: false,
+      showButton: false,
     }
   },
   components: {
@@ -44,6 +45,7 @@ export default {
   watch: {
     '$route': function(route) {
       this.title = this.switchText(route.name)
+      this.showButton = route.meta.showButton
     }
   },
   methods: {

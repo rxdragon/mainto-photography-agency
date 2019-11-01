@@ -7,7 +7,7 @@
     <a-menu mode="inline" theme="dark" :selectedKeys="selectedKeys" :openKeys.sync="openKeys">
       <a-sub-menu key="work">
         <span slot="title">
-          <a-icon type="team" /><span>修图中心</span>
+          <a-icon type="team" /><span>照片上传</span>
         </span>
         <a-menu-item key="upload" @click="routeView('/work')">上传拍摄</a-menu-item>
         <a-menu-item key="record" @click="routeView('/workRecord')">上传历史记录</a-menu-item>

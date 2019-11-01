@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     showModel(url) {
-      this.previewImage = `${this.photoHost}${url}`
+      this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
     },
     reviewOrder() {
@@ -89,7 +89,6 @@ export default {
     }
   },
   created() {
-    console.log(this.getHost)
     this.reviewOrder()
   }
 }
