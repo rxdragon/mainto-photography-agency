@@ -6,7 +6,7 @@
           <span class="tip name">账号: </span>
         </a-col>
         <a-col :span="6">
-          <a-input addonBefore="DC:" placeholder="请填写账号" v-model="account.username" />
+          <a-input addonBefore="DC:" placeholder="请填写账号" :value="account.username" :maxLength="16" @change="userChange" />
         </a-col>
       </a-row>
       <a-row class="item">
@@ -14,7 +14,7 @@
           <span class="tip name">登录密码: </span>
         </a-col>
         <a-col :span="6">
-          <a-input type="password" v-model="account.password" placeholder="未有特殊密码要求可不用填写">
+          <a-input type="text" placeholder="未有特殊密码要求可不用填写" :value="account.password" :maxLength="16" @change="passChange">
           </a-input>
         </a-col>
       </a-row>
@@ -40,6 +40,7 @@ export default {
   name: 'addAccount',
   data() {
     return {
+      value: '',
       account: {
         id: '',
         username: '',
@@ -54,11 +55,28 @@ export default {
     }
   },
   methods: {
+    userChange(e) {
+      const { value } = e.target
+      const reg = /^[0-9a-zA-Z]*$/g
+      if (reg.test(value) || value === '' || value === '-') {
+        this.account.username = value
+      }
+    },
+    passChange(e) {
+      const { value } = e.target;
+      const reg = /^[0-9a-zA-Z]*$/g
+      if (reg.test(value) || value === '' || value === '-') {
+        this.account.password = value
+      }
+    },
     submit() {
+      if (!this.account.username || !this.account.nick) { return this.$message.error('请填写完整信息') }
       this.$emit('loading', true)
       if (!this.hasQuery) {
         Api.manage.create(this.account).then(() => {
           this.$message.success('账号创建成功', 1, this.routeBack)
+        }).catch((e) => {
+          this.$message.error(e.data.error_msg)
         }).finally(() => {
           this.$emit('loading', false)
         })
