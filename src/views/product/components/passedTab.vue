@@ -101,6 +101,8 @@ export default {
     switchState(record) {
       Api.product.switch({
         id: record.id
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).then(() => {
         this.$message.success('更改状态成功', 1, this.searchProduct)
       })
@@ -115,6 +117,8 @@ export default {
       this.loading = true
       Api.product.list(this.searchParams).then((res) => {
         this.dataSource = res.msg.items
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })

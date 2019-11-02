@@ -33,7 +33,7 @@
                 <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
                   <div class="container">
                     <div class="img-wrap">
-                        <img :src="`${getHost}${photoItem.path}`">
+                      <img :src="`${getHost}${photoItem.path}`" @load="imgLoad">
                     </div>
                     <div class="mask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
@@ -73,6 +73,12 @@ export default {
     ...mapGetters(['getHost']),
   },
   methods: {
+    imgLoad(e) {
+      if (e.target.offsetHeight < e.target.offsetWidth) {
+        e.target.style.width = 'auto'
+        e.target.style.height = '100%'
+      }
+    },
     showModel(url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true

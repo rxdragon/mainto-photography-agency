@@ -6,11 +6,11 @@
         <ul class="ant-upload-list ant-upload-list-picture-card" v-for="(item, index) in imgList" :key="index">
           <li class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
-              <div class="ant-upload-list-item-info" style="text-align: center;">
+              <div class="ant-upload-list-item-info">
                 <img :src="`${getHost}${item.response.url}`" @load="imgLoad">
                 <p class="picture-name">{{`文件名: ${item.name}`}}</p>
               </div>
-              <span class="ant-upload-list-item-actions" style="top: 120px">
+              <span class="ant-upload-list-item-actions">
                 <i class="anticon anticon-eye-o" @click="previewPicture(item.response.url)">
                   <a-icon type="eye" /></i>
                 <i class="anticon anticon-delete" @click="deletePicture(item, index)">
@@ -18,17 +18,17 @@
               </span>
             </div>
             <p class="picture-count">
-              选择人数:
-              <a-input-number style="width: 70%;" :min="0" :max="99" v-model="item.people_num" :formatter="value => `${value} 人`" :parser="value => value.replace(/\$\s?|(,*)/g, '')" />
+              填写人数:
+              <a-input addonAfter="人" :maxLength="3" :value="item.people_num" @change="(e) => peopleChange(e, item)" @blur="(e) => onBlur(e, item)" />
             </p>
             <p class="picture-product">
               选择产品:
-              <a-select placeholder="请选择产品类型" style="width: 70%" v-model="item.product_id">
+              <a-select placeholder="请选择产品类型" v-model="item.product_id">
                 <a-select-option v-for="(child, childIndex) in productList.msg" :key="childIndex" :value="child.cloud_product_id">{{child.name}}</a-select-option>
               </a-select>
             </p>
             <p class="picture-product" v-if="needSplit(item)">
-              <a-select placeholder="选择拼接类型" style="width: 55%" v-model="item.splice_position">
+              <a-select  class="concat" placeholder="选择拼接类型" v-model="item.splice_position">
                 <a-select-option v-for="(item, index) in splitArray" :key="index" :value="item">{{item}}</a-select-option>
               </a-select>
               <a-input-number style="width: 40%; margin-left: 4%;" :min="1" :max="99" v-model="item.splice_mark" placeholder="拼接序号" />
@@ -84,11 +84,26 @@ export default {
     }
   },
   methods: {
+    onBlur(e, item) {
+      const { value } = e.target
+      if (value === '') {
+        item.people_num = 0
+      } else if (value.length > 1) {
+        item.people_num = value.replace(/^[0]/, '')
+      }
+    },
+    peopleChange(e, item) {
+      const { value } = e.target
+      const reg = /^[0-9]+$/g
+      if (reg.test(value) || value === '' || value === '-') {
+        item.people_num = value
+      }
+    },
     imgLoad(e) {
       if (e.target.offsetHeight < e.target.offsetWidth) { e.target.style.width = 'auto' }
     },
     async checkFile(file) {
-      let md5 = await utils.getFileMd5(file)
+      const md5 = await utils.getFileMd5(file)
       return new Promise((resolve, reject) => {
         for (let item of this.imgList) {
           if (item.name === file.name || md5 === item.md5) {

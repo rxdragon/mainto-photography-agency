@@ -116,7 +116,7 @@ export default {
         this.photoList.push({
           productId: item.product_id + '',
           path: item.response.url.replace(/\/(\S*)\//, ''),
-          peopleNum: item.people_num,
+          peopleNum: Number(item.people_num),
           spliceMark: item.splice_mark,
           splicePosition: item.splice_position,
           type: Boolean(item.splice_position) === true ? 'splice' : 'normal'

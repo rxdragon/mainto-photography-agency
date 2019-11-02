@@ -111,7 +111,8 @@ export default {
       Api.work.cancel({
         orderNum: record.order_num
       }).then(() => {
-        this.$message.success('订单撤回成功', 2, this.searchOrder)
+        this.searchOrder()
+        this.$message.success('订单撤回成功', 2)
       }).finally(() => {
         this.loading = false
       })
@@ -127,6 +128,8 @@ export default {
       this.loading = true
       Api.work.list(this.searchParams).then((res) => {
         this.data = res.msg.items
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })

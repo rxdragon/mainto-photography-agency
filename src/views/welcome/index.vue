@@ -65,6 +65,8 @@ export default {
         Api.user.getInfo().then((res) => {
           this.initUpyun()
           this.setUserInfo(res.msg)
+        }).catch((e) => {
+          this.$message.error(e.data.error_msg)
         })
       }).catch((e) => {
         this.$message.error(e.data.error_msg)

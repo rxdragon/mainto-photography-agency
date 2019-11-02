@@ -18,21 +18,14 @@
           <a-button type="primary" @click="searchOrder">查 询</a-button>
         </a-col>
       </a-row>
-      <a-table
-        class="table"
-        :loading="loading"
-        :rowKey="bindKey" 
-        :columns="columns"
-        :dataSource="data"
-        :pagination="false"
-        >
+      <a-table class="table" :loading="loading" :rowKey="bindKey" :columns="columns" :dataSource="data" :pagination="false">
         <span slot="stream_nums" slot-scope="record">
           <p v-for="(item, index) in record.stream_nums" :key="index">
             {{`${item.stream_num} (${transText[item.state] || '状态未知'})`}}
           </p>
         </span>
         <span slot="action" slot-scope="record">
-          <a href="javascript:;"  @click="routeView(record)">详 情</a>
+          <a href="javascript:;" @click="routeView(record)">详 情</a>
         </span>
       </a-table>
       <a-pagination class="pagination" :defaultCurrent="1" :total="data.length" />
@@ -115,16 +108,18 @@ export default {
     dateChange(date, dateString) {
       this.search.date = dateString
     },
-    routeView (record) {
+    routeView(record) {
       this.$router.push({
         name: 'customDetail',
-        params: {id: record.order_num}
+        params: { id: record.order_num }
       })
     },
     searchOrder() {
       this.loading = true
       Api.work.list(this.searchParams).then((res) => {
         this.data = res.msg.items
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })

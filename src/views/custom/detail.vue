@@ -127,25 +127,27 @@ export default {
         orderNum: this.$route.params.id
       }).then((res) => {
         this.order = res.msg
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })
     },
     createZip(type) {
-      const PHOTOQUEUE = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
-      const FOLDER = type === 'first' ? '原片' : '成片'
-      if (PHOTOQUEUE.length === 0) { return this.$message.error(`未找到${FOLDER}资源`) }
+      const photoData = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
+      const folder = type === 'first' ? '原片' : '成片'
+      if (photoData.length === 0) { return this.$message.error(`未找到${folder}资源`) }
       let zip = new JsZip()
-      let fold = zip.folder(FOLDER)
+      let fold = zip.folder(folder)
       let transArr = []
-      PHOTOQUEUE.map((obj) => {
+      photoData.map((obj) => {
         transArr.push(utils.getRemoteImg(obj).then(res => {
           fold.file(`${moment().format('YYYY-MM-DD HH-mm-ss')}.png`, res, { base64: true })
         }))
       })
       Promise.all(transArr).then(() => {
         zip.generateAsync({ type: 'blob' }).then(content => {
-          utils.saveAs(content, `${FOLDER} ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
+          utils.saveAs(content, `${folder} ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
         })
       })
     }
