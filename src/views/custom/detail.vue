@@ -82,6 +82,12 @@ export default {
       loading: false,
       previewVisible: false,
       previewImage: '',
+      order: {
+        title: '',
+        products: [],
+        photographer: '',
+        streams: []
+      },
       photoHost: 'http://fed.dev.hzmantu.com/upload_dev/',
       versionState: {
         original_photo: '原片',
@@ -128,7 +134,7 @@ export default {
       }).then((res) => {
         this.order = res.msg
       }).catch((e) => {
-        this.$message.error(e.data.error_msg)
+        this.$message.error(e.data.error_msg, 1, this.routeBack)
       }).finally(() => {
         this.loading = false
       })
