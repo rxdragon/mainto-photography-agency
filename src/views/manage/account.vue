@@ -5,8 +5,8 @@
         <a-col :span="2">
           <span class="tip name">账号: </span>
         </a-col>
-        <a-col :span="6">
-          <a-input addonBefore="DC:" placeholder="请填写账号" :value="account.username" :maxLength="16" @change="userChange" />
+        <a-col :span="7">
+          <a-input :addonBefore="`${getUser.organization.username}: `" placeholder="请填写账号" :value="account.username" :maxLength="16" @change="userChange" />
         </a-col>
       </a-row>
       <a-row class="item">
@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import Api from '@/api/index.js'
 export default {
   name: 'addAccount',
@@ -52,7 +53,10 @@ export default {
   computed: {
     hasQuery() {
       return this.$route.query.id !== undefined
-    }
+    },
+    ...mapGetters([
+      'getUser',
+    ])
   },
   methods: {
     userChange(e) {
@@ -92,7 +96,7 @@ export default {
     },
   },
   created() {
-    if (this.hasQuery) { this.account = this.$route.query }
+    if (this.hasQuery) { this.account = Object.assign(this.account, this.$route.query) }
   }
 }
 </script>
