@@ -1,4 +1,5 @@
 import Api from '@/api/index.js'
+import { message } from 'ant-design-vue'
 export default {
   state: {
     config: {
@@ -19,6 +20,8 @@ export default {
         Api.upyun.getHost().then(res => {
           commit('setHost', res.msg)
         })
+      }).catch((e) => {
+        message.error(e.data.error_msg, 15)
       })
     }
   },

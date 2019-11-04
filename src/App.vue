@@ -61,7 +61,9 @@ export default {
   },
   async created() {
     if (this.getUser.id) {
-      await this.initUpyun()
+      await this.initUpyun().then().catch((e) => {
+        this.$message.error(e.data.error_msg)
+      })
     }
   }
 }

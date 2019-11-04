@@ -31,7 +31,7 @@
                 </div>
               </a-upload>
             </div>
-            <a-button type="primary" class="submit" @click="sumbitAdd" :disabled="loading">
+            <a-button type="primary" class="submit" @click="sumbitAdd">
               提交审核
             </a-button>
           </a-col>
@@ -89,14 +89,14 @@ export default {
       this.previewImage = file.url || file.thumbUrl
       this.previewVisible = true
     },
-    handleChange({ fileList }) {
+    handleChange({ file, fileList }) {
       this.fileList = fileList
+      if (file.status === 'error') { return this.$message.error('upyun 上传异常') }
     },
     sumbitAdd() {
       // TODO: 后续增补Verification模块
       if (!this.product.name || !this.product.standard || !this.fileList.length) {
-        this.$message.error('请填写完整信息')
-        return false
+        return this.$message.error('请填写完整信息')
       }
       this.$emit('loading', true)
       this.addSubmit(this.params).then(() => {
