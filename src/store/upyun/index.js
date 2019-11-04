@@ -10,7 +10,7 @@ export default {
   },
   getters: {
     getUpyun: state => state.config,
-    getHost: state => state.host
+    getHost: state => state.host || 'http://fed.dev.hzmantu.com/upload_dev/'
   },
   actions: {
     initUpyun({ commit }) {
