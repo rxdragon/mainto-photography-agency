@@ -27,7 +27,7 @@
             <p class="retouch">修图要求: {{product.retouch_require}}</p>
           </a-col>
         </a-row>
-        <a-row class="standard item">
+        <a-row class="standard item" v-if="!$route.params.type">
           <a-col :span="6">
             <span class="tip">修图标准: </span>
           </a-col>
@@ -41,7 +41,7 @@
             <span class="tip">照片拼接: </span>
           </a-col>
         </a-row>
-        <a-row class="parameter item">
+        <a-row class="parameter item" v-if="!$route.params.type">
           <a-col :span="6">
             <span class="tip">{{standardText[product.retouch_standard] || ''}}</span>
           </a-col>
@@ -55,7 +55,7 @@
             <span class="tip">{{product.need_splicing === 0 ? '不需要' : '需要'}}</span>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="product.normal_income_config">
+        <a-row class="cut" v-if="!$route.params.type && product.normal_income_config">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>非拼接收益</span></h4>
           </a-col>
@@ -67,7 +67,7 @@
             </ul>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="product.normal_income_config">
+        <a-row class="cut" v-if="!$route.params.type && product.normal_income_config">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>拼接收益</span></h4>
           </a-col>
@@ -84,7 +84,7 @@
             <h4><span class="line"></span><span>产品备注信息</span></h4>
           </a-col>
           <a-col :span="24" class="item">
-            <p class="tip note">{{product.remark}}</p>
+            <p class="tip note">{{product.remark || '暂无备注'}}</p>
           </a-col>
         </a-row>
         <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
@@ -104,7 +104,9 @@ export default {
       previewImage: '',
       standardText: {
         blue: '蓝标',
-        master: '大师店'
+        master: '大师店',
+        kids: '海马体儿童',
+        mainto: '缦图摄影'
       },
       weightState: {
         weight_first: '一类产品',
@@ -132,6 +134,7 @@ export default {
       this.previewVisible = true
     },
     reviewProduct() {
+      console.log(this.$route.params.type)
       this.loading = true
       Api.product.detail({
         id: this.$route.params.id

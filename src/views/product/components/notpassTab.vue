@@ -105,7 +105,7 @@ export default {
     viewDetail(record) {
       this.$router.push({
         name: 'productDetail',
-        params: { id: record.id }
+        params: { id: record.id, type: 'notpass'}
       })
     },
     searchProduct() {
