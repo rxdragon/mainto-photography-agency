@@ -19,7 +19,7 @@
           <a-table :columns="columns" :dataSource="data" :pagination="false" :rowKey="bindKey" :loading="loading">
             <span slot="stream_nums" slot-scope="record">
               <p v-for="(item, index) in record.stream_nums" :key="index">
-                {{item.stream_num}}
+                {{`${item.stream_num} (${transText[item.state] || '状态未知'})`}}
               </p>
             </span>
             <span slot="action" slot-scope="record">
@@ -44,6 +44,15 @@ export default {
   data() {
     return {
       data: [],
+      transText: {
+        wait_retouch: '等待修片',
+        finish: '云端修图完成',
+        retouching: '修片中',
+        wait_review: ' 审核中',
+        reviewing: '等待审核',
+        hanging: '挂起中',
+        review_return_retouch: '审核退回修片中'
+      },
       loading: true,
       columns: [{
         title: '订单标题',

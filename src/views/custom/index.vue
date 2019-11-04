@@ -41,9 +41,12 @@ export default {
       data: [],
       transText: {
         wait_retouch: '等待修片',
-        finish: '修图完成',
+        finish: '云端修图完成',
         retouching: '修片中',
-        wait_review: '等待审核'
+        wait_review: ' 审核中',
+        reviewing: '等待审核',
+        hanging: '挂起中',
+        review_return_retouch: '审核退回修片中'
       },
       search: {
         date: [],
