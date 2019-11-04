@@ -62,6 +62,7 @@ export default {
       Api.user.loginAuth(params, {
         headers: { 'X-Expose-Headers': 'X-Stream-Id, x-stream-id' }
       }).then(() => {
+        this.$router.replace({path: '/'})
         Api.user.getInfo().then((res) => {
           this.initUpyun()
           this.setUserInfo(res.msg)

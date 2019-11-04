@@ -84,7 +84,7 @@
             <h4><span class="line"></span><span>产品备注信息</span></h4>
           </a-col>
           <a-col :span="24" class="item">
-            <p class="tip note">{{product.remark || '暂无备注'}}</p>
+            <p class="tip note">{{product.note || '暂无备注'}}</p>
           </a-col>
         </a-row>
         <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">

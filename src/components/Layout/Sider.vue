@@ -12,7 +12,7 @@
         <a-menu-item key="upload" @click="routeView('/work')">上传拍摄</a-menu-item>
         <a-menu-item key="record" @click="routeView('/workRecord')">上传历史记录</a-menu-item>
       </a-sub-menu>
-      <a-menu-item key="product" @click="routeView('/product')">
+      <a-menu-item key="product" @click="routeView('/product')" v-if="getUser.level === 'master'">
         <a-icon type="upload" />
         <span class="nav-text">产品管理</span>
       </a-menu-item>
@@ -20,7 +20,7 @@
         <a-icon type="user" />
         <span class="nav-text">客片中心</span>
       </a-menu-item>
-      <a-sub-menu key="manage">
+      <a-sub-menu key="manage" v-if="getUser.level === 'master'">
         <span slot="title">
           <a-icon type="team" /><span>管理中心</span>
         </span>
@@ -30,6 +30,7 @@
   </a-layout-sider>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 const RouteConfig = [{
   path: ['manage', 'manageAccount'],
   selectedKeys: ['account'],
@@ -68,6 +69,11 @@ export default {
     '$route': function(route) {
       this.checkRoute(route.name)
     }
+  },
+  computed: {
+    ...mapGetters([
+      'getUser',
+    ])
   },
   methods: {
     checkRoute(path) {
