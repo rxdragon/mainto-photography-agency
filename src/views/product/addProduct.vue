@@ -62,7 +62,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getUpyun']),
+    ...mapGetters(['getUpyun', 'getHost']),
     params() {
       return {
         id: this.$route.query.id || '',
@@ -90,6 +90,7 @@ export default {
       this.previewVisible = true
     },
     handleChange({ file, fileList }) {
+      console.log(file)
       this.fileList = fileList
       if (file.status === 'error') { return this.$message.error('upyun 上传异常') }
     },
@@ -112,8 +113,15 @@ export default {
     initQuery() {
       this.product = {
         name: this.$route.query.name,
-        standard: this.$route.query.standard
+        standard: this.$route.query.standard,
       }
+      this.$route.query.url.map((item) => {
+        this.fileList.push({
+          uid: this.$route.query.name,
+          status: 'done',
+          url: `${this.getHost}${item}`
+        })
+      })
     }
   },
   created() {
