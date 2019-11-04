@@ -134,7 +134,6 @@ export default {
       this.previewVisible = true
     },
     reviewProduct() {
-      console.log(this.$route.params.type)
       this.loading = true
       Api.product.detail({
         id: this.$route.params.id

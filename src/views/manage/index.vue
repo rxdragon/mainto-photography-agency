@@ -103,7 +103,8 @@ export default {
       Api.manage.disable({
         id: record.id
       }).then(() => {
-        this.$message.success('账号禁用成功', 1, this.searchSubuser)
+        this.searchSubuser()
+        this.$message.success('账号禁用成功', 2)
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {
@@ -115,7 +116,8 @@ export default {
       Api.manage.enable({
         id: record.id
       }).then(() => {
-        this.$message.success('账号启用成功', 1, this.searchSubuser)
+        this.searchSubuser()
+        this.$message.success('账号启用成功', 2)
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {
