@@ -27,7 +27,7 @@
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
               <div class="alert-wrap">
-                <a-alert :message="item.product" type="info" />
+                <a-alert :message="`${item.product} (流水号: ${item.stream_num}) `" type="info" />
               </div>
               <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
                 <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">

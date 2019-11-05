@@ -19,7 +19,7 @@
             </div>
             <p class="picture-count">
               填写人数:
-              <a-input addonAfter="人" :maxLength="3" :value="item.people_num" @change="(e) => peopleChange(e, item)" @blur="(e) => onBlur(e, item)" />
+              <a-input placeholder="请填写人数" addonAfter="人" :maxLength="3" :value="item.people_num" @change="(e) => peopleChange(e, item)" @blur="(e) => onBlur(e, item)" />
             </p>
             <p class="picture-product">
               选择产品:
@@ -144,7 +144,7 @@ export default {
       } else if (file.status === 'done') {
         const md5 = await utils.getFile(`${this.getHost}${file.response.url}`)
         this.imgList.push(Object.assign(file, {
-          people_num: 0,
+          people_num: '',
           splice_mark: undefined,
           splice_position: undefined,
           product_id: undefined,
