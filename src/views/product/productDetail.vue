@@ -67,7 +67,7 @@
             </ul>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="product.normal_income_config && product.retouch_standard === 'blue'">
+        <a-row class="cut" v-if="product.normal_income_config && product.need_splicing !== 0">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>拼接收益</span></h4>
           </a-col>
