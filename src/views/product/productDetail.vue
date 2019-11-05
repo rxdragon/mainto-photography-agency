@@ -55,7 +55,7 @@
             <span class="tip">{{product.need_splicing === 0 ? '不需要' : '需要'}}</span>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="product.normal_income_config && product.retouch_standard === 'blue'">
+        <a-row class="cut" v-if="product.normal_income_config">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>非拼接收益</span></h4>
           </a-col>
