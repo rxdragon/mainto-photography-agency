@@ -90,7 +90,6 @@ export default {
       this.previewVisible = true
     },
     handleChange({ file, fileList }) {
-      console.log(file)
       this.fileList = fileList
       if (file.status === 'error') { return this.$message.error('upyun 上传异常') }
     },

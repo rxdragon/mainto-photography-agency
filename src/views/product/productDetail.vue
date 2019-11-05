@@ -55,7 +55,7 @@
             <span class="tip">{{product.need_splicing === 0 ? '不需要' : '需要'}}</span>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="!$route.params.type && product.normal_income_config">
+        <a-row class="cut" v-if="product.normal_income_config && product.retouch_standard === 'blue'">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>非拼接收益</span></h4>
           </a-col>
@@ -67,7 +67,7 @@
             </ul>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="!$route.params.type && product.normal_income_config">
+        <a-row class="cut" v-if="product.normal_income_config && product.retouch_standard === 'blue'">
           <a-col class="title" :span="24">
             <h4><span class="line"></span><span>拼接收益</span></h4>
           </a-col>
@@ -123,6 +123,7 @@ export default {
     ...mapGetters(['getHost']),
   },
   methods: {
+
     imgLoad(e) {
       if (e.target.offsetHeight < e.target.offsetWidth) {
         e.target.style.width = 'auto'
