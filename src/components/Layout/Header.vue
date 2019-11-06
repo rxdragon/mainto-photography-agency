@@ -3,8 +3,8 @@
     <a-row class="info">
       <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="triggerCollapsed" />
       <section :style="{ float: 'right', marginRight: '10px'}">
-        <span>{{getUser.config.orgCode}}</span>
-        <a-tag color="#1769FF" class="organization">{{getUser.nick}}</a-tag>
+        <span>{{getUser.nick}}</span>
+        <a-tag color="#1769FF" class="organization">{{getUser.organization.nick}}</a-tag>
         <icon-font class="out-button" type="icon-tuichu" @click="showConfirm" />
       </section>
     </a-row>

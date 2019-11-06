@@ -76,6 +76,9 @@ export default {
     submit() {
       if (!this.account.username || !this.account.nick) { return this.$message.error('请填写完整信息') }
       this.$emit('loading', true)
+      for (let key in this.account) {
+        if (!this.account[key]) { delete this.account[key] }
+      }
       if (!this.hasQuery) {
         Api.manage.create(this.account).then(() => {
           this.$message.success('账号创建成功', 1, this.routeBack)
