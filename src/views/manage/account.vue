@@ -6,7 +6,7 @@
           <span class="tip name">账号: </span>
         </a-col>
         <a-col :span="7">
-          <a-input :addonBefore="`${getUser.organization.username}: `" placeholder="请填写账号" :value="account.username" :maxLength="16" @change="userChange" />
+          <a-input :addonBefore="`${getUser.config.orgCode}: `" placeholder="请填写账号" :value="account.username" :maxLength="16" @change="userChange" />
         </a-col>
       </a-row>
       <a-row class="item">
