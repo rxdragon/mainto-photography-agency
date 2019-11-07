@@ -1,13 +1,6 @@
 <template>
   <div id="manage">
-    <a-row class="title">
-      <a-col :span="12">
-        <span class="tip">账号管理</span>
-      </a-col>
-      <a-col :span="12" style="text-align: right">
-        <a-button type="primary" @click="routeView('/manageAccount')">添加子账号</a-button>
-      </a-col>
-    </a-row>
+    <a-button class="add-btn" type="primary" @click="routeView('/manageAccount')">添加子账号</a-button>
     <a-row class="table">
       <a-table :rowKey="bindKey" :loading="loading" :columns="columns" :dataSource="dataSource" :pagination="false">
         <span slot="state" slot-scope="record">

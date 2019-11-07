@@ -1,4 +1,8 @@
 #customDetail {
+  margin: 24px;
+  padding: 24px;
+  background-color: #fff;
+
   .spin-content {
     height: 100vh;
     line-height: 80vh;
@@ -31,52 +35,30 @@
     }
 
     .orderInfo {
-      border: 1px solid #e9e9e9;
-      border-radius: 4px;
-      margin-top: 20px;
-      padding: 20px;
+      h4 {
+        margin-bottom: 24px;
+      }
 
-      ul {
+      .cell {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
 
-        border: 1px solid #e9e9e9;
-        border-radius: 4px;
+        p:first-child {
+          font-size: 14px;
+          width: 70px;
+          color: rgba(0, 0, 0, 0.85);
+          text-align: right;
+        }
 
-        li {
-
-          p {
-            font-size: 14px;
-            padding: 14px 0;
-            text-align: center;
-          }
-
-          p.head {
-            font-size: 15px;
-            background-color: #f0f0f0;
-            font-weight: bold;
-          }
-
-          p.iconLine {
-            position: relative;
-
-            span {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 4px;
-              height: 100%;
-              background-color: #f0f0f0;
-            }
-          }
+        P:last-child {
+          color: rgba(0, 0, 0, 0.65);
+          margin-left: 8px;
         }
       }
     }
 
     .pictureInfo {
-      border: 1px solid #e9e9e9;
-      border-radius: 4px;
-      margin-top: 20px;
-      padding: 20px;
-
       h4 {
         .float-button {
           float: right;

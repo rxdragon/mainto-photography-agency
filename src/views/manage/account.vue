@@ -99,7 +99,13 @@ export default {
     },
   },
   created() {
-    if (this.hasQuery) { this.account = Object.assign(this.account, this.$route.query) }
+    if (this.hasQuery) {
+      let username = this.$route.query.username
+      if (username && username.includes(':')) {
+        username = username.trim().split(':')[1]
+      }
+      this.account = Object.assign(this.account, this.$route.query, { username })
+    }
   }
 }
 </script>

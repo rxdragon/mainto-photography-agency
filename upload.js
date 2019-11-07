@@ -22,7 +22,6 @@ async function uploadFileList(fileList, client, force) {
       // 比对文件大小进行上传
       remoteFile = await client.headFile(item.remotePath)
       if (remoteFile && remoteFile.size === item.size && !force) {
-        // console.log('\x1b[33m'+localPath+'\t不需要上传\x1b[0m')
       } else {
         file = fs.readFileSync(item.filePath)
         await client.putFile(item.remotePath, file)
