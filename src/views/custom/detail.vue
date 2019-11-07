@@ -10,34 +10,35 @@
             <span class="line"></span>
             <span>订单信息</span>
           </h4>
-          <ul>
-            <li>
-              <p class="head">订单标题</p>
+          <a-row>
+            <a-col :span="12" class="cell">
+              <p class="head">订单标题:</p>
               <p>{{order.title}}</p>
-            </li>
-            <li>
-              <a-row>
-                <a-col :span="12">
-                  <p class="head">拍摄产品</p>
-                  <p>{{order.products.join('、') }}</p>
-                </a-col>
-                <a-col :span="12">
-                  <p class="head">上传人</p>
-                  <p class="iconLine"><span></span>{{order.photographer}}</p>
-                </a-col>
-              </a-row>
-            </li>
-            <li>
-              <p class="head">修图备注</p>
+            </a-col>
+            <a-col :span="12" class="cell">
+              <p class="head">拍摄产品:</p>
+              <p>{{order.products.join('、') }}</p>
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-col :span="12" class="cell">
+              <p class="head">上传人:</p>
+              <p class="iconLine"><span></span>{{order.photographer}}</p>
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-col :span="12" class="cell">
+              <p class="head">修图备注:</p>
               <p>{{order.retouch_note}}</p>
-            </li>
-          </ul>
+            </a-col>
+          </a-row>
         </div>
+        <a-divider />
         <div class="pictureInfo">
           <h4>
             <span class="line"></span><span>照片信息</span>
             <div class="float-button">
-              <a-button type="primary" class="origin" @click="createZip('first')">原片下载</a-button>
+              <a-button class="origin" @click="createZip('first')">原片下载</a-button>
               <a-button type="primary" @click="createZip('complete')">云端成片下载</a-button>
             </div>
           </h4>

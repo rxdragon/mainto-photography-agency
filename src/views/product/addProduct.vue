@@ -102,7 +102,8 @@ export default {
       this.addSubmit(this.params).then(() => {
         this.product = { name: '', standard: '' }
         this.fileList = []
-        this.$message.success('产品添加成功', 1, this.routeBack)
+        this.$message.success('产品添加成功')
+        this.routeBack()
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {

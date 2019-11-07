@@ -1,8 +1,8 @@
 <template>
-  <a-layout-header id="header" style="">
+  <a-layout-header id="header">
     <a-row class="info">
       <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="triggerCollapsed" />
-      <section :style="{ float: 'right', marginRight: '10px'}">
+      <section :style="{ float: 'right' }">
         <span>{{getUser.nick}}</span>
         <a-tag color="#1769FF" class="organization">{{getUser.organization.nick}}</a-tag>
         <icon-font class="out-button" type="icon-tuichu" @click="showConfirm" />
@@ -128,6 +128,7 @@ export default {
 
       .out-button {
         font-size: 18px;
+        margin-right: 24px;
         font-weight: bold;
         vertical-align: middle;
       }
@@ -141,6 +142,9 @@ export default {
   .route-tip {
     .title {
       padding-left: 24px;
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
     }
 
     .back-button {

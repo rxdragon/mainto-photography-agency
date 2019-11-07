@@ -5,7 +5,7 @@
         <Sider :collapsed="collapsed" />
         <a-layout style="position: relative;">
           <Header @collapsedEvent="collapsedHandle" />
-          <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
+          <a-layout-content :style="{ background: '#f7f7f7', minHeight: '280px' }">
             <router-view @loading="sendLoding" />
           </a-layout-content>
           <div class="loading-wrap" v-if="loading">
