@@ -34,6 +34,7 @@ instance.interceptors.response.use(
       response.data.error_msg = errorCode.getMsg(response.data)
       return Promise.reject(response)
     }
+    return Promise.reject({ data: { error_msg: '网络无响应, 请稍候重试!' } })
   }
 )
 
