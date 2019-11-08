@@ -127,6 +127,9 @@ export default {
       for (let item in this.params) {
         if (!this.params[item]) { return false }
       }
+      for (let photo of this.params.photoData) {
+        if (!photo.productId || !photo.peopleNum) { return false }
+      }
       return true
     },
     async submitCloud() {

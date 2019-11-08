@@ -98,6 +98,11 @@ export default {
       if (!this.product.name || !this.product.standard || !this.fileList.length) {
         return this.$message.error('请填写完整信息')
       }
+      for (let photo of this.fileList) {
+        if (photo.status !== 'done') {
+          return this.$message.error('请等待图片上传完成!')
+        }
+      }
       this.$emit('loading', true)
       this.addSubmit(this.params).then(() => {
         this.product = { name: '', standard: '' }

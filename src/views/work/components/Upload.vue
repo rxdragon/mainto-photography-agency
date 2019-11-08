@@ -145,10 +145,10 @@ export default {
         const md5 = await utils.getFile(`${this.getHost}${file.response.url}`)
         this.imgList.push(Object.assign(file, {
           people_num: '',
-          splice_mark: undefined,
-          splice_position: undefined,
-          product_id: undefined,
-          md5: md5
+          splice_mark: null,
+          splice_position: null,
+          product_id: '',
+          md5
         }))
         this.loading = false
       }
