@@ -114,7 +114,7 @@ export default {
       this.photoList = []
       photos.map((item) => {
         this.photoList.push({
-          productId: item.product_id + '',
+          productId: item.product_id && item.product_id + '',
           path: item.response.url.replace(/\/(\S*)\//, ''),
           peopleNum: Number(item.people_num),
           spliceMark: item.splice_mark,

@@ -147,7 +147,7 @@ export default {
           people_num: '',
           splice_mark: null,
           splice_position: null,
-          product_id: '',
+          product_id: undefined,
           md5
         }))
         this.loading = false
