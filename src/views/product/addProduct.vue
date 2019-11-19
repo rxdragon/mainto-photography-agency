@@ -81,7 +81,7 @@ export default {
         simplePhotoPaths: this.fileList.map((item) => {
           const url = item.url || item.response.url
           const returnUrl = url.replace(/\/(\S*)\//, '')
-          return returnUrl.replace('https:', '').replace('http', '')
+          return returnUrl.replace('https:', '').replace('http:', '')
         })
       }
     },
