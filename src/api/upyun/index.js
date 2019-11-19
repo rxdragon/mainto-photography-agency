@@ -1,11 +1,11 @@
-import base from '../config';
+import base from '../config'
 import axios from '@/axios/index'
 
 const upyun = {
-  getConfig() {
+  getConfig () {
     return axios.get(`${base.url}/photographer/common/sign/upyun`)
   },
-  getHost() {
+  getHost () {
     return axios.get(`${base.url}/photographer/common/sign/getHost`)
   }
 }

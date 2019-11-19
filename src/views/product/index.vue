@@ -2,12 +2,12 @@
   <div id="product">
     <a-button class="add-btn" type="primary" @click="routeView('/addProduct')">新增产品</a-button>
     <a-row class="tab">
-      <a-tabs defaultActiveKey="1" :animated="{'tabPane': false}">
-        <a-tab-pane tab="审核通过" key="1">
-          <passedTab class="content"/>
+      <a-tabs default-active-key="1" :animated="{'tabPane': false}">
+        <a-tab-pane key="1" tab="审核通过">
+          <passedTab class="content" />
         </a-tab-pane>
-        <a-tab-pane tab="待审核" key="2" forceRender>
-          <notpassTab class="content"/>
+        <a-tab-pane key="2" tab="待审核" force-render>
+          <notpassTab class="content" />
         </a-tab-pane>
       </a-tabs>
     </a-row>

@@ -7,20 +7,20 @@
       <p>云端拍摄中心</p>
       <a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="validForm">
         <a-form-item>
-          <a-input @change="e => username = e.target.value" v-decorator="rules.userName" placeholder="请输入登录账号">
+          <a-input v-decorator="rules.userName" placeholder="请输入登录账号" @change="e => username = e.target.value">
             <a-icon slot="prefix" type="user" />
           </a-input>
         </a-form-item>
         <a-form-item>
-          <a-input @change="e => password = e.target.value" v-decorator="rules.password" type="password" placeholder="请输入登录密码">
+          <a-input v-decorator="rules.password" type="password" placeholder="请输入登录密码" @change="e => password = e.target.value">
             <a-icon slot="prefix" type="lock" />
           </a-input>
         </a-form-item>
-        <button ref="TencentCaptcha" id="TencentCaptcha" :data-appid="captchaId" data-cbfn="callback" type="button" style="display: none;"></button>
+        <button id="TencentCaptcha" ref="TencentCaptcha" :data-appid="captchaId" data-cbfn="callback" type="button" style="display: none;" />
         <a-button type="primary" html-type="submit" class="login-button">登 录</a-button>
       </a-form>
-      <div class="loading-wrap" v-if="loading">
-        <a-spin tip="登录中..."></a-spin>
+      <div v-if="loading" class="loading-wrap">
+        <a-spin tip="登录中..." />
       </div>
     </div>
   </div>
@@ -29,9 +29,9 @@
 import Api from '@/api/index.js'
 import { mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
-      logo: require("@/assets/img/single-logo.png"),
+      logo: require('@/assets/img/single-logo.png'),
       captchaId: '2049380082',
       username: 'PHTOTOGRAPHER',
       password: null,
@@ -43,16 +43,27 @@ export default {
       loading: false
     }
   },
+  mounted () {
+    this.form = this.$form.createForm(this)
+    window.callback = res => {
+      if (res.ret === 0) {
+        this.getAuthLogin({
+          ticket: res.ticket,
+          randStr: res.randstr
+        })
+      }
+    }
+  },
   methods: {
     ...mapActions(['setUserInfo', 'initUpyun']),
     // 验证表单
-    validForm(e) {
+    validForm (e) {
       e.preventDefault()
       this.form.validateFields((err) => {
         if (!err) { this.$refs.TencentCaptcha.click() }
       })
     },
-    getAuthLogin(captcha) {
+    getAuthLogin (captcha) {
       const params = {
         username: this.username,
         password: this.password,
@@ -62,7 +73,7 @@ export default {
       Api.user.loginAuth(params, {
         headers: { 'X-Expose-Headers': 'X-Stream-Id, x-stream-id' }
       }).then(() => {
-        this.$router.replace({path: '/'})
+        this.$router.replace({ path: '/' })
         Api.user.getInfo().then((res) => {
           this.initUpyun()
           this.setUserInfo(res.msg)
@@ -74,17 +85,6 @@ export default {
       }).finally(() => {
         this.loading = false
       })
-    }
-  },
-  mounted() {
-    this.form = this.$form.createForm(this)
-    window.callback = res => {
-      if (res.ret === 0) {
-        this.getAuthLogin({
-          ticket: res.ticket,
-          randStr: res.randstr
-        })
-      }
     }
   }
 }

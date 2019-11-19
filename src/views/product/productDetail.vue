@@ -1,15 +1,15 @@
 <template>
   <div id="productDetail">
-    <div class="spin-content" v-if="loading">
+    <div v-if="loading" class="spin-content">
       <a-spin size="large" />
     </div>
-    <div class="container" v-else>
+    <div v-else class="container">
       <a-row class="title">
-        <h4><span class="line"></span><span>样片素材</span></h4>
+        <h4><span class="line" /><span>样片素材</span></h4>
       </a-row>
       <section class="form">
         <a-row :span="24" class="item">
-          <a-col class="pictureWrap" :span="6" :offset="1" v-for="(item, index) in product.simple_images" :key="index">
+          <a-col v-for="(item, index) in product.simple_images" :key="index" class="pictureWrap" :span="6" :offset="1">
             <div class="container-wrap">
               <div class="img-wrap">
                 <img :src="`${getHost}${item}`" @load="imgLoad">
@@ -22,12 +22,12 @@
         </a-row>
         <a-row class="item">
           <a-col :span="24" class="product-info">
-            <p class="name">产品名称: {{product.name}}</p>
-            <span class="line"></span>
-            <p class="retouch">修图要求: {{product.retouch_require}}</p>
+            <p class="name">产品名称: {{ product.name }}</p>
+            <span class="line" />
+            <p class="retouch">修图要求: {{ product.retouch_require }}</p>
           </a-col>
         </a-row>
-        <a-row class="standard item" v-if="!$route.params.type">
+        <a-row v-if="!$route.params.type" class="standard item">
           <a-col :span="6">
             <span class="tip">修图标准: </span>
           </a-col>
@@ -41,54 +41,54 @@
             <span class="tip">照片拼接: </span>
           </a-col>
         </a-row>
-        <a-row class="parameter item" v-if="!$route.params.type">
+        <a-row v-if="!$route.params.type" class="parameter item">
           <a-col :span="6">
-            <span class="tip">{{standardText[product.retouch_standard] || ''}}</span>
+            <span class="tip">{{ standardText[product.retouch_standard] || '' }}</span>
           </a-col>
           <a-col :span="6">
-            <span class="tip">{{weightState[product.weight_level]}}</span>
+            <span class="tip">{{ weightState[product.weight_level] }}</span>
           </a-col>
           <a-col :span="6">
-            <span class="tip">{{product.need_template === 0 ? '不需要' : '需要'}}</span>
+            <span class="tip">{{ product.need_template === 0 ? '不需要' : '需要' }}</span>
           </a-col>
           <a-col :span="6">
-            <span class="tip">{{product.need_splicing === 0 ? '不需要' : '需要'}}</span>
+            <span class="tip">{{ product.need_splicing === 0 ? '不需要' : '需要' }}</span>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="product.normal_income_config">
+        <a-row v-if="product.normal_income_config" class="cut">
           <a-col class="title" :span="24">
-            <h4><span class="line"></span><span>非拼接收益</span></h4>
+            <h4><span class="line" /><span>非拼接收益</span></h4>
           </a-col>
           <a-col :span="24" class="item">
             <ul class="profit">
               <li v-for="(item, index) in product.normal_income_config.retoucher" :key="index">
-                <span class="head">{{`${index}人`}}</span><span>{{`¥ ${item}`}}</span>
+                <span class="head">{{ `${index}人` }}</span><span>{{ `¥ ${item}` }}</span>
               </li>
             </ul>
           </a-col>
         </a-row>
-        <a-row class="cut" v-if="product.normal_income_config && product.need_splicing !== 0">
+        <a-row v-if="product.normal_income_config && product.need_splicing !== 0" class="cut">
           <a-col class="title" :span="24">
-            <h4><span class="line"></span><span>拼接收益</span></h4>
+            <h4><span class="line" /><span>拼接收益</span></h4>
           </a-col>
           <a-col :span="24" class="item">
             <ul class="profit">
               <li v-for="(item, index) in product.splicing_income_config.retoucher" :key="index">
-                <span class="head">{{`${index}人`}}</span><span>{{`¥ ${item}`}}</span>
+                <span class="head">{{ `${index}人` }}</span><span>{{ `¥ ${item}` }}</span>
               </li>
             </ul>
           </a-col>
         </a-row>
         <a-row>
           <a-col class="title" :span="24">
-            <h4><span class="line"></span><span>产品备注信息</span></h4>
+            <h4><span class="line" /><span>产品备注信息</span></h4>
           </a-col>
           <a-col :span="24" class="item">
-            <p class="tip note">{{product.note || '暂无备注'}}</p>
+            <p class="tip note">{{ product.note || '暂无备注' }}</p>
           </a-col>
         </a-row>
         <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-          <img style="width: 100%" :src="previewImage" />
+          <img style="width: 100%" :src="previewImage">
         </a-modal>
       </section>
     </div>
@@ -98,7 +98,7 @@
 import { mapGetters } from 'vuex'
 import Api from '@/api/index.js'
 export default {
-  data() {
+  data () {
     return {
       previewVisible: false,
       previewImage: '',
@@ -120,21 +120,24 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getHost']),
+    ...mapGetters(['getHost'])
+  },
+  created () {
+    this.reviewProduct()
   },
   methods: {
 
-    imgLoad(e) {
+    imgLoad (e) {
       if (e.target.offsetHeight < e.target.offsetWidth) {
         e.target.style.width = 'auto'
         e.target.style.height = '100%'
       }
     },
-    showModel(url) {
+    showModel (url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
     },
-    reviewProduct() {
+    reviewProduct () {
       this.loading = true
       Api.product.detail({
         id: this.$route.params.id
@@ -146,9 +149,6 @@ export default {
         this.loading = false
       })
     }
-  },
-  created() {
-    this.reviewProduct()
   }
 }
 </script>

@@ -2,33 +2,33 @@
   <div id="manage">
     <a-button class="add-btn" type="primary" @click="routeView('/manageAccount')">添加子账号</a-button>
     <a-row class="table">
-      <a-table :rowKey="bindKey" :loading="loading" :columns="columns" :dataSource="dataSource" :pagination="false">
+      <a-table :row-key="bindKey" :loading="loading" :columns="columns" :data-source="dataSource" :pagination="false">
         <span slot="state" slot-scope="record">
-          {{stateText[record.state]}}
+          {{ stateText[record.state] }}
         </span>
         <span slot="action" slot-scope="record">
           <div>
-            <div class="button-group" v-if="record.state === 'disabled'">
+            <div v-if="record.state === 'disabled'" class="button-group">
               <a href="javascript:;" style="color: #52C41A" @click="enableSubuser(record)">启 用</a>
               <a-divider type="vertical" />
             </div>
-            <div class="button-group" v-else-if="record.state === 'enabled'">
-              <a href="javascript:;" style="color: #f5222d" @click="disableSubuser(record)" ghost>禁 用</a>
+            <div v-else-if="record.state === 'enabled'" class="button-group">
+              <a href="javascript:;" style="color: #f5222d" ghost @click="disableSubuser(record)">禁 用</a>
               <a-divider type="vertical" />
             </div>
             <a href="javascript:;" class="edit" @click="reviewDetail(record)">编 辑</a>
           </div>
         </span>
       </a-table>
-      <a-pagination class="pagination" :defaultCurrent="page.index" :total="dataSource.length" @change="pageChange" />
+      <a-pagination class="pagination" :default-current="page.index" :total="dataSource.length" @change="pageChange" />
     </a-row>
   </div>
 </template>
 <script>
 import Api from '@/api/index.js'
 export default {
-  name: 'manage',
-  data() {
+  name: 'Manage',
+  data () {
     return {
       dataSource: [],
       stateText: {
@@ -69,11 +69,14 @@ export default {
       }
     }
   },
+  created () {
+    this.searchSubuser()
+  },
   methods: {
-    bindKey(record, index) {
+    bindKey (record, index) {
       return index
     },
-    reviewDetail(record) {
+    reviewDetail (record) {
       this.$router.push({
         name: 'manageAccount',
         query: {
@@ -83,7 +86,7 @@ export default {
         }
       })
     },
-    searchSubuser() {
+    searchSubuser () {
       this.loading = true
       Api.manage.list(this.page).then((res) => {
         this.dataSource = res.msg.items
@@ -91,7 +94,7 @@ export default {
         this.loading = false
       })
     },
-    disableSubuser(record) {
+    disableSubuser (record) {
       this.loading = true
       Api.manage.disable({
         id: record.id
@@ -104,7 +107,7 @@ export default {
         this.loading = false
       })
     },
-    enableSubuser(record) {
+    enableSubuser (record) {
       this.loading = true
       Api.manage.enable({
         id: record.id
@@ -117,13 +120,10 @@ export default {
         this.loading = false
       })
     },
-    pageChange(page) {
+    pageChange (page) {
       this.page.index = page
       this.searchSubuser()
     }
-  },
-  created() {
-    this.searchSubuser()
   }
 }
 </script>

@@ -6,7 +6,7 @@
           <span class="tip name">账号: </span>
         </a-col>
         <a-col :span="7">
-          <a-input :addonBefore="`${getUser.config.orgCode}: `" placeholder="请填写账号" :value="account.username" :maxLength="16" @change="userChange" />
+          <a-input :addon-before="`${getUser.config.orgCode}: `" placeholder="请填写账号" :value="account.username" :max-length="16" @change="userChange" />
         </a-col>
       </a-row>
       <a-row class="item">
@@ -14,8 +14,7 @@
           <span class="tip name">登录密码: </span>
         </a-col>
         <a-col :span="6">
-          <a-input type="text" placeholder="未有特殊密码要求可不用填写" :value="account.password" :maxLength="16" @change="passChange">
-          </a-input>
+          <a-input type="text" placeholder="未有特殊密码要求可不用填写" :value="account.password" :max-length="16" @change="passChange" />
         </a-col>
       </a-row>
       <a-row class="item">
@@ -23,7 +22,7 @@
           <span class="tip name">账号昵称: </span>
         </a-col>
         <a-col :span="6">
-          <a-input placeholder="请填写昵称" v-model="account.nick" />
+          <a-input v-model="account.nick" placeholder="请填写昵称" />
         </a-col>
       </a-row>
       <a-row class="item">
@@ -38,8 +37,8 @@
 import { mapGetters } from 'vuex'
 import Api from '@/api/index.js'
 export default {
-  name: 'addAccount',
-  data() {
+  name: 'AddAccount',
+  data () {
     return {
       value: '',
       account: {
@@ -51,32 +50,41 @@ export default {
     }
   },
   computed: {
-    hasQuery() {
+    hasQuery () {
       return this.$route.query.id !== undefined
     },
     ...mapGetters([
-      'getUser',
+      'getUser'
     ])
   },
+  created () {
+    if (this.hasQuery) {
+      let username = this.$route.query.username
+      if (username && username.includes(':')) {
+        username = username.trim().split(':')[1]
+      }
+      this.account = Object.assign(this.account, this.$route.query, { username })
+    }
+  },
   methods: {
-    userChange(e) {
+    userChange (e) {
       const { value } = e.target
       const reg = /^[0-9a-zA-Z]*$/g
       if (reg.test(value) || value === '' || value === '-') {
         this.account.username = value
       }
     },
-    passChange(e) {
-      const { value } = e.target;
+    passChange (e) {
+      const { value } = e.target
       const reg = /^[0-9a-zA-Z]*$/g
       if (reg.test(value) || value === '' || value === '-') {
         this.account.password = value
       }
     },
-    submit() {
+    submit () {
       if (!this.account.username || !this.account.nick) { return this.$message.error('请填写完整信息') }
       this.$emit('loading', true)
-      for (let key in this.account) {
+      for (const key in this.account) {
         if (!this.account[key]) { delete this.account[key] }
       }
       if (!this.hasQuery) {
@@ -96,15 +104,6 @@ export default {
           this.$emit('loading', false)
         })
       }
-    },
-  },
-  created() {
-    if (this.hasQuery) {
-      let username = this.$route.query.username
-      if (username && username.includes(':')) {
-        username = username.trim().split(':')[1]
-      }
-      this.account = Object.assign(this.account, this.$route.query, { username })
     }
   }
 }

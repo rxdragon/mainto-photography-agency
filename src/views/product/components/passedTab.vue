@@ -3,26 +3,26 @@
     <a-row class="search">
       <a-col :span="10" class="date">
         <span class="tip">选择日期: </span>
-        <a-range-picker @change="dateChange" :disabledDate="disabledDate" />
+        <a-range-picker :disabled-date="disabledDate" @change="dateChange" />
       </a-col>
       <a-col :span="3" style="text-align: right;">
         <a-button type="primary" @click="searchProduct">查 询</a-button>
       </a-col>
     </a-row>
-    <a-table class="table" :columns="columns" :dataSource="dataSource" :rowKey="bindKey" :pagination="false" :loading="loading">
+    <a-table class="table" :columns="columns" :data-source="dataSource" :row-key="bindKey" :pagination="false" :loading="loading">
       <span slot="status" slot-scope="record">
         <span>
           <a-badge status="processing" />
-          {{stateText[record.state] || '状态异常'}}
+          {{ stateText[record.state] || '状态异常' }}
         </span>
       </span>
       <span slot="action" slot-scope="record">
         <div>
-          <span class="cancel" v-if="record.state === 'enable'">
+          <span v-if="record.state === 'enable'" class="cancel">
             <a href="javascript:;" style="color: #F5222D;" @click="switchState(record)">禁用</a>
             <a-divider type="vertical" />
           </span>
-          <span class="cancel" v-else-if="record.state === 'disable'">
+          <span v-else-if="record.state === 'disable'" class="cancel">
             <a href="javascript:;" style="color: #52C41A;" @click="switchState(record)">启用</a>
             <a-divider type="vertical" />
           </span>
@@ -30,7 +30,7 @@
         </div>
       </span>
     </a-table>
-    <a-pagination class="pagination" :current="page.index" @change="searchProduct" :defaultCurrent="1" :total="dataSource.length" />
+    <a-pagination class="pagination" :current="page.index" :default-current="1" :total="dataSource.length" @change="searchProduct" />
   </div>
 </template>
 <script>
@@ -38,8 +38,8 @@ import Api from '@/api/index.js'
 import moment from 'moment'
 
 export default {
-  name: 'passedTab',
-  data() {
+  name: 'PassedTab',
+  data () {
     return {
       dataSource: [],
       columns: [{
@@ -77,7 +77,7 @@ export default {
     }
   },
   computed: {
-    searchParams() {
+    searchParams () {
       return {
         state: 'pass',
         name: '',
@@ -88,17 +88,20 @@ export default {
       }
     }
   },
+  created () {
+    this.searchProduct()
+  },
   methods: {
-    disabledDate(current) {
+    disabledDate (current) {
       return current && current > moment().endOf('day')
     },
-    viewDetail(record) {
+    viewDetail (record) {
       this.$router.push({
         name: 'productDetail',
         params: { id: record.id }
       })
     },
-    switchState(record) {
+    switchState (record) {
       Api.product.switch({
         id: record.id
       }).catch((e) => {
@@ -107,13 +110,13 @@ export default {
         this.$message.success('更改状态成功', 1, this.searchProduct)
       })
     },
-    bindKey(record, index) {
+    bindKey (record, index) {
       return index
     },
-    dateChange(date, dateString) {
+    dateChange (date, dateString) {
       this.date = dateString
     },
-    searchProduct() {
+    searchProduct () {
       this.loading = true
       Api.product.list(this.searchParams).then((res) => {
         this.dataSource = res.msg.items
@@ -123,9 +126,6 @@ export default {
         this.loading = false
       })
     }
-  },
-  created() {
-    this.searchProduct()
   }
 }
 </script>

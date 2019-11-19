@@ -1,23 +1,23 @@
 <template>
-  <div id='work'>
-    <section class='content'>
+  <div id="work">
+    <section class="content">
       <!-- 照片上传 -->
       <div class="upload">
-        <h4><span class="line"></span><span>发布照片</span></h4>
-        <a-alert v-if="visible" message="温馨提示" description="1、若要进行照片拼接，需选择标签对照片标记；如标签“拼接A”先后标记了照片1、2，则表示这两张照片需先后被拼接在一起" type="info" closable :afterClose="handleClose" :style="{textAlign: 'left', marginBottom: '24px'}" />
+        <h4><span class="line" /><span>发布照片</span></h4>
+        <a-alert v-if="visible" message="温馨提示" description="1、若要进行照片拼接，需选择标签对照片标记；如标签“拼接A”先后标记了照片1、2，则表示这两张照片需先后被拼接在一起" type="info" closable :after-close="handleClose" :style="{textAlign: 'left', marginBottom: '24px'}" />
         <Upload ref="uploadChild" @sendPhotos="getPhotos" />
       </div>
       <div class="order-info">
-        <h4><span class="line"></span><span>订单信息</span></h4>
+        <h4><span class="line" /><span>订单信息</span></h4>
         <a-row>
           <a-col :span="24" class="child-item">
             <span class="title">订单标题: </span>
-            <a-input placeholder="请输入订单标题" style="width: 80%;" v-model="orderInfo.title" />
+            <a-input v-model="orderInfo.title" placeholder="请输入订单标题" style="width: 80%;" />
           </a-col>
         </a-row>
       </div>
       <div class="order-info">
-        <h4><span class="line"></span><span>修图要求</span></h4>
+        <h4><span class="line" /><span>修图要求</span></h4>
         <a-row class="child-item">
           <span class="title">眼睛增幅: </span>
           <a-radio-group v-model="orderInfo.claim.eyes">
@@ -46,12 +46,12 @@
         <a-row class="child-item">
           <a-col :span="24">
             <span class="title">修图备注: </span>
-            <a-input placeholder="请输入修图备注" style="width: 80%;" v-model="orderInfo.retouchNote" />
+            <a-input v-model="orderInfo.retouchNote" placeholder="请输入修图备注" style="width: 80%;" />
           </a-col>
         </a-row>
       </div>
       <div class="order-info">
-        <h4><span class="line"></span><span>取片日期</span></h4>
+        <h4><span class="line" /><span>取片日期</span></h4>
         <a-row class="child-item">
           <a-radio-group v-model="orderInfo.takeTime" :style="{ width: '100%' }">
             <a-radio :value="'today'">当日取片</a-radio>
@@ -68,10 +68,13 @@
 </template>
 <script>
 import Api from '@/api/index.js'
-import Upload from "./components/Upload.vue"
+import Upload from './components/Upload.vue'
 export default {
-  name: 'work',
-  data() {
+  name: 'Work',
+  components: {
+    Upload
+  },
+  data () {
     return {
       photoList: [],
       submit: false,
@@ -89,7 +92,7 @@ export default {
     }
   },
   computed: {
-    params() {
+    params () {
       return {
         title: this.orderInfo.title,
         retouchNote: this.orderInfo.retouchNote,
@@ -103,14 +106,11 @@ export default {
       }
     }
   },
-  components: {
-    Upload
-  },
   methods: {
-    handleClose() {
+    handleClose () {
       this.visible = false
     },
-    getPhotos(photos) {
+    getPhotos (photos) {
       this.photoList = []
       photos.map((item) => {
         this.photoList.push({
@@ -123,19 +123,19 @@ export default {
         })
       })
     },
-    emptyParams() {
-      for (let item in this.params) {
+    emptyParams () {
+      for (const item in this.params) {
         if (!this.params[item]) { return false }
       }
-      for (let photo of this.params.photoData) {
+      for (const photo of this.params.photoData) {
         if (!photo.productId || !photo.peopleNum) { return false }
       }
       return true
     },
-    async submitCloud() {
+    async submitCloud () {
       this.$refs.uploadChild.getChildPhotos()
       // TODO: 后续增补Verification模块
-      if (!this.emptyParams()) { return this.$message.error("请填写完整信息") }
+      if (!this.emptyParams()) { return this.$message.error('请填写完整信息') }
       this.$emit('loading', true)
       Api.work.add(this.params).then(() => {
         this.$message.success('订单提交成功', 2, () => {

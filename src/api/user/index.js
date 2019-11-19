@@ -1,14 +1,14 @@
-import base from '../config';
+import base from '../config'
 import axios from '@/axios/index'
 
 const user = {
-  loginOut() {
+  loginOut () {
     return axios.get(`${base.manage_auth}/logout`)
   },
-  loginAuth(params, config = {}) {
+  loginAuth (params, config = {}) {
     return axios.post(`${base.manage_auth}/cloud3rdLogin`, params, config)
   },
-  getInfo() {
+  getInfo () {
     return axios.get(`${base.url}/userInfo`)
   }
 }

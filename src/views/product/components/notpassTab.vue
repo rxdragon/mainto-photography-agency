@@ -3,7 +3,7 @@
     <a-row class="search">
       <a-col :span="8" class="date">
         <span class="tip">选择状态: </span>
-        <a-select defaultValue="" v-model="selectValue" style="width: 50%">
+        <a-select v-model="selectValue" default-value="" style="width: 50%">
           <a-select-option value="not_pass">全部</a-select-option>
           <a-select-option value="wait_review">待审核</a-select-option>
           <a-select-option value="refuse">审核拒绝</a-select-option>
@@ -13,13 +13,13 @@
         <a-button type="primary" @click="searchProduct">查 询</a-button>
       </a-col>
     </a-row>
-    <a-table class="table" :columns="columns" :dataSource="dataSource" :rowKey="bindKey" :pagination="false" :loading="loading">
+    <a-table class="table" :columns="columns" :data-source="dataSource" :row-key="bindKey" :pagination="false" :loading="loading">
       <span slot="status" slot-scope="record">
-        <span>{{stateText[record.state]}}</span>
+        <span>{{ stateText[record.state] }}</span>
       </span>
       <span slot="action" slot-scope="record">
         <div>
-          <span class="cancel" v-if="record.state === 'refuse'">
+          <span v-if="record.state === 'refuse'" class="cancel">
             <a href="javascript:;" @click="resubmit(record)">重新提交</a>
             <a-divider type="vertical" />
           </span>
@@ -27,14 +27,14 @@
         </div>
       </span>
     </a-table>
-    <a-pagination class="pagination" :current="page.index" :defaultCurrent="1" @change="searchProduct" :total="dataSource.length" />
+    <a-pagination class="pagination" :current="page.index" :default-current="1" :total="dataSource.length" @change="searchProduct" />
   </div>
 </template>
 <script>
 import Api from '@/api/index.js'
 export default {
-  name: 'notpassTab',
-  data() {
+  name: 'NotpassTab',
+  data () {
     return {
       dataSource: [],
       columns: [{
@@ -76,7 +76,7 @@ export default {
     }
   },
   computed: {
-    searchParams() {
+    searchParams () {
       return {
         state: this.selectValue,
         name: '',
@@ -87,11 +87,14 @@ export default {
       }
     }
   },
+  created () {
+    this.searchProduct()
+  },
   methods: {
-    bindKey(record, index) {
+    bindKey (record, index) {
       return index
     },
-    resubmit(record) {
+    resubmit (record) {
       this.$router.push({
         name: 'addProduct',
         query: {
@@ -102,13 +105,13 @@ export default {
         }
       })
     },
-    viewDetail(record) {
+    viewDetail (record) {
       this.$router.push({
         name: 'productDetail',
-        params: { id: record.id, type: 'notpass'}
+        params: { id: record.id, type: 'notpass' }
       })
     },
-    searchProduct() {
+    searchProduct () {
       this.loading = true
       Api.product.list(this.searchParams).then((res) => {
         this.dataSource = res.msg.items
@@ -118,9 +121,6 @@ export default {
         this.loading = false
       })
     }
-  },
-  created() {
-    this.searchProduct()
   }
 }
 </script>
