@@ -1,22 +1,12 @@
 <template>
   <div id="account">
-    <a-row class="title">
-      <a-col :span="12">
-        <span class="tip">
-          {{hasQuery === true ? '编辑子账号' : '添加子账号'}}
-        </span>
-      </a-col>
-      <a-col :span="12" style="text-align: right">
-        <a-button type="primary" @click="routeBack">返回</a-button>
-      </a-col>
-    </a-row>
     <a-row class="form">
       <a-row class="item">
         <a-col :span="2">
           <span class="tip name">账号: </span>
         </a-col>
-        <a-col :span="6">
-          <a-input addonBefore="DC:" placeholder="请填写账号" v-model="account.username" />
+        <a-col :span="7">
+          <a-input :addonBefore="`${getUser.config.orgCode}: `" placeholder="请填写账号" :value="account.username" :maxLength="16" @change="userChange" />
         </a-col>
       </a-row>
       <a-row class="item">
@@ -24,7 +14,8 @@
           <span class="tip name">登录密码: </span>
         </a-col>
         <a-col :span="6">
-          <a-input placeholder="未有特殊密码要求可用填写" v-model="account.password" />
+          <a-input type="text" placeholder="未有特殊密码要求可不用填写" :value="account.password" :maxLength="16" @change="passChange">
+          </a-input>
         </a-col>
       </a-row>
       <a-row class="item">
@@ -44,11 +35,13 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import Api from '@/api/index.js'
 export default {
   name: 'addAccount',
   data() {
     return {
+      value: '',
       account: {
         id: '',
         username: '',
@@ -60,23 +53,59 @@ export default {
   computed: {
     hasQuery() {
       return this.$route.query.id !== undefined
-    }
+    },
+    ...mapGetters([
+      'getUser',
+    ])
   },
   methods: {
+    userChange(e) {
+      const { value } = e.target
+      const reg = /^[0-9a-zA-Z]*$/g
+      if (reg.test(value) || value === '' || value === '-') {
+        this.account.username = value
+      }
+    },
+    passChange(e) {
+      const { value } = e.target;
+      const reg = /^[0-9a-zA-Z]*$/g
+      if (reg.test(value) || value === '' || value === '-') {
+        this.account.password = value
+      }
+    },
     submit() {
+      if (!this.account.username || !this.account.nick) { return this.$message.error('请填写完整信息') }
+      this.$emit('loading', true)
+      for (let key in this.account) {
+        if (!this.account[key]) { delete this.account[key] }
+      }
       if (!this.hasQuery) {
         Api.manage.create(this.account).then(() => {
-          this.$message.success('账号创建成功', 3)
+          this.$message.success('账号创建成功', 1, this.routeBack)
+        }).catch((e) => {
+          this.$message.error(e.data.error_msg)
+        }).finally(() => {
+          this.$emit('loading', false)
         })
       } else {
         Api.manage.edit(this.account).then(() => {
-          this.$message.success('账号修改成功', 3)
+          this.$message.success('账号修改成功', 1, this.routeBack)
+        }).catch((e) => {
+          this.$message.error(e.data.error_msg)
+        }).finally(() => {
+          this.$emit('loading', false)
         })
       }
     },
   },
   created() {
-    if (this.hasQuery) { this.account = this.$route.query }
+    if (this.hasQuery) {
+      let username = this.$route.query.username
+      if (username && username.includes(':')) {
+        username = username.trim().split(':')[1]
+      }
+      this.account = Object.assign(this.account, this.$route.query, { username })
+    }
   }
 }
 </script>

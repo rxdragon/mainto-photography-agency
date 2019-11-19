@@ -1,8 +1,10 @@
 <template>
   <div class="login-wrap">
     <div class="form-wrap">
-      <a-icon type="cloud" class="logo" />
-      <p>云端图像处理中心</p>
+      <div class="img-wrap">
+        <img :src="logo">
+      </div>
+      <p>云端拍摄中心</p>
       <a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="validForm">
         <a-form-item>
           <a-input @change="e => username = e.target.value" v-decorator="rules.userName" placeholder="请输入登录账号">
@@ -29,8 +31,9 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
+      logo: require("@/assets/img/single-logo.png"),
       captchaId: '2049380082',
-      username: 'RETOUCHER',
+      username: 'PHTOTOGRAPHER',
       password: null,
       rules: {
         userName: ['userName', { rules: [{ required: true, message: '账号不能为空!' }] }],
@@ -41,7 +44,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUserInfo']),
+    ...mapActions(['setUserInfo', 'initUpyun']),
     // 验证表单
     validForm(e) {
       e.preventDefault()
@@ -59,15 +62,20 @@ export default {
       Api.user.loginAuth(params, {
         headers: { 'X-Expose-Headers': 'X-Stream-Id, x-stream-id' }
       }).then(() => {
+        this.$router.replace({path: '/'})
         Api.user.getInfo().then((res) => {
+          this.initUpyun()
           this.setUserInfo(res.msg)
-        }).finally(() => {
-          this.loading = false
+        }).catch((e) => {
+          this.$message.error(e.data.error_msg)
         })
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
+      }).finally(() => {
+        this.loading = false
       })
     }
   },
-  created() {},
   mounted() {
     this.form = this.$form.createForm(this)
     window.callback = res => {

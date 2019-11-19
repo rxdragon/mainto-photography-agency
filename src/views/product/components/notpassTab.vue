@@ -4,7 +4,7 @@
       <a-col :span="8" class="date">
         <span class="tip">选择状态: </span>
         <a-select defaultValue="" v-model="selectValue" style="width: 50%">
-          <a-select-option value="">全部</a-select-option>
+          <a-select-option value="not_pass">全部</a-select-option>
           <a-select-option value="wait_review">待审核</a-select-option>
           <a-select-option value="refuse">审核拒绝</a-select-option>
         </a-select>
@@ -19,8 +19,11 @@
       </span>
       <span slot="action" slot-scope="record">
         <div>
-          <a-button type="primary" v-if="record.state !== 'refuse'">详 情</a-button>
-          <a-button type="danger" v-else ghost @click="resubmit(record)">重新提交</a-button>
+          <span class="cancel" v-if="record.state === 'refuse'">
+            <a href="javascript:;" @click="resubmit(record)">重新提交</a>
+            <a-divider type="vertical" />
+          </span>
+          <a href="javascript:;" @click="viewDetail(record)">详情</a>
         </div>
       </span>
     </a-table>
@@ -38,33 +41,33 @@ export default {
         title: '产品名称',
         dataIndex: 'name',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '生成时间',
         dataIndex: 'created_at',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '审核状态',
         scopedSlots: { customRender: 'status' },
         width: 200,
-        align: 'center'
+        align: 'left'
       }, {
         title: '拒绝原因',
         dataIndex: 'refuse_reason',
         width: 200,
-        align: 'center'
+        align: 'left'
       }, {
         title: '操作',
         scopedSlots: { customRender: 'action' },
         width: 200,
-        align: 'center'
+        align: 'right'
       }],
       stateText: {
         wait_review: '等待审核',
         refuse: '审核拒绝'
       },
-      selectValue: '',
+      selectValue: 'not_pass',
       page: {
         size: 10,
         index: 1
@@ -76,6 +79,9 @@ export default {
     searchParams() {
       return {
         state: this.selectValue,
+        name: '',
+        reviewPassAtStart: '',
+        reviewPassAtEnd: '',
         page: this.page.index,
         pageSize: this.page.size
       }
@@ -96,10 +102,18 @@ export default {
         }
       })
     },
+    viewDetail(record) {
+      this.$router.push({
+        name: 'productDetail',
+        params: { id: record.id, type: 'notpass'}
+      })
+    },
     searchProduct() {
       this.loading = true
       Api.product.list(this.searchParams).then((res) => {
         this.dataSource = res.msg.items
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })

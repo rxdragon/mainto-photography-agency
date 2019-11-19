@@ -1,17 +1,16 @@
 <template>
   <div id='workRecord'>
-    <h3>历史上传记录</h3>
     <section class='content'>
       <a-row class="search">
-        <a-col :span="10">
+        <a-col :span="12">
           <span>选择日期: </span>
-          <a-range-picker @change="dateChange" />
+          <a-range-picker @change="dateChange" :disabledDate="disabledDate" />
         </a-col>
         <a-col :span="8">
           <span>订单标题: </span>
           <a-input placeholder="请输入订单标题" style="width: 75%;" v-model="search.title" />
         </a-col>
-        <a-col :span="4" style="text-align: right;">
+        <a-col :span="2" style="text-align: right;">
           <a-button type="primary" @click="searchOrder">查 询</a-button>
         </a-col>
       </a-row>
@@ -20,64 +19,66 @@
           <a-table :columns="columns" :dataSource="data" :pagination="false" :rowKey="bindKey" :loading="loading">
             <span slot="stream_nums" slot-scope="record">
               <p v-for="(item, index) in record.stream_nums" :key="index">
-                {{item.stream_num}}
+                {{`${item.stream_num} (${transText[item.state] || '状态未知'})`}}
               </p>
             </span>
             <span slot="action" slot-scope="record">
-              <a-button class="withdraw"
-                v-if="hasRetouchStream(record.stream_nums)" 
-                @click="cancelOrder(record)"
-                type="danger"
-                ghost
-              >
-                撤回
-              </a-button>
-              <a-button type="primary" @click="viewsDetail(record)">详 情</a-button>
+              <span class="cancel" v-if="hasRetouchStream(record.stream_nums)">
+                <a href="javascript:;" @click="cancelOrder(record)">撤回</a>
+                <a-divider type="vertical" />
+              </span>
+              <a href="javascript:;" @click="viewsDetail(record)">详情</a>
             </span>
           </a-table>
         </template>
       </div>
-      <a-pagination 
-        class="pagination"
-        :defaultCurrent="search.page.index"
-        :total="data.length"
-        @change="pageChange"
-      />
+      <a-pagination class="pagination" :defaultCurrent="search.page.index" :total="data.length" @change="pageChange" />
     </section>
   </div>
 </template>
 <script>
 import Api from '@/api/index.js'
+import moment from 'moment'
 export default {
   name: 'workRecord',
   data() {
     return {
       data: [],
+      transText: {
+        wait_retouch: '等待修片',
+        finish: '云端修图完成',
+        retouching: '修片中',
+        wait_review: ' 审核中',
+        reviewing: '等待审核',
+        hanging: '挂起中',
+        review_return_retouch: '审核退回修片中'
+      },
       loading: true,
       columns: [{
         title: '订单标题',
         dataIndex: 'title',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '订单号',
         dataIndex: 'order_num',
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '上传时间',
         dataIndex: 'created_at',
+        align: 'left',
         width: 200
       }, {
         title: '流水号',
         scopedSlots: { customRender: 'stream_nums' },
         width: 300,
-        align: 'center'
+        align: 'left'
       }, {
         title: '操作',
         scopedSlots: { customRender: 'action' },
         width: 200,
-        align: 'center'
+        align: 'right'
       }],
       search: {
         date: [],
@@ -92,6 +93,7 @@ export default {
   computed: {
     searchParams() {
       return {
+        type: 'person',
         createdAtStart: this.search.date[0] || '',
         createdAtEnd: this.search.date[1] || '',
         title: this.search.title,
@@ -101,6 +103,9 @@ export default {
     }
   },
   methods: {
+    disabledDate(current) {
+      return current && current > moment().endOf('day')
+    },
     bindKey(record, index) {
       return index
     },
@@ -110,12 +115,13 @@ export default {
       }
       return false
     },
-    cancelOrder (record) {
+    cancelOrder(record) {
       this.loading = true
       Api.work.cancel({
         orderNum: record.order_num
       }).then(() => {
-        this.$message.success('订单撤回成功', 3, this.searchOrder)
+        this.searchOrder()
+        this.$message.success('订单撤回成功', 2)
       }).finally(() => {
         this.loading = false
       })
@@ -131,6 +137,8 @@ export default {
       this.loading = true
       Api.work.list(this.searchParams).then((res) => {
         this.data = res.msg.items
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
       })
@@ -138,7 +146,7 @@ export default {
     viewsDetail(record) {
       this.$router.push({
         name: 'recordDetail',
-        params: {id: record.order_num}
+        params: { id: record.order_num }
       })
     }
   },

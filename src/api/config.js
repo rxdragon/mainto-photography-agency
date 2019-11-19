@@ -2,8 +2,8 @@
  * 接口域名的管理
  */
 const base = {    
-  url: 'https://doc.local.hzmantu.com/project_cloud3rd/haodi',
-  devUrl: 'https://project-cloud-3rd-v1.local.hzmantu.com',
+  url: `${process.env.VUE_APP_BASE_URL}/project_cloud3rd`,
+  manage_auth: `${process.env.VUE_APP_BASE_URL}/manage_auth`,
 }
 
 export default base

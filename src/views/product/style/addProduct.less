@@ -1,4 +1,8 @@
 #addProduct {
+  margin: 24px;
+  padding: 24px;
+  background-color: #fff;
+
   .spin-content {
     height: 100vh;
     line-height: 80vh;
@@ -15,6 +19,13 @@
     margin-top: 20px;
     text-align: left;
 
+    .ant-upload-list-item-info {
+      display: -webkit-flex;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .item {
       margin-bottom: 40px;
     }
@@ -27,7 +38,9 @@
     .tip {
       display: inline-block;
     }
-
+    .ant-upload-list-item-thumbnail {
+      opacity: 1;
+    }
     .ant-upload-list-picture-card {
       .ant-upload-list-item-uploading-text {
         text-align: center;
@@ -63,6 +76,10 @@
 
     .submit {
       margin-top: 20px;
+    }
+
+    b {
+      color: red;
     }
   }
 }

@@ -3,7 +3,10 @@ import axios from '@/axios/index'
 
 const upyun = {
   getConfig() {
-    return axios.get(`${base.url}/project_cloud3rd/photographer/common/sign/upyun`)
+    return axios.get(`${base.url}/photographer/common/sign/upyun`)
+  },
+  getHost() {
+    return axios.get(`${base.url}/photographer/common/sign/getHost`)
   }
 }
 export default upyun
