@@ -1,36 +1,36 @@
 <template>
-  <div id='recordDetail'>
-    <div class="spin-content" v-if="loading">
+  <div id="recordDetail">
+    <div v-if="loading" class="spin-content">
       <a-spin size="large" />
     </div>
-    <div class="container" v-if="!loading">
-      <section class='content'>
+    <div v-if="!loading" class="container">
+      <section class="content">
         <div class="orderInfo">
-          <h4><span class="line"></span><span>订单信息</span></h4>
+          <h4><span class="line" /><span>订单信息</span></h4>
           <a-row class="item">
             <a-col :span="12">
               <span>订单标题: </span>
-              <p class="text">{{order.title}}</p>
+              <p class="text">{{ order.title }}</p>
             </a-col>
             <a-col :span="10">
               <span>订单产品: </span>
-              <p class="text">{{order.products.join('、')}}</p>
+              <p class="text">{{ order.products.join('、') }}</p>
             </a-col>
           </a-row>
           <a-row class="item">
             <span class="head">修图备注:</span>
-            <p class="text">{{order.retouch_note}}</p>
+            <p class="text">{{ order.retouch_note }}</p>
           </a-row>
         </div>
         <div class="pictureInfo">
-          <h4><span class="line"></span><span>照片信息</span></h4>
+          <h4><span class="line" /><span>照片信息</span></h4>
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
               <div class="alert-wrap">
                 <a-alert :message="`${item.product} (流水号: ${item.stream_num}) `" type="info" />
               </div>
-              <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex">
+              <a-row v-for="(childItem, childIndex) in item.photos" :key="childIndex" type="flex" justify="start" class="pirtureWrap">
+                <a-col v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" :span="7" class="item">
                   <div class="container">
                     <div class="img-wrap">
                       <img :src="`${getHost}${photoItem.path}`" @load="imgLoad">
@@ -46,7 +46,7 @@
         </div>
       </section>
       <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-        <img style="width: 100%" :src="previewImage" />
+        <img style="width: 100%" :src="previewImage">
       </a-modal>
     </div>
   </div>
@@ -55,8 +55,8 @@
 import Api from '@/api/index.js'
 import { mapGetters } from 'vuex'
 export default {
-  name: 'workRecord',
-  data() {
+  name: 'WorkRecord',
+  data () {
     return {
       order: {},
       previewImage: '',
@@ -64,26 +64,29 @@ export default {
       versionState: {
         original_photo: '原片',
         complete_photo: '云端成片',
-        first_photo: '一次成片',
+        first_photo: '一次成片'
       },
       loading: true
     }
   },
   computed: {
-    ...mapGetters(['getHost']),
+    ...mapGetters(['getHost'])
+  },
+  created () {
+    this.reviewOrder()
   },
   methods: {
-    imgLoad(e) {
+    imgLoad (e) {
       if (e.target.offsetHeight < e.target.offsetWidth) {
         e.target.style.width = 'auto'
         e.target.style.height = '100%'
       }
     },
-    showModel(url) {
+    showModel (url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
     },
-    reviewOrder() {
+    reviewOrder () {
       Api.work.detail({
         orderNum: this.$route.params.id
       }).then((res) => {
@@ -94,9 +97,6 @@ export default {
         this.loading = false
       })
     }
-  },
-  created() {
-    this.reviewOrder()
   }
 }
 </script>

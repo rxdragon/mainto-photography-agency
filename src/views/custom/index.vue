@@ -1,6 +1,6 @@
 <template>
   <div id="custom">
-    <section class='content'>
+    <section class="content">
       <a-row class="search">
         <a-col :span="8">
           <span class="tip">上传时间: </span>
@@ -8,35 +8,35 @@
         </a-col>
         <a-col :span="8">
           <span class="tip">订单标题: </span>
-          <a-input class="wrap" placeholder="请输入订单标题" v-model="search.title" />
+          <a-input v-model="search.title" class="wrap" placeholder="请输入订单标题" />
         </a-col>
         <a-col :span="6">
           <span class="tip">订单号: </span>
-          <a-input class="wrap" placeholder="请输入订单号" v-model="search.number" />
+          <a-input v-model="search.number" class="wrap" placeholder="请输入订单号" />
         </a-col>
         <a-col :span="2">
           <a-button type="primary" @click="searchOrder">查 询</a-button>
         </a-col>
       </a-row>
-      <a-table class="table" :loading="loading" :rowKey="bindKey" :columns="columns" :dataSource="data" :pagination="false">
+      <a-table class="table" :loading="loading" :row-key="bindKey" :columns="columns" :data-source="data" :pagination="false">
         <span slot="stream_nums" slot-scope="record">
           <p v-for="(item, index) in record.stream_nums" :key="index">
-            {{`${item.stream_num} (${transText[item.state] || '状态未知'})`}}
+            {{ `${item.stream_num} (${transText[item.state] || '状态未知'})` }}
           </p>
         </span>
         <span slot="action" slot-scope="record">
           <a href="javascript:;" @click="routeView(record)">详 情</a>
         </span>
       </a-table>
-      <a-pagination class="pagination" :defaultCurrent="1" :total="data.length" />
+      <a-pagination class="pagination" :default-current="1" :total="data.length" />
     </section>
   </div>
 </template>
 <script>
 import Api from '@/api/index.js'
 export default {
-  name: 'custom',
-  data() {
+  name: 'Custom',
+  data () {
     return {
       data: [],
       transText: {
@@ -92,7 +92,7 @@ export default {
     }
   },
   computed: {
-    searchParams() {
+    searchParams () {
       return {
         type: 'global',
         createdAtStart: this.search.date[0] || '',
@@ -104,20 +104,23 @@ export default {
       }
     }
   },
+  created () {
+    this.searchOrder()
+  },
   methods: {
-    bindKey(record, index) {
+    bindKey (record, index) {
       return index
     },
-    dateChange(date, dateString) {
+    dateChange (date, dateString) {
       this.search.date = dateString
     },
-    routeView(record) {
+    routeView (record) {
       this.$router.push({
         name: 'customDetail',
         params: { id: record.order_num }
       })
     },
-    searchOrder() {
+    searchOrder () {
       this.loading = true
       Api.work.list(this.searchParams).then((res) => {
         this.data = res.msg.items
@@ -126,10 +129,7 @@ export default {
       }).finally(() => {
         this.loading = false
       })
-    },
-  },
-  created() {
-    this.searchOrder()
+    }
   }
 }
 </script>

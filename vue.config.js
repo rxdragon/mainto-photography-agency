@@ -1,6 +1,6 @@
-const path = require('path');
+const path = require('path')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
@@ -18,11 +18,11 @@ module.exports = {
       less: {
         // antd主题色配置, 需要在main.js中引入的antd.less
         modifyVars: {
-          'primary-color': '#1769FF',
+          'primary-color': '#1769FF'
         },
-        javascriptEnabled: true,
-      },
-    },
+        javascriptEnabled: true
+      }
+    }
   },
   chainWebpack: (config) => {
     config.resolve.alias.set('@', resolve('src'))

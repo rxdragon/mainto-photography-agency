@@ -1,42 +1,42 @@
 <template>
-  <div id='customDetail'>
-    <div class="spin-content" v-if="loading">
+  <div id="customDetail">
+    <div v-if="loading" class="spin-content">
       <a-spin size="large" />
     </div>
-    <div class="contaner" v-else>
-      <section class='content'>
+    <div v-else class="contaner">
+      <section class="content">
         <div class="orderInfo">
           <h4>
-            <span class="line"></span>
+            <span class="line" />
             <span>订单信息</span>
           </h4>
           <a-row>
             <a-col :span="12" class="cell">
               <p class="head">订单标题:</p>
-              <p>{{order.title}}</p>
+              <p>{{ order.title }}</p>
             </a-col>
             <a-col :span="12" class="cell">
               <p class="head">拍摄产品:</p>
-              <p>{{order.products.join('、') }}</p>
+              <p>{{ order.products.join('、') }}</p>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="12" class="cell">
               <p class="head">上传人:</p>
-              <p class="iconLine"><span></span>{{order.photographer}}</p>
+              <p class="iconLine"><span />{{ order.photographer }}</p>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="12" class="cell">
               <p class="head">修图备注:</p>
-              <p>{{order.retouch_note}}</p>
+              <p>{{ order.retouch_note }}</p>
             </a-col>
           </a-row>
         </div>
         <a-divider />
         <div class="pictureInfo">
           <h4>
-            <span class="line"></span><span>照片信息</span>
+            <span class="line" /><span>照片信息</span>
             <div class="float-button">
               <a-button class="origin" @click="createZip('first')">原片下载</a-button>
               <a-button type="primary" @click="createZip('complete')">云端成片下载</a-button>
@@ -45,8 +45,8 @@
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
               <a-alert :message="item.product" type="info" />
-              <a-row type="flex" justify="start" class="pirtureWrap" v-for="(childItem, childIndex) in item.photos" :key="childIndex">
-                <a-col :span="7" class="item" v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" v-show="photoItem.version !== 'first_photo'">
+              <a-row v-for="(childItem, childIndex) in item.photos" :key="childIndex" type="flex" justify="start" class="pirtureWrap">
+                <a-col v-for="(photoItem, photoIndex) in childItem" v-show="photoItem.version !== 'first_photo'" :key="photoIndex" :span="7" class="item">
                   <div class="container-wrap">
                     <div class="img-wrap">
                       <img :src="`${photoHost}${photoItem.path}`" @load="imgLoad">
@@ -57,7 +57,7 @@
                   </div>
                   <p class="tip">
                     <span class="button" @click="download(`${photoHost}${photoItem.path}`)">下载照片</span>
-                    <span class="text">{{versionState[photoItem.version]}}</span>
+                    <span class="text">{{ versionState[photoItem.version] }}</span>
                   </p>
                 </a-col>
               </a-row>
@@ -65,7 +65,7 @@
           </ul>
         </div>
         <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-          <img style="width: 100%" :src="previewImage" />
+          <img style="width: 100%" :src="previewImage">
         </a-modal>
       </section>
     </div>
@@ -77,8 +77,8 @@ import JsZip from 'jszip'
 import * as utils from '@/util'
 import moment from 'moment'
 export default {
-  name: 'custom',
-  data() {
+  name: 'Custom',
+  data () {
     return {
       loading: false,
       previewVisible: false,
@@ -97,10 +97,10 @@ export default {
     }
   },
   computed: {
-    photoQueue() {
-      let photoList = { firstArr: [], completeArr: [] }
+    photoQueue () {
+      const photoList = { firstArr: [], completeArr: [] }
       this.order.streams.map((item) => {
-        let itemList = item.photos
+        const itemList = item.photos
         itemList.map((item) => {
           item.map((photoItem) => {
             if (photoItem.version === 'complete_photo') {
@@ -114,21 +114,24 @@ export default {
       return photoList
     }
   },
+  created () {
+    this.reviewOrder()
+  },
   methods: {
-    imgLoad(e) {
+    imgLoad (e) {
       if (e.target.offsetHeight < e.target.offsetWidth) {
         e.target.style.width = 'auto'
         e.target.style.height = '100%'
       }
     },
-    download(url) {
+    download (url) {
       window.open(`${url}?download`)
     },
-    showModel(url) {
+    showModel (url) {
       this.previewImage = `${this.photoHost}${url}`
       this.previewVisible = true
     },
-    reviewOrder() {
+    reviewOrder () {
       this.loading = true
       Api.work.detail({
         orderNum: this.$route.params.id
@@ -140,13 +143,13 @@ export default {
         this.loading = false
       })
     },
-    createZip(type) {
+    createZip (type) {
       const photoData = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
       const folder = type === 'first' ? '原片' : '成片'
       if (photoData.length === 0) { return this.$message.error(`未找到${folder}资源`) }
-      let zip = new JsZip()
-      let fold = zip.folder(folder)
-      let transArr = []
+      const zip = new JsZip()
+      const fold = zip.folder(folder)
+      const transArr = []
       photoData.map((obj) => {
         transArr.push(utils.getRemoteImg(obj).then(res => {
           fold.file(`${moment().format('YYYY-MM-DD HH-mm-ss')}.png`, res, { base64: true })
@@ -154,13 +157,10 @@ export default {
       })
       Promise.all(transArr).then(() => {
         zip.generateAsync({ type: 'blob' }).then(content => {
-          utils.saveAs(content, `${folder} ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`);
+          utils.saveAs(content, `${folder} ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`)
         })
       })
     }
-  },
-  created() {
-    this.reviewOrder()
   }
 }
 </script>

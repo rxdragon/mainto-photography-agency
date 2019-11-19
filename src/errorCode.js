@@ -29,12 +29,12 @@ export const errText = [
   ['0xa09006002', '密码错误'],
   ['0xa09006003', '用户配置信息有误'],
   ['0xa09006004', '账户级别有误'],
-  ['0xa11001003', '机构不存在, upyun上传功能异常'],
+  ['0xa11001003', '机构不存在, upyun上传功能异常']
 ]
-let errMap = new Map(errText)
+const errMap = new Map(errText)
 export const errorCode = {
   getMsg: err => {
-    let codeNum = Number(err.error_code)
+    const codeNum = Number(err.error_code)
     const hexCode = `0x${codeNum.toString(16).toLowerCase()}`
     return errMap.get(hexCode) || JSON.stringify(err.error_msg)
   }

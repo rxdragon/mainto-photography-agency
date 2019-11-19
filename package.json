@@ -40,9 +40,9 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "@vue/standard"
     ],
-    "rules": {},
+    "rules": "./.eslintrc.js",
     "parserOptions": {
       "parser": "babel-eslint"
     }

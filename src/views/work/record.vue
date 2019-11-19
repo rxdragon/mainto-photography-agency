@@ -1,14 +1,14 @@
 <template>
-  <div id='workRecord'>
-    <section class='content'>
+  <div id="workRecord">
+    <section class="content">
       <a-row class="search">
         <a-col :span="12">
           <span>选择日期: </span>
-          <a-range-picker @change="dateChange" :disabledDate="disabledDate" />
+          <a-range-picker :disabled-date="disabledDate" @change="dateChange" />
         </a-col>
         <a-col :span="8">
           <span>订单标题: </span>
-          <a-input placeholder="请输入订单标题" style="width: 75%;" v-model="search.title" />
+          <a-input v-model="search.title" placeholder="请输入订单标题" style="width: 75%;" />
         </a-col>
         <a-col :span="2" style="text-align: right;">
           <a-button type="primary" @click="searchOrder">查 询</a-button>
@@ -16,14 +16,14 @@
       </a-row>
       <div class="table">
         <template>
-          <a-table :columns="columns" :dataSource="data" :pagination="false" :rowKey="bindKey" :loading="loading">
+          <a-table :columns="columns" :data-source="data" :pagination="false" :row-key="bindKey" :loading="loading">
             <span slot="stream_nums" slot-scope="record">
               <p v-for="(item, index) in record.stream_nums" :key="index">
-                {{`${item.stream_num} (${transText[item.state] || '状态未知'})`}}
+                {{ `${item.stream_num} (${transText[item.state] || '状态未知'})` }}
               </p>
             </span>
             <span slot="action" slot-scope="record">
-              <span class="cancel" v-if="hasRetouchStream(record.stream_nums)">
+              <span v-if="hasRetouchStream(record.stream_nums)" class="cancel">
                 <a href="javascript:;" @click="cancelOrder(record)">撤回</a>
                 <a-divider type="vertical" />
               </span>
@@ -32,7 +32,7 @@
           </a-table>
         </template>
       </div>
-      <a-pagination class="pagination" :defaultCurrent="search.page.index" :total="data.length" @change="pageChange" />
+      <a-pagination class="pagination" :default-current="search.page.index" :total="data.length" @change="pageChange" />
     </section>
   </div>
 </template>
@@ -40,8 +40,8 @@
 import Api from '@/api/index.js'
 import moment from 'moment'
 export default {
-  name: 'workRecord',
-  data() {
+  name: 'WorkRecord',
+  data () {
     return {
       data: [],
       transText: {
@@ -91,7 +91,7 @@ export default {
     }
   },
   computed: {
-    searchParams() {
+    searchParams () {
       return {
         type: 'person',
         createdAtStart: this.search.date[0] || '',
@@ -102,20 +102,23 @@ export default {
       }
     }
   },
+  created () {
+    this.searchOrder()
+  },
   methods: {
-    disabledDate(current) {
+    disabledDate (current) {
       return current && current > moment().endOf('day')
     },
-    bindKey(record, index) {
+    bindKey (record, index) {
       return index
     },
-    hasRetouchStream(streamNums) {
-      for (let stream of streamNums) {
+    hasRetouchStream (streamNums) {
+      for (const stream of streamNums) {
         if (stream.state === 'wait_retouch') { return true }
       }
       return false
     },
-    cancelOrder(record) {
+    cancelOrder (record) {
       this.loading = true
       Api.work.cancel({
         orderNum: record.order_num
@@ -126,14 +129,14 @@ export default {
         this.loading = false
       })
     },
-    dateChange(date, dateString) {
+    dateChange (date, dateString) {
       this.search.date = dateString
     },
-    pageChange(page) {
+    pageChange (page) {
       this.search.page.index = page
       this.searchOrder()
     },
-    searchOrder() {
+    searchOrder () {
       this.loading = true
       Api.work.list(this.searchParams).then((res) => {
         this.data = res.msg.items
@@ -143,15 +146,12 @@ export default {
         this.loading = false
       })
     },
-    viewsDetail(record) {
+    viewsDetail (record) {
       this.$router.push({
         name: 'recordDetail',
         params: { id: record.order_num }
       })
     }
-  },
-  created() {
-    this.searchOrder()
   }
 }
 </script>
