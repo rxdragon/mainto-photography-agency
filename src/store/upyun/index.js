@@ -14,7 +14,7 @@ export default {
     getHost: state => state.host || 'http://fed.dev.hzmantu.com/upload_dev/'
   },
   actions: {
-    initUpyun({ commit }) {
+    initUpyun ({ commit }) {
       Api.upyun.getConfig().then(res => {
         commit('setUpyun', res.msg)
         Api.upyun.getHost().then(res => {
@@ -26,10 +26,10 @@ export default {
     }
   },
   mutations: {
-    setUpyun(state, config) {
+    setUpyun (state, config) {
       state.config = config
     },
-    setHost(state, host) {
+    setHost (state, host) {
       state.host = host
     }
   }

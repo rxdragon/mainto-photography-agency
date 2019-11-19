@@ -13,18 +13,18 @@ export default {
     getSteamId: state => state.steamid
   },
   actions: {
-    setUserInfo( { commit }, userInfo) {
+    setUserInfo ({ commit }, userInfo) {
       commit('setUser', userInfo)
     },
-    setSteamId( { commit }, steamid) {
+    setSteamId ({ commit }, steamid) {
       commit('setSteam', steamid)
     }
   },
   mutations: {
-    setUser(state, userInfo) {
+    setUser (state, userInfo) {
       state.user = userInfo
     },
-    setSteam(state, steamid) {
+    setSteam (state, steamid) {
       state.steamid = steamid
     }
   }

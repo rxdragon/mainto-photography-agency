@@ -1,14 +1,14 @@
 <template>
   <a-locale-provider :locale="locale">
     <div id="app">
-      <a-layout id="components-layout-demo-custom-trigger" v-if="getUser.id">
+      <a-layout v-if="getUser.id" id="components-layout-demo-custom-trigger">
         <Sider :collapsed="collapsed" />
         <a-layout style="position: relative;">
           <Header @collapsedEvent="collapsedHandle" />
           <a-layout-content :style="{ background: '#f7f7f7', minHeight: '280px' }">
             <router-view @loading="sendLoding" />
           </a-layout-content>
-          <div class="loading-wrap" v-if="loading">
+          <div v-if="loading" class="loading-wrap">
             <a-spin />
           </div>
         </a-layout>
@@ -18,52 +18,48 @@
   </a-locale-provider>
 </template>
 <script>
-import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
+import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import Sider from './components/Layout/Sider.vue'
 import Welcome from './views/welcome/index.vue'
 import Header from './components/Layout/Header.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'app',
-  data() {
+  name: 'App',
+  components: { Sider, Header, Welcome },
+  data () {
     return {
       loading: false,
       collapsed: false,
       locale: zhCN,
       bodyStyle: {
-        marginLeft: '20%',
+        marginLeft: '20%'
       },
       contentStyle: {
         padding: '24px',
         background: '#f0f2f5',
         textAlign: 'center',
         minHeight: '700px',
-        overflow: 'initial',
+        overflow: 'initial'
       }
     }
   },
   computed: {
-    ...mapGetters(['getUser']),
+    ...mapGetters(['getUser'])
   },
-  components: {
-    Sider,
-    Header,
-    Welcome
-  },
-  methods: {
-    ...mapActions(['initUpyun', 'initHost']),
-    sendLoding(state) {
-      this.loading = state
-    },
-    collapsedHandle(type) {
-      this.collapsed = type
-    }
-  },
-  async created() {
+  async created () {
     if (this.getUser.id) {
       await this.initUpyun().then().catch((e) => {
         this.$message.error(e.data.error_msg)
       })
+    }
+  },
+  methods: {
+    ...mapActions(['initUpyun', 'initHost']),
+    sendLoding (state) {
+      this.loading = state
+    },
+    collapsedHandle (type) {
+      this.collapsed = type
     }
   }
 }

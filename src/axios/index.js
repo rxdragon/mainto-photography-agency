@@ -1,11 +1,14 @@
 import axios from 'axios'
 import store from '../store'
+import { message } from 'ant-design-vue'
 import { errorCode } from '../errorCode.js'
 const errorHandle = (status) => {
   switch (status) {
     case 401:
-      window.localStorage.clear()
-      window.location.reload()
+      message.error('权限不足', () => {
+        window.localStorage.clear()
+        window.location.reload()
+      })
       break
   }
 }
@@ -15,7 +18,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 
 instance.interceptors.request.use(
   config => {
-    let steamId = store.getters.getSteamId
+    const steamId = store.getters.getSteamId
     if (steamId) { config.headers['x-stream-id'] = steamId }
     return config
   },
@@ -34,7 +37,7 @@ instance.interceptors.response.use(
       response.data.error_msg = errorCode.getMsg(response.data)
       return Promise.reject(response)
     }
-    return Promise.reject({ data: { error_msg: '网络无响应, 请稍候重试!' } })
+    return Promise.reject({ data: { error_msg: '网络无响应, 请稍候重试!' }})
   }
 )
 

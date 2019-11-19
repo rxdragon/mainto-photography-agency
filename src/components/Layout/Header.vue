@@ -3,16 +3,16 @@
     <a-row class="info">
       <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="triggerCollapsed" />
       <section :style="{ float: 'right' }">
-        <span>{{getUser.nick}}</span>
-        <a-tag color="#1769FF" class="organization">{{getUser.organization.nick}}</a-tag>
+        <span>{{ getUser.nick }}</span>
+        <a-tag color="#1769FF" class="organization">{{ getUser.organization.nick }}</a-tag>
         <icon-font class="out-button" type="icon-tuichu" @click="showConfirm" />
       </section>
     </a-row>
     <a-row class="route-tip">
       <a-col :span="18" class="title">
-        <h3>{{title}}</h3>
+        <h3>{{ title }}</h3>
       </a-col>
-      <a-col :span="5" class="back-button" v-if="showButton">
+      <a-col v-if="showButton" :span="5" class="back-button">
         <a-button type="primary" @click="routeBack">返回</a-button>
       </a-col>
     </a-row>
@@ -27,29 +27,29 @@ const IconFont = Icon.createFromIconfontCN({
 })
 export default {
   name: 'Header',
-  data() {
+  components: {
+    IconFont
+  },
+  data () {
     return {
       title: '',
       collapsed: false,
-      showButton: false,
+      showButton: false
     }
-  },
-  components: {
-    IconFont,
   },
   computed: {
     ...mapGetters([
-      'getUser',
+      'getUser'
     ])
   },
   watch: {
-    '$route': function(route) {
+    '$route': function (route) {
       this.title = this.switchText(route.name)
       this.showButton = route.meta.showButton
     }
   },
   methods: {
-    switchText(name) {
+    switchText (name) {
       let text = ''
       switch (name) {
         case 'work':
@@ -87,15 +87,15 @@ export default {
       }
       return text
     },
-    triggerCollapsed() {
+    triggerCollapsed () {
       this.collapsed = !this.collapsed
       this.$emit('collapsedEvent', this.collapsed)
     },
-    showConfirm() {
+    showConfirm () {
       const VM = this
       this.$confirm({
         title: '是否确认退出?',
-        onOk() {
+        onOk () {
           Api.user.loginOut().then((res) => {
             if (res.success) {
               VM.$message.success('登出中...', 2, () => {

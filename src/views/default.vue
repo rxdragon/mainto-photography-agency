@@ -8,12 +8,12 @@
 </template>
 <script>
 export default {
-  name: 'default',
-  data() {
+  name: 'Default',
+  data () {
     return {
-      defaultBg: require("@/assets/img/default.png"),
+      defaultBg: require('@/assets/img/default.png')
     }
-  },
+  }
 }
 </script>
 <style scoped lang="less">

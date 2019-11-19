@@ -10,12 +10,12 @@ sourcefolder = path.resolve(__dirname, sourcefolder)
 const service = new upyun.Service(bucket, operator, password)
 const client = new upyun.Client(service)
 // 要上传的文件列表，html最后上传：[upyun]上传完成前有过访问，会有 5 分钟 404 缓存，需要刷新缓存或等待缓存过期后更新
-let htmlFileList = [] // html文件
-let fileList = [] // 其他文件
+const htmlFileList = [] // html文件
+const fileList = [] // 其他文件
 
 // 上传文件脚本
-async function uploadFileList(fileList, client, force) {
-  for (let item of fileList) {
+async function uploadFileList (fileList, client, force) {
+  for (const item of fileList) {
     let file = null
     let remoteFile = null
     try {
@@ -35,19 +35,19 @@ async function uploadFileList(fileList, client, force) {
   }
 }
 // 读出所有的文件
-function findAllFile(uploadDir, relativePath) {
-  let dirExist = fs.existsSync(uploadDir)
+function findAllFile (uploadDir, relativePath) {
+  const dirExist = fs.existsSync(uploadDir)
   if (dirExist) {
-    let res = fs.readdirSync(uploadDir)
+    const res = fs.readdirSync(uploadDir)
     if (res.length === 0) {
       return
     }
-    for (let item of res) {
+    for (const item of res) {
       if (fs.statSync(uploadDir + path.sep + item).isDirectory()) {
         findAllFile(uploadDir + path.sep + item, relativePath + item + path.sep)
       } else {
-        let localPath = uploadDir + path.sep + item
-        let fileObj = {
+        const localPath = uploadDir + path.sep + item
+        const fileObj = {
           filePath: localPath,
           remotePath: relativePath + item,
           size: fs.statSync(localPath).size
@@ -62,11 +62,11 @@ function findAllFile(uploadDir, relativePath) {
   }
 }
 
-async function main() {
+async function main () {
   let tempRootPath = rootpath
   if (rootpath === '\/ops-himo-user\/' || rootpath === '\/develop-himo-user\/') {
     if (rootpath === '\/ops-himo-user\/' && branchName) {
-      let matchRes = branchName.match(/^release-[.0-9]+/)
+      const matchRes = branchName.match(/^release-[.0-9]+/)
       tempRootPath = tempRootPath + matchRes[0] + '/'
     }
   }
