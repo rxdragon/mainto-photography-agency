@@ -1,5 +1,5 @@
 <template>
-  <a-layout-sider class="sider" v-model="collapsed" :trigger="null" collapsible width="256px" :style="{ overflow: 'auto', minHeight: '100vh',}">
+  <a-layout-sider v-model="collapsed" class="sider" :trigger="null" collapsible width="256px" :style="{ overflow: 'auto', minHeight: '100vh',}">
     <p class="wrap" :style="{height: '64px', padding: '20px 40px',}">
       <img v-if="!collapsed" :src="logo" :style="{width: '100%'}">
       <img v-else class="single-photo" :src="singleLogo">
