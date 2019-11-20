@@ -1,0 +1,138 @@
+<template>
+  <div id="custom">
+    <section class="content">
+      <a-row class="search">
+        <a-col :span="8">
+          <span class="tip">上传时间: </span>
+          <a-range-picker class="wrap" @change="dateChange" />
+        </a-col>
+        <a-col :span="8">
+          <span class="tip">订单标题: </span>
+          <a-input v-model="search.title" class="wrap" placeholder="请输入订单标题" />
+        </a-col>
+        <a-col :span="6">
+          <span class="tip">订单号: </span>
+          <a-input v-model="search.number" class="wrap" placeholder="请输入订单号" />
+        </a-col>
+        <a-col :span="2">
+          <a-button type="primary" @click="searchOrder">查 询</a-button>
+        </a-col>
+      </a-row>
+      <a-table class="table" :loading="loading" :row-key="bindKey" :columns="columns" :data-source="data" :pagination="false">
+        <span slot="stream_nums" slot-scope="record">
+          <p v-for="(item, index) in record.stream_nums" :key="index">
+            {{ `${item.stream_num} (${transText[item.state] || '状态未知'})` }}
+          </p>
+        </span>
+        <span slot="action" slot-scope="record">
+          <a href="javascript:;" @click="routeView(record)">详 情</a>
+        </span>
+      </a-table>
+      <a-pagination class="pagination" :default-current="1" :total="data.length" />
+    </section>
+  </div>
+</template>
+<script>
+import Api from '@/api/index.js'
+export default {
+  name: 'Custom',
+  data () {
+    return {
+      data: [],
+      transText: {
+        wait_retouch: '等待修片',
+        finish: '云端修图完成',
+        retouching: '修片中',
+        wait_review: ' 审核中',
+        reviewing: '等待审核',
+        hanging: '挂起中',
+        review_return_retouch: '审核退回修片中'
+      },
+      search: {
+        date: [],
+        title: '',
+        number: '',
+        page: {
+          index: 1,
+          size: 10
+        }
+      },
+      loading: false,
+      columns: [{
+        title: '订单标题',
+        width: 300,
+        dataIndex: 'title',
+        align: 'left'
+      }, {
+        title: '订单号',
+        width: 300,
+        dataIndex: 'order_num',
+        align: 'left'
+      }, {
+        title: '上传时间',
+        width: 200,
+        dataIndex: 'updated_at',
+        align: 'left'
+      }, {
+        title: '摄影师',
+        width: 200,
+        dataIndex: 'photographer',
+        align: 'left'
+      }, {
+        title: '流水号',
+        width: 300,
+        scopedSlots: { customRender: 'stream_nums' },
+        align: 'left'
+      }, {
+        title: '操作',
+        scopedSlots: { customRender: 'action' },
+        width: 100,
+        align: 'right'
+      }]
+    }
+  },
+  computed: {
+    searchParams () {
+      return {
+        type: 'global',
+        createdAtStart: this.search.date[0] || '',
+        createdAtEnd: this.search.date[1] || '',
+        title: this.search.title,
+        orderNum: this.search.number,
+        page: this.search.page.index,
+        pageSize: this.search.page.size
+      }
+    }
+  },
+  created () {
+    this.searchOrder()
+  },
+  methods: {
+    bindKey (record, index) {
+      return index
+    },
+    dateChange (date, dateString) {
+      this.search.date = dateString
+    },
+    routeView (record) {
+      this.$router.push({
+        name: 'customDetail',
+        params: { id: record.order_num }
+      })
+    },
+    searchOrder () {
+      this.loading = true
+      Api.work.list(this.searchParams).then((res) => {
+        this.data = res.msg.items
+      }).catch((e) => {
+        this.$message.error(e.data.error_msg)
+      }).finally(() => {
+        this.loading = false
+      })
+    }
+  }
+}
+</script>
+<style lang="less">
+@import './style/index.less';
+</style>
