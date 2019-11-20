@@ -50,7 +50,7 @@
 </template>
 <script>
 import Api from '@/api/index.js'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 import * as utils from '@/util'
 export default {
   name: 'Upload',
@@ -85,8 +85,10 @@ export default {
   },
   async created () {
     this.productList = await Api.product.listAll()
+    this.initUpyun()
   },
   methods: {
+    ...mapActions(['initUpyun']),
     onBlur (e, item) {
       const { value } = e.target
       if (value === '') {

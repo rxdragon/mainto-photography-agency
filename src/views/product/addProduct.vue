@@ -55,7 +55,7 @@
 </template>
 <script>
 import Api from '@/api/index.js'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -97,8 +97,10 @@ export default {
   },
   created () {
     if (this.hasQuery) { this.initQuery() }
+    this.initUpyun()
   },
   methods: {
+    ...mapActions(['initUpyun']),
     handlePreview (file) {
       this.previewImage = file.url || file.thumbUrl
       this.previewVisible = true

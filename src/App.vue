@@ -65,6 +65,9 @@ export default {
 }
 </script>
 <style>
+html {
+	font-family: PingFangSC-Medium, PingFangSC;
+}
 .loading-wrap {
   text-align: center;
   background: rgba(0, 0, 0, 0.25);

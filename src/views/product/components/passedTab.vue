@@ -138,6 +138,7 @@ export default {
 
     .tip {
       margin-right: 20px;
+      font-size: 14px;
     }
   }
 }
