@@ -64,10 +64,17 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="less">
 html {
 	font-family: PingFangSC-Medium, PingFangSC;
 }
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .loading-wrap {
   text-align: center;
   background: rgba(0, 0, 0, 0.25);
@@ -83,6 +90,11 @@ html {
 .loading-wrap .ant-spin-spinning {
   position: absolute;
   top: 45%;
+}
+
+.ant-layout-content {
+  height: calc(100vh - 128px);
+  overflow-y: auto;
 }
 
 #components-layout-demo-custom-trigger .trigger {
