@@ -11,6 +11,10 @@
         <h4><span class="line" /><span>订单信息</span></h4>
         <a-row>
           <a-col :span="24" class="child-item">
+            <span class="title">顾客姓名: </span>
+            <a-input v-model="orderInfo.name" placeholder="请输入顾客姓名" style="width: 80%;" />
+          </a-col>
+          <a-col :span="24" class="child-item">
             <span class="title">订单标题: </span>
             <a-input v-model="orderInfo.title" placeholder="请输入订单标题" style="width: 80%;" />
           </a-col>
@@ -81,6 +85,7 @@ export default {
       visible: true,
       orderInfo: {
         title: '',
+        name: '',
         retouchNote: '',
         takeTime: '',
         claim: {
@@ -94,7 +99,7 @@ export default {
   computed: {
     params () {
       return {
-        title: this.orderInfo.title,
+        title: `顾客姓名：${this.orderInfo.name}，` + this.orderInfo.title,
         retouchNote: this.orderInfo.retouchNote,
         takeTime: this.orderInfo.takeTime,
         photoData: this.photoList,
@@ -116,7 +121,7 @@ export default {
         this.photoList.push({
           productId: item.product_id && item.product_id + '',
           path: item.response.url.replace(/\/(\S*)\//, ''),
-          peopleNum: Number(item.people_num),
+          peopleNum: String(item.people_num),
           spliceMark: item.splice_mark,
           splicePosition: item.splice_position,
           type: Boolean(item.splice_position) === true ? 'splice' : 'normal'
@@ -128,6 +133,7 @@ export default {
         if (!this.params[item]) { return false }
       }
       for (const photo of this.params.photoData) {
+        if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) { return false }
         if (!photo.productId || !photo.peopleNum) { return false }
       }
       return true
@@ -139,9 +145,10 @@ export default {
       this.$emit('loading', true)
       Api.work.add(this.params).then(() => {
         this.$message.success('订单提交成功', 2, () => {
-          this.$refs.uploadChild.imgList = []
+          this.$refs.uploadChild.fileList = []
           this.orderInfo = {
             title: '',
+            name: '',
             retouchNote: '',
             takeTime: '',
             claim: {
@@ -150,10 +157,10 @@ export default {
               pimples: ''
             }
           }
+          this.$emit('loading', false)
         })
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
-      }).finally(() => {
         this.$emit('loading', false)
       })
     }
