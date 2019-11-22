@@ -50,6 +50,7 @@
           </li>
         </ul>
         <a-upload
+          ref="antUpload"
           accept="image/*"
           :multiple="true"
           :headers="uploadHeader"
@@ -57,11 +58,12 @@
           :before-upload="checkFile"
           list-type="picture-card"
           :data="getUpyun"
+          :file-list="fileList"
           :show-upload-list="false"
           @change="handleChange"
         >
           <div>
-            <a-icon :type="loading ? 'loading' : 'plus'" />
+            <a-icon type="plus" />
             <div class="ant-upload-text">点击上传</div>
           </div>
         </a-upload>
@@ -135,9 +137,11 @@ export default {
         for (const item of this.fileList) {
           if (item.name === file.name || md5 === item.md5) {
             this.$message.error('重复照片上传')
+            this.$emit('loading', false)
             return reject(false)
           }
         }
+        this.$emit('loading', false)
         return resolve(true)
       })
     },
