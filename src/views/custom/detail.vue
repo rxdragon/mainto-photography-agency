@@ -49,14 +49,14 @@
                 <a-col v-for="(photoItem, photoIndex) in childItem" v-show="photoItem.version !== 'first_photo'" :key="photoIndex" :span="7" class="item">
                   <div class="container-wrap">
                     <div class="img-wrap">
-                      <img :src="`${photoHost}${photoItem.path}`" @load="imgLoad">
+                      <img :src="`${getHost}${photoItem.path}`" @load="imgLoad">
                     </div>
                     <div class="imgMask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
                     </div>
                   </div>
                   <p class="tip">
-                    <span class="button" @click="download(`${photoHost}${photoItem.path}`)">下载照片</span>
+                    <span class="button" @click="download(`${getHost}${photoItem.path}`)">下载照片</span>
                     <span class="text">{{ versionState[photoItem.version] }}</span>
                   </p>
                 </a-col>
@@ -72,6 +72,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import Api from '@/api/index.js'
 import JsZip from 'jszip'
 import * as utils from '@/util'
@@ -89,7 +90,6 @@ export default {
         photographer: '',
         streams: []
       },
-      photoHost: 'http://fed.dev.hzmantu.com/upload_dev/',
       versionState: {
         original_photo: '原片',
         complete_photo: '云端成片'
@@ -97,6 +97,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getHost']),
     photoQueue () {
       const photoList = { firstArr: [], completeArr: [] }
       this.order.streams.map((item) => {
@@ -104,9 +105,9 @@ export default {
         itemList.map((item) => {
           item.map((photoItem) => {
             if (photoItem.version === 'complete_photo') {
-              photoList.completeArr.push(`${this.photoHost}${photoItem.path}`)
+              photoList.completeArr.push(`${this.getHost}${photoItem.path}`)
             } else if (photoItem.version === 'original_photo') {
-              photoList.firstArr.push(`${this.photoHost}${photoItem.path}`)
+              photoList.firstArr.push(`${this.getHost}${photoItem.path}`)
             }
           })
         })
@@ -128,7 +129,7 @@ export default {
       window.open(`${url}?download`)
     },
     showModel (url) {
-      this.previewImage = `${this.photoHost}${url}`
+      this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
     },
     reviewOrder () {
