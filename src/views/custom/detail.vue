@@ -44,12 +44,14 @@
           </h4>
           <ul>
             <li v-for="(item, index) in order.streams" :key="index">
-              <a-alert :message="item.product" type="info" />
+              <div class="alert-wrap">
+                <a-alert :message="`${item.product} (流水号: ${item.stream_num}) `" type="info" />
+              </div>
               <a-row v-for="(childItem, childIndex) in item.photos" :key="childIndex" type="flex" justify="start" class="pirtureWrap">
                 <a-col v-for="(photoItem, photoIndex) in childItem" v-show="photoItem.version !== 'first_photo'" :key="photoIndex" :span="7" class="item">
                   <div class="container-wrap">
                     <div class="img-wrap">
-                      <img :src="`${getHost}${photoItem.path}`" @load="imgLoad">
+                      <img :src="`${getHost}${photoItem.path}${$cutDown}`">
                     </div>
                     <div class="imgMask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
@@ -116,15 +118,10 @@ export default {
     }
   },
   created () {
+    console.log(this.$cutDown)
     this.reviewOrder()
   },
   methods: {
-    imgLoad (e) {
-      if (e.target.offsetHeight < e.target.offsetWidth) {
-        e.target.style.width = 'auto'
-        e.target.style.height = '100%'
-      }
-    },
     download (url) {
       window.open(`${url}?download`)
     },

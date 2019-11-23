@@ -3,7 +3,7 @@ import md5 from 'js-md5'
 // 获取图片地址
 export function getUglifyImg (url, needUglify = false) {
   const fullUrl = process.env.VUE_APP_UPYUN_HOST + url
-  if (needUglify) return fullUrl + '!thumb.small.50'
+  if (needUglify) return fullUrl + this.$cutDown
   return fullUrl
 }
 

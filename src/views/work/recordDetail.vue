@@ -33,7 +33,7 @@
                 <a-col v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" :span="7" class="item">
                   <div class="container">
                     <div class="img-wrap">
-                      <img :src="`${getHost}${photoItem.path}`" @load="imgLoad">
+                      <img :src="`${getHost}${photoItem.path}${$cutDown}`">
                     </div>
                     <div class="mask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
@@ -76,12 +76,6 @@ export default {
     this.reviewOrder()
   },
   methods: {
-    imgLoad (e) {
-      if (e.target.offsetHeight < e.target.offsetWidth) {
-        e.target.style.width = 'auto'
-        e.target.style.height = '100%'
-      }
-    },
     showModel (url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
