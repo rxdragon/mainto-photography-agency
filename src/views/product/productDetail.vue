@@ -12,7 +12,7 @@
           <a-col v-for="(item, index) in product.simple_images" :key="index" class="pictureWrap" :span="6" :offset="1">
             <div class="container-wrap">
               <div class="img-wrap">
-                <img :src="`${getHost}${item}`" @load="imgLoad">
+                <img :src="`${getHost}${item}${$cutDown}`">
               </div>
               <div class="mask">
                 <a-icon type="eye" class="bigger-icon" @click="showModel(item)" />
@@ -126,13 +126,6 @@ export default {
     this.reviewProduct()
   },
   methods: {
-
-    imgLoad (e) {
-      if (e.target.offsetHeight < e.target.offsetWidth) {
-        e.target.style.width = 'auto'
-        e.target.style.height = '100%'
-      }
-    },
     showModel (url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true

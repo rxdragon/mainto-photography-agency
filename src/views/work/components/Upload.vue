@@ -3,9 +3,9 @@
     <!-- 照片上传 -->
     <div class="upload">
       <div class="clearfix">
-        <ul v-for="(item, index) in fileList" :key="'fileList' + index" class="ant-upload-list ant-upload-list-picture-card">
+        <ul class="ant-upload-list ant-upload-list-picture-card">
           <!-- 单张照片列表 -->
-          <li class="list-wrap">
+          <li v-for="(item, index) in fileList" :key="'fileList' + index" class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info">
                 <img v-if="item.status === 'done' && item.response" :src="changeImagePath(item.response.url)">
@@ -48,25 +48,25 @@
               />
             </p>
           </li>
+          <a-upload
+            ref="antUpload"
+            accept="image/*"
+            :multiple="true"
+            :headers="uploadHeader"
+            :action="upyunAction"
+            :before-upload="checkFile"
+            list-type="picture-card"
+            :data="getUpyun"
+            :file-list="fileList"
+            :show-upload-list="false"
+            @change="handleChange"
+          >
+            <div>
+              <a-icon type="plus" />
+              <div class="ant-upload-text">点击上传</div>
+            </div>
+          </a-upload>
         </ul>
-        <a-upload
-          ref="antUpload"
-          accept="image/*"
-          :multiple="true"
-          :headers="uploadHeader"
-          :action="upyunAction"
-          :before-upload="checkFile"
-          list-type="picture-card"
-          :data="getUpyun"
-          :file-list="fileList"
-          :show-upload-list="false"
-          @change="handleChange"
-        >
-          <div>
-            <a-icon type="plus" />
-            <div class="ant-upload-text">点击上传</div>
-          </div>
-        </a-upload>
         <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
           <img style="width: 100%" :src="previewImage">
         </a-modal>
@@ -125,7 +125,7 @@ export default {
      * @description 更改图片地址
      */
     changeImagePath (url) {
-      const imgPath = this.getHost + url + '!thumb.small.50'
+      const imgPath = this.getHost + url + this.$cutDown
       return imgPath
     },
     /**
