@@ -5,7 +5,7 @@
       <div class="upload">
         <h4><span class="line" /><span>发布照片</span></h4>
         <a-alert v-if="visible" message="温馨提示" description="1、若要进行照片拼接，需选择标签对照片标记；如标签“拼接A”先后标记了照片1、2，则表示这两张照片需先后被拼接在一起" type="info" closable :after-close="handleClose" :style="{textAlign: 'left', marginBottom: '24px'}" />
-        <Upload ref="uploadChild" @sendPhotos="getPhotos" />
+        <Upload ref="uploadChild" @loading="sendLoding" @sendPhotos="getPhotos" />
       </div>
       <div class="order-info">
         <h4><span class="line" /><span>订单信息</span></h4>
@@ -139,7 +139,8 @@ export default {
       return true
     },
     async submitCloud () {
-      this.$refs.uploadChild.getChildPhotos()
+      const isAllFinish = this.$refs.uploadChild.getChildPhotos()
+      if (!isAllFinish) return
       // TODO: 后续增补Verification模块
       if (!this.emptyParams()) { return this.$message.error('请填写完整信息') }
       this.$emit('loading', true)
@@ -163,6 +164,9 @@ export default {
         this.$message.error(e.data.error_msg)
         this.$emit('loading', false)
       })
+    },
+    sendLoding (state) {
+      this.$emit('loading', state)
     }
   }
 }
