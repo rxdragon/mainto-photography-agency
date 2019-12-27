@@ -3,15 +3,15 @@
     <section class="content">
       <a-row class="search">
         <a-col :span="12">
-          <span>选择日期: </span>
+          <span class="tip">选择日期: </span>
           <a-range-picker :disabled-date="disabledDate" @change="dateChange" />
         </a-col>
         <a-col :span="8">
-          <span>订单标题: </span>
+          <span class="tip">订单标题: </span>
           <a-input v-model="search.title" placeholder="请输入订单标题" style="width: 75%;" />
         </a-col>
         <a-col :span="2" style="text-align: right;">
-          <a-button type="primary" @click="searchOrder">查 询</a-button>
+          <a-button type="primary" @click="searchOrder(1)">查 询</a-button>
         </a-col>
       </a-row>
       <div class="table">
@@ -32,7 +32,12 @@
           </a-table>
         </template>
       </div>
-      <a-pagination class="pagination" :default-current="search.page.index" :total="data.length" @change="pageChange" />
+      <a-pagination
+        v-model="search.page.index"
+        class="pagination"
+        :total="search.page.total"
+        @change="pageChange"
+      />
     </section>
   </div>
 </template>
@@ -85,7 +90,8 @@ export default {
         title: '',
         page: {
           size: 10,
-          index: 1
+          index: 1,
+          total: 0
         }
       }
     }
@@ -132,14 +138,23 @@ export default {
     dateChange (date, dateString) {
       this.search.date = dateString
     },
-    pageChange (page) {
-      this.search.page.index = page
-      this.searchOrder()
+    /**
+     * @description 监听页面变化
+     */
+    pageChange () {
+      this.$nextTick(() => {
+        this.searchOrder()
+      })
     },
-    searchOrder () {
+    /**
+     * @description 搜索订单
+     */
+    searchOrder (page) {
       this.loading = true
+      this.search.page.index = page || this.search.page.index
       Api.work.list(this.searchParams).then((res) => {
         this.data = res.msg.items
+        this.search.page.total = res.msg.count
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {

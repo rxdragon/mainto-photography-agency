@@ -20,7 +20,12 @@
           </div>
         </span>
       </a-table>
-      <a-pagination class="pagination" :default-current="page.index" :total="dataSource.length" @change="pageChange" />
+      <a-pagination
+        v-model="page.index"
+        class="pagination"
+        :total="page.total"
+        @change="pageChange"
+      />
     </a-row>
   </div>
 </template>
@@ -65,7 +70,8 @@ export default {
       page: {
         size: 10,
         index: 1,
-        state: ''
+        state: '',
+        total: 0
       }
     }
   },
@@ -86,10 +92,19 @@ export default {
         }
       })
     },
+    /**
+     * @description 搜索账号
+     */
     searchSubuser () {
       this.loading = true
-      Api.manage.list(this.page).then((res) => {
+      const req = {
+        page: this.page.index,
+        pageSize: this.page.size
+      }
+      if (this.page.state) { req.state = this.page.state }
+      Api.manage.list(req).then((res) => {
         this.dataSource = res.msg.items
+        this.page.total = res.msg.total
       }).finally(() => {
         this.loading = false
       })
@@ -120,9 +135,13 @@ export default {
         this.loading = false
       })
     },
-    pageChange (page) {
-      this.page.index = page
-      this.searchSubuser()
+    /**
+     * @description 监听页面变化
+     */
+    pageChange () {
+      this.$nextTick(() => {
+        this.searchSubuser()
+      })
     }
   }
 }

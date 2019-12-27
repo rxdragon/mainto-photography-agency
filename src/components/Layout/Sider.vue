@@ -1,8 +1,8 @@
 <template>
-  <a-layout-sider v-model="collapsed" :trigger="null" collapsible width="256px" :style="{ overflow: 'auto', minHeight: '100vh',}">
+  <a-layout-sider v-model="collapsed" class="sider" :trigger="null" collapsible width="256px" :style="{ overflow: 'auto', minHeight: '100vh',}">
     <p class="wrap" :style="{height: '64px', padding: '20px 40px',}">
       <img v-if="!collapsed" :src="logo" :style="{width: '100%'}">
-      <img v-else :src="singleLogo" :style="{width: '100%'}">
+      <img v-else class="single-photo" :src="singleLogo">
     </p>
     <a-menu mode="inline" theme="dark" :selected-keys="selectedKeys" :open-keys.sync="openKeys">
       <a-sub-menu key="work">
@@ -87,3 +87,23 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.sider {
+  .wrap {
+    position: relative;
+
+    img {
+      width: 47px;
+      height: 28px;
+    }
+
+    .single-photo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+}
+</style>

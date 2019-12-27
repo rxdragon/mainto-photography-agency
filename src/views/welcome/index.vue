@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUserInfo', 'initUpyun']),
+    ...mapActions(['setUserInfo']),
     // 验证表单
     validForm (e) {
       e.preventDefault()
@@ -75,7 +75,6 @@ export default {
       }).then(() => {
         this.$router.replace({ path: '/' })
         Api.user.getInfo().then((res) => {
-          this.initUpyun()
           this.setUserInfo(res.msg)
         }).catch((e) => {
           this.$message.error(e.data.error_msg)

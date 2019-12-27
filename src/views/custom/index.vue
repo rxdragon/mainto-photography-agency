@@ -15,7 +15,7 @@
           <a-input v-model="search.number" class="wrap" placeholder="请输入订单号" />
         </a-col>
         <a-col :span="2">
-          <a-button type="primary" @click="searchOrder">查 询</a-button>
+          <a-button type="primary" @click="searchOrder(1)">查 询</a-button>
         </a-col>
       </a-row>
       <a-table class="table" :loading="loading" :row-key="bindKey" :columns="columns" :data-source="data" :pagination="false">
@@ -28,7 +28,12 @@
           <a href="javascript:;" @click="routeView(record)">详 情</a>
         </span>
       </a-table>
-      <a-pagination class="pagination" :default-current="1" :total="data.length" />
+      <a-pagination
+        v-model="search.page.index"
+        class="pagination"
+        :total="search.page.total"
+        @change="onPageChange"
+      />
     </section>
   </div>
 </template>
@@ -54,7 +59,8 @@ export default {
         number: '',
         page: {
           index: 1,
-          size: 10
+          size: 10,
+          total: 0
         }
       },
       loading: false,
@@ -91,19 +97,6 @@ export default {
       }]
     }
   },
-  computed: {
-    searchParams () {
-      return {
-        type: 'global',
-        createdAtStart: this.search.date[0] || '',
-        createdAtEnd: this.search.date[1] || '',
-        title: this.search.title,
-        orderNum: this.search.number,
-        page: this.search.page.index,
-        pageSize: this.search.page.size
-      }
-    }
-  },
   created () {
     this.searchOrder()
   },
@@ -120,14 +113,36 @@ export default {
         params: { id: record.order_num }
       })
     },
-    searchOrder () {
+    /**
+     * @description 查询订单数据
+     */
+    searchOrder (page) {
       this.loading = true
-      Api.work.list(this.searchParams).then((res) => {
+      this.search.page.index = page || this.search.page.index
+      const reqData = {
+        type: 'global',
+        createdAtStart: this.search.date[0] || '',
+        createdAtEnd: this.search.date[1] || '',
+        title: this.search.title,
+        orderNum: this.search.number,
+        page: this.search.page.index,
+        pageSize: this.search.page.size
+      }
+      Api.work.list(reqData).then((res) => {
         this.data = res.msg.items
+        this.search.page.total = res.msg.count
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
+      })
+    },
+    /**
+     * @description 页面变动
+     */
+    onPageChange () {
+      this.$nextTick(() => {
+        this.searchOrder()
       })
     }
   }

@@ -6,7 +6,7 @@
         <a-range-picker :disabled-date="disabledDate" @change="dateChange" />
       </a-col>
       <a-col :span="3" style="text-align: right;">
-        <a-button type="primary" @click="searchProduct">查 询</a-button>
+        <a-button type="primary" @click="searchProduct(1)">查 询</a-button>
       </a-col>
     </a-row>
     <a-table class="table" :columns="columns" :data-source="dataSource" :row-key="bindKey" :pagination="false" :loading="loading">
@@ -30,7 +30,12 @@
         </div>
       </span>
     </a-table>
-    <a-pagination class="pagination" :current="page.index" :default-current="1" :total="dataSource.length" @change="searchProduct" />
+    <a-pagination
+      v-model="page.index"
+      class="pagination"
+      :total="page.total"
+      @change="onPageChange"
+    />
   </div>
 </template>
 <script>
@@ -71,7 +76,8 @@ export default {
       date: [],
       page: {
         size: 10,
-        index: 1
+        index: 1,
+        total: 0
       },
       loading: false
     }
@@ -116,14 +122,27 @@ export default {
     dateChange (date, dateString) {
       this.date = dateString
     },
-    searchProduct () {
+    /**
+     * @description 搜索产品
+     */
+    searchProduct (page) {
       this.loading = true
+      this.page.index = page || this.page.index
       Api.product.list(this.searchParams).then((res) => {
         this.dataSource = res.msg.items
+        this.page.total = res.msg.count
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {
         this.loading = false
+      })
+    },
+    /**
+     * @description 监听页面变化
+     */
+    onPageChange () {
+      this.$nextTick(() => {
+        this.searchProduct()
       })
     }
   }
@@ -138,6 +157,7 @@ export default {
 
     .tip {
       margin-right: 20px;
+      font-size: 14px;
     }
   }
 }
