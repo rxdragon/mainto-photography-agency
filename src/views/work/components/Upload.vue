@@ -77,8 +77,8 @@
 <script>
 import Api from '@/api/index.js'
 import { mapGetters, mapState, mapActions } from 'vuex'
-import * as utils from '@/util/index.js'
 import * as PhotoTool from '@/util/photoTool.js'
+
 export default {
   name: 'Upload',
   filters: {
@@ -90,9 +90,7 @@ export default {
   data () {
     return {
       productList: [],
-      uploadHeader: {
-        'X-Requested-With': null
-      },
+      uploadHeader: { 'X-Requested-With': null },
       previewVisible: false,
       previewImage: '',
       fileList: [],
@@ -129,21 +127,22 @@ export default {
       return imgPath
     },
     /**
-     * @description 检测文件是否重复上传
+     * @description 上传前生命周期
      */
     async checkFile (file) {
-      const md5 = await utils.getFileMd5(file)
-      return new Promise((resolve, reject) => {
-        for (const item of this.fileList) {
-          if (item.name === file.name || md5 === item.md5) {
-            this.$message.error('重复照片上传')
-            this.$emit('loading', false)
-            return reject(false)
-          }
-        }
+      try {
+        this.$emit('loading', true)
+        const info = await PhotoTool.getImgBufferPhoto(file)
+        const md5 = info.md5
+        const hasSamePhoto = this.fileList.find(fileItem => fileItem.name === file.name || fileItem.md5 === md5)
+        if (hasSamePhoto) throw new Error('重复照片上传')
+        return Promise.resolve()
+      } catch (error) {
+        this.$message.warning(error.message || error)
+        return Promise.reject()
+      } finally {
         this.$emit('loading', false)
-        return resolve(true)
-      })
+      }
     },
     getChildPhotos () {
       const isFinish = this.fileList.every(photoItem => photoItem.md5)
@@ -152,6 +151,7 @@ export default {
         return false
       }
       this.$emit('sendPhotos', this.fileList)
+      return true
     },
     needSplit (item) {
       const selectId = item.product_id || 0
