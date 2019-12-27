@@ -151,6 +151,7 @@ export default {
         return false
       }
       this.$emit('sendPhotos', this.fileList)
+      return true
     },
     needSplit (item) {
       const selectId = item.product_id || 0
