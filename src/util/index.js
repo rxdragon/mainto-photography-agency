@@ -1,4 +1,5 @@
 import md5 from 'js-md5'
+import JSZipUtils from 'jszip-utils'
 
 // 获取图片地址
 export function getUglifyImg (url, needUglify = false) {
@@ -30,6 +31,19 @@ export function getRemoteImg (url, removeBase64 = true) {
       const dataUrl = getBase64Image(image, removeBase64)
       resolve(dataUrl)
     }
+  })
+}
+
+export function zipGetFile (url) {
+  return new Promise(function (resolve, reject) {
+    // 避免跨域
+    JSZipUtils.getBinaryContent(`${url}?nocache=${Date.now()}`, function (err, data) {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
   })
 }
 

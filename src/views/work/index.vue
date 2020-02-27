@@ -75,9 +75,7 @@ import Api from '@/api/index.js'
 import Upload from './components/Upload.vue'
 export default {
   name: 'Work',
-  components: {
-    Upload
-  },
+  components: { Upload },
   data () {
     return {
       photoList: [],
@@ -128,10 +126,17 @@ export default {
         })
       })
     },
+    /**
+     * @description 验证参数
+     */
     emptyParams () {
       for (const item in this.params) {
-        if (!this.params[item]) { return false }
+        if (!this.params[item]) return false
       }
+      if (!this.params.retouchClaim.eye) return false
+      if (!this.params.retouchClaim.face) return false
+      const hasPimples = typeof this.params.retouchClaim.pimples === 'boolean'
+      if (!hasPimples) return false
       for (const photo of this.params.photoData) {
         if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) { return false }
         if (!photo.productId || !photo.peopleNum) { return false }
