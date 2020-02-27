@@ -148,28 +148,15 @@ export default {
       const zip = new JsZip()
       const fold = zip.folder(folder)
       const transArr = []
-      // photoData.map(obj => {
-      //   const promiseItem = utils.zipGetFile(obj).then(res => {
-      //     console.log(obj)
-      //     const arrName = obj.split('/')
-      //     const fileName = arrName[arrName.length - 1] // 获取文件名
-      //     fold.file(fileName, res, { base64: true })
-      //   })
-      //   transArr.push(promiseItem)
-      // })
-
-      photoData.forEach((obj, index) => {
+      photoData.map(obj => {
         const promiseItem = utils.zipGetFile(obj).then(res => {
-          // console.log(obj)
-          fold.file(`${moment().format('YYYY-MM-DD HH-mm-ss')}.png`, res, { base64: true })
-          console.log(obj)
-          // fold.file(`${index}.png`, res, { base64: true })
+          const arrName = obj.split('/')
+          const fileName = arrName[arrName.length - 1] // 获取文件名
+          fold.file(fileName, res, { base64: true })
         })
         transArr.push(promiseItem)
       })
-      
       Promise.all(transArr).then(() => {
-        console.log('loadingALl')
         zip.generateAsync({ type: 'blob' }).then(content => {
           utils.saveAs(content, `${folder} ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`)
         })
