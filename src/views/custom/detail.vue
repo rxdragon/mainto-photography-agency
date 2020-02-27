@@ -74,11 +74,12 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import Api from '@/api/index.js'
 import JsZip from 'jszip'
-import * as utils from '@/util'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
+import * as utils from '@/util'
+
 export default {
   name: 'Custom',
   data () {
@@ -118,12 +119,11 @@ export default {
     }
   },
   created () {
-    console.log(this.$cutDown)
     this.reviewOrder()
   },
   methods: {
     download (url) {
-      window.open(`${url}?download`)
+      window.open(`${url}?_upd=true`)
     },
     showModel (url) {
       this.previewImage = `${this.getHost}${url}`
@@ -148,12 +148,28 @@ export default {
       const zip = new JsZip()
       const fold = zip.folder(folder)
       const transArr = []
-      photoData.map((obj) => {
-        transArr.push(utils.getRemoteImg(obj).then(res => {
+      // photoData.map(obj => {
+      //   const promiseItem = utils.zipGetFile(obj).then(res => {
+      //     console.log(obj)
+      //     const arrName = obj.split('/')
+      //     const fileName = arrName[arrName.length - 1] // 获取文件名
+      //     fold.file(fileName, res, { base64: true })
+      //   })
+      //   transArr.push(promiseItem)
+      // })
+
+      photoData.forEach((obj, index) => {
+        const promiseItem = utils.zipGetFile(obj).then(res => {
+          // console.log(obj)
           fold.file(`${moment().format('YYYY-MM-DD HH-mm-ss')}.png`, res, { base64: true })
-        }))
+          console.log(obj)
+          // fold.file(`${index}.png`, res, { base64: true })
+        })
+        transArr.push(promiseItem)
       })
+      
       Promise.all(transArr).then(() => {
+        console.log('loadingALl')
         zip.generateAsync({ type: 'blob' }).then(content => {
           utils.saveAs(content, `${folder} ${moment().format('YYYY-MM-DD HH-mm-ss')}.zip`)
         })
