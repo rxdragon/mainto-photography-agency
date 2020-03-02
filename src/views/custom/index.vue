@@ -7,8 +7,8 @@
           <a-range-picker class="wrap" @change="dateChange" />
         </a-col>
         <a-col :span="8">
-          <span class="tip">订单标题: </span>
-          <a-input v-model="search.title" class="wrap" placeholder="请输入订单标题" />
+          <span class="tip">顾客姓名: </span>
+          <a-input v-model="search.clientName" class="wrap" placeholder="请输入顾客姓名" />
         </a-col>
         <a-col :span="6">
           <span class="tip">订单号: </span>
@@ -22,8 +22,15 @@
         <span slot="stream_nums" slot-scope="record">
           <p v-for="(item, index) in record.stream_nums" :key="index">
             {{ `${item.stream_num} (${transText[item.state] || '状态未知'})` }}
+            <a-popover title="修图信息">
+              <template slot="content">
+                <p>修图主管：{{ item.retoucherLeader }}</p>
+              </template>
+              <a-icon type="info-circle" />
+            </a-popover>
           </p>
         </span>
+
         <span slot="action" slot-scope="record">
           <a href="javascript:;" @click="routeView(record)">详 情</a>
         </span>
@@ -42,6 +49,42 @@ import Api from '@/api/index.js'
 export default {
   name: 'Custom',
   data () {
+    const rowInfo = [{
+      title: '订单标题',
+      width: 300,
+      dataIndex: 'title',
+      align: 'left'
+    }, {
+      title: '订单号',
+      width: 300,
+      dataIndex: 'order_num',
+      align: 'left'
+    }, {
+      title: '顾客姓名',
+      width: 200,
+      dataIndex: 'clientName',
+      align: 'left'
+    }, {
+      title: '上传时间',
+      width: 200,
+      dataIndex: 'updated_at',
+      align: 'left'
+    }, {
+      title: '摄影师',
+      width: 200,
+      dataIndex: 'photographer',
+      align: 'left'
+    }, {
+      title: '流水号',
+      width: 400,
+      scopedSlots: { customRender: 'stream_nums' },
+      align: 'left'
+    }, {
+      title: '操作',
+      scopedSlots: { customRender: 'action' },
+      width: 100,
+      align: 'right'
+    }]
     return {
       data: [],
       transText: {
@@ -55,7 +98,7 @@ export default {
       },
       search: {
         date: [],
-        title: '',
+        clientName: '',
         number: '',
         page: {
           index: 1,
@@ -64,37 +107,7 @@ export default {
         }
       },
       loading: false,
-      columns: [{
-        title: '订单标题',
-        width: 300,
-        dataIndex: 'title',
-        align: 'left'
-      }, {
-        title: '订单号',
-        width: 300,
-        dataIndex: 'order_num',
-        align: 'left'
-      }, {
-        title: '上传时间',
-        width: 200,
-        dataIndex: 'updated_at',
-        align: 'left'
-      }, {
-        title: '摄影师',
-        width: 200,
-        dataIndex: 'photographer',
-        align: 'left'
-      }, {
-        title: '流水号',
-        width: 300,
-        scopedSlots: { customRender: 'stream_nums' },
-        align: 'left'
-      }, {
-        title: '操作',
-        scopedSlots: { customRender: 'action' },
-        width: 100,
-        align: 'right'
-      }]
+      columns: rowInfo
     }
   },
   created () {
@@ -123,16 +136,34 @@ export default {
         type: 'global',
         createdAtStart: this.search.date[0] || '',
         createdAtEnd: this.search.date[1] || '',
-        title: this.search.title,
+        customerName: this.search.clientName,
+        title: '',
         orderNum: this.search.number,
         page: this.search.page.index,
         pageSize: this.search.page.size
       }
       Api.work.list(reqData).then((res) => {
+        res.msg.items = res.msg.items.map(listItem => {
+          listItem.stream_nums.forEach(streamItem => {
+            const retoucherInfo = streamItem.retoucher
+            streamItem.retoucherName = '-'
+            streamItem.retoucherLeader = '-'
+            if (retoucherInfo) {
+              streamItem.retoucherName = retoucherInfo.name || retoucherInfo.real_name || '-'
+              if (retoucherInfo.retoucher_leader) {
+                streamItem.retoucherLeader = retoucherInfo.retoucher_leader.nickname || retoucherInfo.retoucher_leader.name || '-'
+              }
+            }
+          })
+          return {
+            ...listItem,
+            clientName: listItem.customer_name || '-'
+          }
+        })
         this.data = res.msg.items
         this.search.page.total = res.msg.count
       }).catch((e) => {
-        this.$message.error(e.data.error_msg)
+        this.$message.error(e.data.error_msg || e)
       }).finally(() => {
         this.loading = false
       })

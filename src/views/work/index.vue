@@ -97,7 +97,8 @@ export default {
   computed: {
     params () {
       return {
-        title: `顾客姓名：${this.orderInfo.name}，` + this.orderInfo.title,
+        title: this.orderInfo.title,
+        customerName: this.orderInfo.name,
         retouchNote: this.orderInfo.retouchNote,
         takeTime: this.orderInfo.takeTime,
         photoData: this.photoList,
