@@ -2,13 +2,17 @@
   <div id="workRecord">
     <section class="content">
       <a-row class="search">
-        <a-col :span="12">
+        <a-col :span="8">
           <span class="tip">选择日期: </span>
           <a-range-picker :disabled-date="disabledDate" @change="dateChange" />
         </a-col>
-        <a-col :span="8">
+        <a-col :span="7">
           <span class="tip">订单标题: </span>
           <a-input v-model="search.title" placeholder="请输入订单标题" style="width: 75%;" />
+        </a-col>
+        <a-col :span="7">
+          <span class="tip">顾客姓名: </span>
+          <a-input v-model="search.customerName" placeholder="请输入顾姓名" style="width: 75%;" />
         </a-col>
         <a-col :span="2" style="text-align: right;">
           <a-button type="primary" @click="searchOrder(1)">查 询</a-button>
@@ -47,6 +51,37 @@ import moment from 'moment'
 export default {
   name: 'WorkRecord',
   data () {
+    const rowInfo = [{
+      title: '订单标题',
+      dataIndex: 'title',
+      width: 300,
+      align: 'left'
+    }, {
+      title: '订单号',
+      dataIndex: 'order_num',
+      width: 300,
+      align: 'left'
+    }, {
+      title: '顾客姓名',
+      dataIndex: 'clientName',
+      align: 'left',
+      width: 200
+    }, {
+      title: '上传时间',
+      dataIndex: 'created_at',
+      align: 'left',
+      width: 200
+    }, {
+      title: '流水号',
+      scopedSlots: { customRender: 'stream_nums' },
+      width: 300,
+      align: 'left'
+    }, {
+      title: '操作',
+      scopedSlots: { customRender: 'action' },
+      width: 200,
+      align: 'right'
+    }]
     return {
       data: [],
       transText: {
@@ -59,35 +94,11 @@ export default {
         review_return_retouch: '审核退回修片中'
       },
       loading: true,
-      columns: [{
-        title: '订单标题',
-        dataIndex: 'title',
-        width: 300,
-        align: 'left'
-      }, {
-        title: '订单号',
-        dataIndex: 'order_num',
-        width: 300,
-        align: 'left'
-      }, {
-        title: '上传时间',
-        dataIndex: 'created_at',
-        align: 'left',
-        width: 200
-      }, {
-        title: '流水号',
-        scopedSlots: { customRender: 'stream_nums' },
-        width: 300,
-        align: 'left'
-      }, {
-        title: '操作',
-        scopedSlots: { customRender: 'action' },
-        width: 200,
-        align: 'right'
-      }],
+      columns: rowInfo,
       search: {
         date: [],
         title: '',
+        customerName: '',
         page: {
           size: 10,
           index: 1,
@@ -103,6 +114,7 @@ export default {
         createdAtStart: this.search.date[0] || '',
         createdAtEnd: this.search.date[1] || '',
         title: this.search.title,
+        customerName: this.search.customerName,
         page: this.search.page.index,
         pageSize: this.search.page.size
       }
@@ -153,6 +165,12 @@ export default {
       this.loading = true
       this.search.page.index = page || this.search.page.index
       Api.work.list(this.searchParams).then((res) => {
+        res.msg.items = res.msg.items.map(listItem => {
+          return {
+            ...listItem,
+            clientName: listItem.customer_name || '-'
+          }
+        })
         this.data = res.msg.items
         this.search.page.total = res.msg.count
       }).catch((e) => {
