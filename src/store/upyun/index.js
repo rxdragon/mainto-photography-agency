@@ -3,21 +3,21 @@ import { message } from 'ant-design-vue'
 export default {
   state: {
     config: {
-      bucket: '',
-      policy: '',
-      signature: ''
+      token: ''
     },
     host: ''
   },
   getters: {
     getUpyun: state => state.config,
-    getHost: state => state.host || 'http://fed.dev.hzmantu.com/upload_dev/'
+    getHost: state => state.host || 'https://cloud-dev.cdn-qn.hzmantu.com/upload_dev/'
   },
   actions: {
     initUpyun ({ commit }) {
       Api.upyun.getConfig().then(res => {
-        commit('setUpyun', res.msg)
+        const config = { token: res.msg }
+        commit('setUpyun', config)
         Api.upyun.getHost().then(res => {
+          console.log(res.msg, 'host')
           commit('setHost', res.msg)
         })
       }).catch((e) => {

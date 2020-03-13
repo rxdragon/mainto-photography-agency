@@ -73,6 +73,8 @@
 <script>
 import Api from '@/api/index.js'
 import Upload from './components/Upload.vue'
+import * as PhotoTool from '@/util/photoTool'
+
 export default {
   name: 'Work',
   components: { Upload },
@@ -119,7 +121,7 @@ export default {
       photos.map((item) => {
         this.photoList.push({
           productId: item.product_id && item.product_id + '',
-          path: item.response.url.replace(/\/(\S*)\//, ''),
+          path: PhotoTool.handlePicPath(item.response.url),
           peopleNum: String(item.people_num),
           spliceMark: item.splice_mark,
           splicePosition: item.splice_position,

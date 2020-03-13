@@ -33,7 +33,7 @@
                 <a-col v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" :span="7" class="item">
                   <div class="container">
                     <div class="img-wrap">
-                      <img :src="`${getHost}${photoItem.path}${$cutDown}`">
+                      <photo-box :img-src="`${getHost}${photoItem.path}${$cutDown}`" />
                     </div>
                     <div class="mask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
@@ -53,9 +53,12 @@
 </template>
 <script>
 import Api from '@/api/index.js'
+import PhotoBox from '@/components/PhotoBox/index'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'WorkRecord',
+  components: { PhotoBox },
   data () {
     return {
       order: {},
