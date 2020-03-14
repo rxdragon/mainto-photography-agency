@@ -17,7 +17,6 @@ export default {
         const config = { token: res.msg }
         commit('setUpyun', config)
         Api.upyun.getHost().then(res => {
-          console.log(res.msg, 'host')
           commit('setHost', res.msg)
         })
       }).catch((e) => {
