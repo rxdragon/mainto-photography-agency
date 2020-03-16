@@ -36,7 +36,7 @@ dev_deploy:
 ops_deploy:
   stage: deploy
   script:
-    - yarn run opsbuild
+    - yarn run relbuild
     - node upload.js $ops_operator $ops_password $ops_bucket $ops_path $sourcefolder
   only:
     - /^release-(\d+\.){2,3}\d+$/
