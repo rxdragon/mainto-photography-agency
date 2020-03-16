@@ -12,7 +12,7 @@
           <a-col v-for="(item, index) in product.simple_images" :key="index" class="pictureWrap" :span="6" :offset="1">
             <div class="container-wrap">
               <div class="img-wrap">
-                <img :src="`${getHost}${item}${$cutDown}`">
+                <photo-box :file-obj="item" :img-src="`${getHost}${item}${$cutDown}`" />
               </div>
               <div class="mask">
                 <a-icon type="eye" class="bigger-icon" @click="showModel(item)" />
@@ -96,8 +96,11 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import PhotoBox from '@/components/PhotoBox/index'
 import Api from '@/api/index.js'
+
 export default {
+  components: { PhotoBox },
   data () {
     return {
       previewVisible: false,

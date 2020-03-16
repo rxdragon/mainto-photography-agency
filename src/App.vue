@@ -3,7 +3,7 @@
     <div id="app">
       <a-layout v-if="getUser.id" id="components-layout-demo-custom-trigger">
         <Sider :collapsed="collapsed" />
-        <a-layout style="position: relative;">
+        <a-layout class="right-box" style="position: relative;">
           <Header @collapsedEvent="collapsedHandle" />
           <a-layout-content :style="{ background: '#f7f7f7', minHeight: '280px' }">
             <router-view @loading="sendLoding" />
@@ -97,21 +97,27 @@ html {
   overflow-y: auto;
 }
 
-#components-layout-demo-custom-trigger .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
+#components-layout-demo-custom-trigger {
+  .right-box {
+    min-width: 1080px;
+  }
 
-#components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
-}
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
 
-#components-layout-demo-custom-trigger .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+  }
 }
 </style>
