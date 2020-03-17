@@ -16,7 +16,6 @@
             <a-icon slot="prefix" type="lock" />
           </a-input>
         </a-form-item>
-        <button id="TencentCaptcha" ref="TencentCaptcha" :data-appid="captchaId" data-cbfn="callback" type="button" style="display: none;" />
         <a-button type="primary" html-type="submit" class="login-button">登 录</a-button>
       </a-form>
       <div v-if="loading" class="loading-wrap">
@@ -45,14 +44,6 @@ export default {
   },
   mounted () {
     this.form = this.$form.createForm(this)
-    window.callback = res => {
-      if (res.ret === 0) {
-        this.getAuthLogin({
-          ticket: res.ticket,
-          randStr: res.randstr
-        })
-      }
-    }
   },
   methods: {
     ...mapActions(['setUserInfo']),
@@ -60,7 +51,16 @@ export default {
     validForm (e) {
       e.preventDefault()
       this.form.validateFields((err) => {
-        if (!err) { this.$refs.TencentCaptcha.click() }
+        if (err) return
+        const captcha = new window.TencentCaptcha(this.captchaId, (res) => {
+          if (res.ret === 0) {
+            this.getAuthLogin({
+              ticket: res.ticket,
+              randStr: res.randstr
+            })
+          }
+        })
+        captcha.show()
       })
     },
     getAuthLogin (captcha) {
