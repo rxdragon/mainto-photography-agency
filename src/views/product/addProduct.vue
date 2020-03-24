@@ -86,7 +86,7 @@ export default {
       }
     },
     upyunAction () {
-      return `https://v0.api.upyun.com/${this.getUpyun.bucket}`
+      return `https://upload.qiniup.com/`
     },
     hasQuery () {
       return this.$route.query.id !== undefined

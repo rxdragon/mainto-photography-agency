@@ -94,14 +94,15 @@ html {
 
 .ant-layout-content {
   height: calc(100vh - 128px);
+  overflow-x: auto;
   overflow-y: auto;
+
+  & > div {
+    min-width: 1080px;
+  }
 }
 
 #components-layout-demo-custom-trigger {
-  .right-box {
-    min-width: 1080px;
-  }
-
   .trigger {
     font-size: 18px;
     line-height: 64px;
