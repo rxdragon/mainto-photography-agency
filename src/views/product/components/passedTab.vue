@@ -19,11 +19,11 @@
       <span slot="action" slot-scope="record">
         <div>
           <span v-if="record.state === 'enable'" class="cancel">
-            <a href="javascript:;" style="color: #F5222D;" @click="switchState(record)">禁用</a>
+            <a href="javascript:;" style="color: #f5222d;" @click="switchState(record)">禁用</a>
             <a-divider type="vertical" />
           </span>
           <span v-else-if="record.state === 'disable'" class="cancel">
-            <a href="javascript:;" style="color: #52C41A;" @click="switchState(record)">启用</a>
+            <a href="javascript:;" style="color: #52c41a;" @click="switchState(record)">启用</a>
             <a-divider type="vertical" />
           </span>
           <a href="javascript:;" @click="viewDetail(record)">详情</a>
@@ -163,8 +163,8 @@ export default {
 }
 
 .table {
-  margin-top: 20px;
   min-height: 200px;
+  margin-top: 20px;
 
   .btnDetail {
     margin-left: 20px;

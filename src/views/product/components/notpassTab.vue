@@ -3,7 +3,7 @@
     <a-row class="search">
       <a-col :span="8" class="date">
         <span class="tip">选择状态: </span>
-        <a-select v-model="selectValue" default-value="" style="width: 50%">
+        <a-select v-model="selectValue" default-value="" style="width: 50%;">
           <a-select-option value="not_pass">全部</a-select-option>
           <a-select-option value="wait_review">待审核</a-select-option>
           <a-select-option value="refuse">审核拒绝</a-select-option>
@@ -157,7 +157,7 @@ export default {
 }
 
 .table {
-  margin-top: 20px;
   min-height: 200px;
+  margin-top: 20px;
 }
 </style>

@@ -68,7 +68,7 @@
           </a-upload>
         </ul>
         <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-          <img style="width: 100%" :src="previewImage">
+          <img style="width: 100%;" :src="previewImage">
         </a-modal>
       </div>
     </div>
@@ -159,7 +159,9 @@ export default {
       for (const option of proList) {
         const matchId = option.cloud_product_id === selectId
         const needSplicing = option.need_splicing > 0
-        if (matchId && needSplicing) { return true }
+        if (matchId && needSplicing) {
+          return true
+        }
       }
       return false
     },

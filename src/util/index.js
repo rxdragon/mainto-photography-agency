@@ -17,7 +17,9 @@ export function getBase64Image (img, removeBase64) {
   ctx.drawImage(img, 0, 0, img.width, img.height)
   const ext = img.src.substring(img.src.lastIndexOf('.') + 1).toLowerCase()
   let dataURL = canvas.toDataURL('image/' + ext)
-  if (removeBase64) { dataURL = dataURL.replace('data:image/png;base64,', '') }
+  if (removeBase64) {
+    dataURL = dataURL.replace('data:image/png;base64,', '')
+  }
   return dataURL
 }
 

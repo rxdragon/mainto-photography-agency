@@ -9,11 +9,11 @@
         <span slot="action" slot-scope="record">
           <div>
             <div v-if="record.state === 'disabled'" class="button-group">
-              <a href="javascript:;" style="color: #52C41A" @click="enableSubuser(record)">启 用</a>
+              <a href="javascript:;" style="color: #52c41a;" @click="enableSubuser(record)">启 用</a>
               <a-divider type="vertical" />
             </div>
             <div v-else-if="record.state === 'enabled'" class="button-group">
-              <a href="javascript:;" style="color: #f5222d" ghost @click="disableSubuser(record)">禁 用</a>
+              <a href="javascript:;" style="color: #f5222d;" ghost @click="disableSubuser(record)">禁 用</a>
               <a-divider type="vertical" />
             </div>
             <a href="javascript:;" class="edit" @click="reviewDetail(record)">编 辑</a>
@@ -101,7 +101,9 @@ export default {
         page: this.page.index,
         pageSize: this.page.size
       }
-      if (this.page.state) { req.state = this.page.state }
+      if (this.page.state) {
+        req.state = this.page.state
+      }
       Api.manage.list(req).then((res) => {
         this.dataSource = res.msg.items
         this.page.total = res.msg.total

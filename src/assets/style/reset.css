@@ -15,8 +15,11 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	vertical-align: baseline;
+  vertical-align: baseline;
+  --fontFamily: PingFangSC-Semibold, PingFang,
 }
+
+
 
 /* make sure to set some focus styles for accessibility */
 :focus {

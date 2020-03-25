@@ -67,7 +67,7 @@
           </ul>
         </div>
         <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-          <img style="width: 100%" :src="previewImage">
+          <img style="width: 100%;" :src="previewImage">
         </a-modal>
       </section>
     </div>
@@ -144,7 +144,9 @@ export default {
     createZip (type) {
       const photoData = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
       const folder = type === 'first' ? '原片' : '成片'
-      if (photoData.length === 0) { return this.$message.error(`未找到${folder}资源`) }
+      if (photoData.length === 0) {
+        return this.$message.error(`未找到${folder}资源`)
+      }
       const zip = new JsZip()
       const fold = zip.folder(folder)
       const transArr = []
