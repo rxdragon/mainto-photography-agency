@@ -7,37 +7,6 @@
  - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
 
 
-### 🐛 Bug 修复
-范围|描述|commitId
---|--|--
- - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/acad33f)
- - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/860e744)
- - | 修复undefined 处理 | [d855202](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d855202)
- - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/de841cf)
- - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2c92756)
- - | 解决无数据返回的提示 | [3433e7b](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/3433e7b)
- - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/039cd50)
-
-
-### 🔧 测试
-范围|描述|commitId
---|--|--
- - | 修改预发请求地址 | [712f88b](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/712f88b)
-
-
-### 🚀 性能优化
-范围|描述|commitId
---|--|--
- - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/9e100fd)
- - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8655b7d)
-
-
-### opt
-范围|描述|commitId
---|--|--
- - | 优化上传错误监听 | [1f24b00](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/1f24b00)
-
-
 范围|描述|commitId
 --|--|--
  - | update custom | [d1a5c6d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d1a5c6d)
@@ -131,4 +100,41 @@
  - | 增加产品管理 | [abe4796](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/abe4796)
  - | 项目初始化 | [067c038](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/067c038)
  - | Initial commit | [b38b5f6](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/b38b5f6)
+
+
+### 🎨 代码样式
+范围|描述|commitId
+--|--|--
+ - | 前端项目规范 | [d27c268](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d27c268)
+
+
+### 🐛 Bug 修复
+范围|描述|commitId
+--|--|--
+ - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/acad33f)
+ - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/860e744)
+ - | 修复undefined 处理 | [d855202](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d855202)
+ - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/de841cf)
+ - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2c92756)
+ - | 解决无数据返回的提示 | [3433e7b](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/3433e7b)
+ - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/039cd50)
+
+
+### 🔧 测试
+范围|描述|commitId
+--|--|--
+ - | 修改预发请求地址 | [712f88b](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/712f88b)
+
+
+### 🚀 性能优化
+范围|描述|commitId
+--|--|--
+ - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/9e100fd)
+ - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8655b7d)
+
+
+### opt
+范围|描述|commitId
+--|--|--
+ - | 优化上传错误监听 | [1f24b00](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/1f24b00)
 
