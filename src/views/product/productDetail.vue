@@ -88,7 +88,7 @@
           </a-col>
         </a-row>
         <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-          <img style="width: 100%" :src="previewImage">
+          <img style="width: 100%;" :src="previewImage">
         </a-modal>
       </section>
     </div>

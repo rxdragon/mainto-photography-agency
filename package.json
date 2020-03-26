@@ -5,8 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "cz": "yarn log && git add . && git cz",
+    "log": "conventional-changelog --config ./node_modules/vue-cli-plugin-commitlint/lib/log -i CHANGELOG.md -s -r 0",
     "opsbuild": "vue-cli-service build --mode staging",
-    "lint": "vue-cli-service lint"
+    "stylelint": "stylelint 'src/**/*.vue' --config '.stylelintrc.js' --fix"
   },
   "dependencies": {
     "ant-design-vue": "^1.4.0-beta.0",
@@ -20,6 +23,7 @@
     "less-loader": "^5.0.0",
     "moment": "^2.24.0",
     "promise.prototype.finally": "^3.1.1",
+    "stylelint-config-standard": "^20.0.0",
     "upyun": "^3.3.11",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
@@ -31,8 +35,16 @@
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
     "babel-eslint": "^10.0.1",
+    "commitizen": "^4.0.3",
+    "commitlint": "^8.2.0",
+    "conventional-changelog-cli": "^2.0.28",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "husky": "^3.0.9",
+    "stylelint": "^13.2.1",
+    "stylelint-config-recess-order": "^2.0.4",
+    "stylelint-webpack-plugin": "^1.2.3",
+    "vue-cli-plugin-commitlint": "~1.0.12",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -57,5 +69,16 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/vue-cli-plugin-commitlint/lib/cz"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
 }

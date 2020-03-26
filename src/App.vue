@@ -66,7 +66,7 @@ export default {
 </script>
 <style lang="less">
 html {
-	font-family: PingFangSC-Medium, PingFangSC;
+  font-family: var(--fontFamily);
 }
 
 #app {
@@ -76,15 +76,15 @@ html {
 }
 
 .loading-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
   text-align: center;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
 }
 
 .loading-wrap .ant-spin-spinning {
@@ -98,9 +98,9 @@ html {
 }
 
 #components-layout-demo-custom-trigger .trigger {
+  padding: 0 24px;
   font-size: 18px;
   line-height: 64px;
-  padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -111,7 +111,7 @@ html {
 
 #components-layout-demo-custom-trigger .logo {
   height: 32px;
-  background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+  background: rgba(255, 255, 255, 0.2);
 }
 </style>

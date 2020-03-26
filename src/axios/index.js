@@ -13,13 +13,15 @@ const errorHandle = (status) => {
   }
 }
 
-var instance = axios.create({ timeout: 1000 * 12 })
+let instance = axios.create({ timeout: 1000 * 12 })
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 instance.interceptors.request.use(
   config => {
     const steamId = store.getters.getSteamId
-    if (steamId) { config.headers['x-stream-id'] = steamId }
+    if (steamId) {
+      config.headers['x-stream-id'] = steamId
+    }
     return config
   },
   error => Promise.error(error)
@@ -27,7 +29,9 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   res => {
-    if (res.headers['x-stream-id']) { store.dispatch('setSteamId', res.headers['x-stream-id']) }
+    if (res.headers['x-stream-id']) {
+      store.dispatch('setSteamId', res.headers['x-stream-id'])
+    }
     return Promise.resolve(res.data)
   },
   error => {
@@ -37,7 +41,7 @@ instance.interceptors.response.use(
       response.data.error_msg = errorCode.getMsg(response.data)
       return Promise.reject(response)
     }
-    return Promise.reject({ data: { error_msg: '网络无响应, 请稍候重试!' }})
+    return Promise.reject({ data: { error_msg: '网络无响应, 请稍候重试!' } })
   }
 )
 

@@ -46,7 +46,7 @@
             </a-button>
           </a-col>
           <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-            <img alt="example" style="width: 100%" :src="previewImage">
+            <img alt="example" style="width: 100%;" :src="previewImage">
           </a-modal>
         </a-row>
       </section>
@@ -96,7 +96,9 @@ export default {
     }
   },
   created () {
-    if (this.hasQuery) { this.initQuery() }
+    if (this.hasQuery) {
+      this.initQuery()
+    }
     this.initUpyun()
   },
   methods: {
@@ -107,7 +109,9 @@ export default {
     },
     handleChange ({ file, fileList }) {
       this.fileList = fileList
-      if (file.status === 'error') { return this.$message.error('upyun 上传异常') }
+      if (file.status === 'error') {
+        return this.$message.error('upyun 上传异常')
+      }
     },
     sumbitAdd () {
       // TODO: 后续增补Verification模块

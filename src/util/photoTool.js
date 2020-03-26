@@ -45,12 +45,12 @@ function readChunked (file, chunkCallback, endCallback) {
   const fileSize = file.size
   const chunkSize = 4 * 1024 * 1024 // 4MB
   let offset = 0
+  const reader = new FileReader()
   const readNext = () => {
     const fileSlice = file.slice(offset, offset + chunkSize)
     reader.readAsArrayBuffer(fileSlice)
   }
 
-  const reader = new FileReader()
   reader.onload = () => {
     if (reader.error) {
       endCallback(reader.error || {})
@@ -83,7 +83,9 @@ function getMD5 (file, cbProgress) {
     const hash = md5.create()
     readChunked(file, (chunk, offs, total) => {
       hash.update(chunk)
-      if (cbProgress) { cbProgress(offs / total) }
+      if (cbProgress) {
+        cbProgress(offs / total)
+      }
       if (offs - chunk.byteLength === 0) {
         fileInfo = fileType(chunk)
       }
