@@ -69,7 +69,6 @@
 │           ├── record.vue // 查看页面
 │           ├── recordDetail.vue // 查询详情页面
 │           └── style
-├── upload.js // 上传脚本
 ├── vue.config.js
 ├── yarn-error.log
 └── yarn.lock

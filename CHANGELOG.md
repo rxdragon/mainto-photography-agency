@@ -121,6 +121,12 @@
  - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/039cd50)
 
 
+### 📝 文档
+范围|描述|commitId
+--|--|--
+ - | 前端项目规范 | [e68690a](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/e68690a)
+
+
 ### 📦 持续集成
 范围|描述|commitId
 --|--|--
