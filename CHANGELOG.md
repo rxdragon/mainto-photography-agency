@@ -121,6 +121,12 @@
  - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/039cd50)
 
 
+### 📦 持续集成
+范围|描述|commitId
+--|--|--
+ - | 更改ci配置 | [b74b8e8](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/b74b8e8)
+
+
 ### 🔧 测试
 范围|描述|commitId
 --|--|--
