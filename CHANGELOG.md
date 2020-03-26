@@ -146,6 +146,12 @@
  - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8655b7d)
 
 
+### chore
+范围|描述|commitId
+--|--|--
+ - | 删除upyun模块，删除upload脚本 | [57aeb21](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/57aeb21)
+
+
 ### opt
 范围|描述|commitId
 --|--|--
