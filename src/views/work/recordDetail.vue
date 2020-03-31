@@ -33,7 +33,7 @@
                 <a-col v-for="(photoItem, photoIndex) in childItem" :key="photoIndex" :span="7" class="item">
                   <div class="container">
                     <div class="img-wrap">
-                      <img :src="`${getHost}${photoItem.path}${$cutDown}`">
+                      <photo-box :img-src="`${getHost}${photoItem.path}${$cutDown}`" />
                     </div>
                     <div class="mask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
@@ -46,16 +46,19 @@
         </div>
       </section>
       <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-        <img style="width: 100%" :src="previewImage">
+        <img style="width: 100%;" :src="previewImage">
       </a-modal>
     </div>
   </div>
 </template>
 <script>
 import Api from '@/api/index.js'
+import PhotoBox from '@/components/PhotoBox/index'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'WorkRecord',
+  components: { PhotoBox },
   data () {
     return {
       order: {},

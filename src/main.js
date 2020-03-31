@@ -10,8 +10,12 @@ import promiseFinally from 'promise.prototype.finally'
 promiseFinally.shim()
 sessionStorage.clear()
 Vue.prototype.$cutDown = '!thumb.small.50'
-Vue.prototype.routeView = (address) => { router.push({ path: address }) }
-Vue.prototype.routeBack = () => { router.go(-1) }
+Vue.prototype.routeView = (address) => {
+  router.push({ path: address })
+}
+Vue.prototype.routeBack = () => {
+  router.go(-1)
+}
 Vue.use(Antd)
 Vue.config.productionTip = false
 

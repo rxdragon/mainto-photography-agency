@@ -113,11 +113,11 @@ export default {
 <style scoped lang="less">
 #header {
   height: 128px;
-  background: #fff;
   padding: 0;
+  background: #fff;
 
   .info {
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 
     section {
       font-size: 14px;
@@ -127,8 +127,8 @@ export default {
       }
 
       .out-button {
-        font-size: 18px;
         margin-right: 24px;
+        font-size: 18px;
         font-weight: bold;
         vertical-align: middle;
       }

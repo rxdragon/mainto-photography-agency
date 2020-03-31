@@ -73,6 +73,8 @@
 <script>
 import Api from '@/api/index.js'
 import Upload from './components/Upload.vue'
+import * as PhotoTool from '@/util/photoTool'
+
 export default {
   name: 'Work',
   components: { Upload },
@@ -119,7 +121,7 @@ export default {
       photos.map((item) => {
         this.photoList.push({
           productId: item.product_id && item.product_id + '',
-          path: item.response.url.replace(/\/(\S*)\//, ''),
+          path: PhotoTool.handlePicPath(item.response.url),
           peopleNum: String(item.people_num),
           spliceMark: item.splice_mark,
           splicePosition: item.splice_position,
@@ -139,8 +141,12 @@ export default {
       const hasPimples = typeof this.params.retouchClaim.pimples === 'boolean'
       if (!hasPimples) return false
       for (const photo of this.params.photoData) {
-        if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) { return false }
-        if (!photo.productId || !photo.peopleNum) { return false }
+        if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) {
+          return false
+        }
+        if (!photo.productId || !photo.peopleNum) {
+          return false
+        }
       }
       return true
     },
@@ -148,7 +154,9 @@ export default {
       const isAllFinish = this.$refs.uploadChild.getChildPhotos()
       if (!isAllFinish) return
       // TODO: 后续增补Verification模块
-      if (!this.emptyParams()) { return this.$message.error('请填写完整信息') }
+      if (!this.emptyParams()) {
+        return this.$message.error('请填写完整信息')
+      }
       this.$emit('loading', true)
       Api.work.add(this.params).then(() => {
         this.$message.success('订单提交成功', 2, () => {
