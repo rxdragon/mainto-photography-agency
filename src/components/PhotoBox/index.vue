@@ -20,7 +20,7 @@ export default {
       isError: false,
       fileData: null,
       quality: 0.8,
-      width: 300,
+      width: 700,
       src: ''
     }
   },
@@ -92,12 +92,12 @@ export default {
   }
 
   .err-img {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 
     .icon {
       font-size: 40px;
@@ -106,8 +106,8 @@ export default {
 
     .err-desc {
       margin-top: 16px;
-      color: #eee;
       font-size: 16px;
+      color: #eee;
     }
   }
 }

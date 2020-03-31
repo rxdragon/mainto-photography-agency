@@ -110,6 +110,7 @@
 --|--|--
  - | 修改css格式 | [0b4f09c](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/0b4f09c)
  - | 前端项目规范 | [d27c268](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d27c268)
+ - | 格式化代码 | [3d8ef17](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/3d8ef17)
 
 
 ### 🐛 Bug 修复
