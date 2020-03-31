@@ -1,4 +1,4 @@
-# 0.1.0 (2020-03-26)
+# 0.1.0 (2020-03-31)
 
 ### 🌟 新功能
 范围|描述|commitId
@@ -9,8 +9,11 @@
 
 范围|描述|commitId
 --|--|--
- - | update custom | [d1a5c6d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d1a5c6d)
+ - | fix render | [5b6d1fb](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/5b6d1fb)
  - | 修复防水墙 | [eb3f93c](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/eb3f93c)
+ - | 去除console | [29a44e5](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/29a44e5)
+ - | 切换七牛云 | [f660c79](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/f660c79)
+ - | 增加新的搜索和上传 | [8c64f53](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8c64f53)
  - | 修复批量下载 | [513e793](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/513e793)
  - | 修复代码下载 | [ba133a5](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/ba133a5)
  - | 修复样式 | [10aec8c](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/10aec8c)
@@ -53,8 +56,8 @@
  - | limit date range | [3a0fb86](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/3a0fb86)
  - | update page title | [611fee4](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/611fee4)
  - | fix repeat add product | [89b28d5](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/89b28d5)
- - | fix render | [5b6d1fb](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/5b6d1fb)
- - | 增加新的搜索和上传 | [8c64f53](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8c64f53)
+ - | 更改release打包配置 | [90516e3](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/90516e3)
+ - | update custom | [d1a5c6d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d1a5c6d)
  - | 更新名称 | [0e2ce55](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/0e2ce55)
  - | 增加图片放大功能 | [2de0915](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2de0915)
  - | 增加客片放大功能 | [8075977](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8075977)
@@ -114,8 +117,10 @@
 --|--|--
  - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/acad33f)
  - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/860e744)
+ - | 修复qetagjs | [8cdc2b3](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8cdc2b3)
  - | 修复undefined 处理 | [d855202](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d855202)
  - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/de841cf)
+ - | 修复上传问题 | [478e86e](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/478e86e)
  - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2c92756)
  - | 解决无数据返回的提示 | [3433e7b](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/3433e7b)
  - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/039cd50)
@@ -124,6 +129,7 @@
 ### 📝 文档
 范围|描述|commitId
 --|--|--
+ - | 修改package相关配置 | [8d71e60](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8d71e60)
  - | 前端项目规范 | [e68690a](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/e68690a)
 
 

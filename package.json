@@ -10,7 +10,7 @@
     "log": "conventional-changelog --config ./node_modules/vue-cli-plugin-commitlint/lib/log -i CHANGELOG.md -s -r 0",
     "opsbuild": "vue-cli-service build --mode staging",
     "stylelint": "stylelint 'src/**/*.vue' --config '.stylelintrc.js' --fix",
-    "relbuild": "vue-cli-service build --mode development",
+    "relbuild": "vue-cli-service build --mode development"
   },
   "dependencies": {
     "ant-design-vue": "^1.4.0-beta.0",
