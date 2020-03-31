@@ -6,10 +6,7 @@
     <div v-else class="contaner">
       <section class="content">
         <div class="orderInfo">
-          <h4>
-            <span class="line" />
-            <span>订单信息</span>
-          </h4>
+          <h4><span class="line" /><span>订单信息</span></h4>
           <a-row>
             <a-col :span="12" class="cell">
               <p class="head">订单标题:</p>
@@ -51,7 +48,7 @@
                 <a-col v-for="(photoItem, photoIndex) in childItem" v-show="photoItem.version !== 'first_photo'" :key="photoIndex" :span="7" class="item">
                   <div class="container-wrap">
                     <div class="img-wrap">
-                      <img :src="`${getHost}${photoItem.path}${$cutDown}`">
+                      <photo-box :img-src="`${getHost}${photoItem.path}${$cutDown}`" />
                     </div>
                     <div class="imgMask">
                       <a-icon type="eye" class="bigger-icon" @click="showModel(photoItem.path)" />
@@ -67,7 +64,7 @@
           </ul>
         </div>
         <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
-          <img style="width: 100%" :src="previewImage">
+          <img style="width: 100%;" :src="previewImage">
         </a-modal>
       </section>
     </div>
@@ -77,11 +74,13 @@
 import Api from '@/api/index.js'
 import JsZip from 'jszip'
 import moment from 'moment'
+import PhotoBox from '@/components/PhotoBox/index'
 import { mapGetters } from 'vuex'
 import * as utils from '@/util'
 
 export default {
   name: 'Custom',
+  components: { PhotoBox },
   data () {
     return {
       loading: false,
@@ -144,7 +143,9 @@ export default {
     createZip (type) {
       const photoData = type === 'first' ? this.photoQueue['firstArr'] : this.photoQueue['completeArr']
       const folder = type === 'first' ? '原片' : '成片'
-      if (photoData.length === 0) { return this.$message.error(`未找到${folder}资源`) }
+      if (photoData.length === 0) {
+        return this.$message.error(`未找到${folder}资源`)
+      }
       const zip = new JsZip()
       const fold = zip.folder(folder)
       const transArr = []

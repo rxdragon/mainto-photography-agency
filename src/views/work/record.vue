@@ -132,7 +132,9 @@ export default {
     },
     hasRetouchStream (streamNums) {
       for (const stream of streamNums) {
-        if (stream.state === 'wait_retouch') { return true }
+        if (stream.state === 'wait_retouch') {
+          return true
+        }
       }
       return false
     },

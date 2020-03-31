@@ -1,4 +1,5 @@
 const path = require('path')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -23,6 +24,16 @@ module.exports = {
         javascriptEnabled: true
       }
     }
+  },
+  configureWebpack: {
+    plugins: [
+      new StyleLintPlugin({
+        configFile: '.stylelintrc.js',
+        files: ['./src/assets/**/*.less', './src/**/*.vue'],
+        formatter: 'verbose',
+        fix: true
+      })
+    ]
   },
   chainWebpack: (config) => {
     config.resolve.alias.set('@', resolve('src'))

@@ -82,10 +82,14 @@ export default {
       }
     },
     submit () {
-      if (!this.account.username || !this.account.nick) { return this.$message.error('请填写完整信息') }
+      if (!this.account.username || !this.account.nick) {
+        return this.$message.error('请填写完整信息')
+      }
       this.$emit('loading', true)
       for (const key in this.account) {
-        if (!this.account[key]) { delete this.account[key] }
+        if (!this.account[key]) {
+          delete this.account[key]
+        }
       }
       if (!this.hasQuery) {
         Api.manage.create(this.account).then(() => {

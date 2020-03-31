@@ -8,7 +8,7 @@
           <li v-for="(item, index) in fileList" :key="'fileList' + index" class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info">
-                <img v-if="item.status === 'done' && item.response" :src="changeImagePath(item.response.url)">
+                <photo-box v-if="item.status === 'done' && item.response" :file-obj="item" :img-src="item.response.url" />
                 <a-progress v-else type="circle" :percent="item.percent | formatProgress" />
                 <p class="picture-name">{{ `文件名: ${item.name}` }}</p>
               </div>
@@ -68,7 +68,7 @@
           </a-upload>
         </ul>
         <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-          <img style="width: 100%" :src="previewImage">
+          <img style="width: 100%;" :src="previewImage">
         </a-modal>
       </div>
     </div>
@@ -76,6 +76,7 @@
 </template>
 <script>
 import Api from '@/api/index.js'
+import PhotoBox from '@/components/PhotoBox/index'
 import { mapGetters, mapState, mapActions } from 'vuex'
 import * as PhotoTool from '@/util/photoTool.js'
 
@@ -87,6 +88,7 @@ export default {
       return Number(value.toFixed(0))
     }
   },
+  components: { PhotoBox },
   data () {
     return {
       productList: [],
@@ -106,11 +108,13 @@ export default {
     ...mapGetters(['getUpyun']),
     ...mapState({
       getHost: state => {
-        return state.upyun.host.replace(/com\/(\S*)\//, 'com')
+        //  去除域名后面的「upload_dev」
+        return state.upyun.host.replace(/com\/(\S*)\//, 'com/')
       }
     }),
+    // 上传地址
     upyunAction () {
-      return `https://v0.api.upyun.com/${this.getUpyun.bucket}`
+      return `https://upload.qiniup.com/`
     }
   },
   async created () {
@@ -133,8 +137,8 @@ export default {
       try {
         this.$emit('loading', true)
         const info = await PhotoTool.getImgBufferPhoto(file)
-        const md5 = info.md5
-        const hasSamePhoto = this.fileList.find(fileItem => fileItem.name === file.name || fileItem.md5 === md5)
+        const sha1 = info.sha1
+        const hasSamePhoto = this.fileList.find(fileItem => fileItem.name === file.name || fileItem.sha1 === sha1)
         if (hasSamePhoto) throw new Error('重复照片上传')
         return Promise.resolve()
       } catch (error) {
@@ -144,8 +148,27 @@ export default {
         this.$emit('loading', false)
       }
     },
+    /**
+     * @description 监听上传变化
+     */
+    async handleChange ({ file, fileList }) {
+      this.fileList = fileList
+      fileList.forEach(fileItem => {
+        const isAdded = Boolean(fileItem.sha1)
+        if (fileItem.status === 'done' && !isAdded) {
+          const photoPathName = PhotoTool.handlePicPath(file.response.url)
+          const photoName = PhotoTool.fileNameFormat(photoPathName)
+          const sha1 = photoName
+          this.$set(fileItem, 'people_num', '')
+          this.$set(fileItem, 'splice_mark', null)
+          this.$set(fileItem, 'splice_position', null)
+          this.$set(fileItem, 'product_id', undefined)
+          this.$set(fileItem, 'sha1', sha1)
+        }
+      })
+    },
     getChildPhotos () {
-      const isFinish = this.fileList.every(photoItem => photoItem.md5)
+      const isFinish = this.fileList.every(photoItem => photoItem.sha1)
       if (!isFinish) {
         this.$message.error('未上传完毕')
         return false
@@ -159,7 +182,9 @@ export default {
       for (const option of proList) {
         const matchId = option.cloud_product_id === selectId
         const needSplicing = option.need_splicing > 0
-        if (matchId && needSplicing) { return true }
+        if (matchId && needSplicing) {
+          return true
+        }
       }
       return false
     },
@@ -172,24 +197,6 @@ export default {
     },
     handleCancel () {
       this.previewVisible = false
-    },
-    /**
-     * @description 监听上传变化
-     */
-    async handleChange ({ file, fileList }) {
-      this.fileList = fileList
-      fileList.forEach(fileItem => {
-        if (fileItem.status === 'done' && !fileItem.md5) {
-          const photoPathName = PhotoTool.handlePicPath(file.response.url)
-          const photoName = PhotoTool.fileNameFormat(photoPathName)
-          const md5 = photoName
-          this.$set(fileItem, 'people_num', '')
-          this.$set(fileItem, 'splice_mark', null)
-          this.$set(fileItem, 'splice_position', null)
-          this.$set(fileItem, 'product_id', undefined)
-          this.$set(fileItem, 'md5', md5)
-        }
-      })
     }
   }
 }

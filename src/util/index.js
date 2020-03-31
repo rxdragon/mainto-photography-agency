@@ -1,4 +1,3 @@
-import md5 from 'js-md5'
 import JSZipUtils from 'jszip-utils'
 
 // 获取图片地址
@@ -17,7 +16,9 @@ export function getBase64Image (img, removeBase64) {
   ctx.drawImage(img, 0, 0, img.width, img.height)
   const ext = img.src.substring(img.src.lastIndexOf('.') + 1).toLowerCase()
   let dataURL = canvas.toDataURL('image/' + ext)
-  if (removeBase64) { dataURL = dataURL.replace('data:image/png;base64,', '') }
+  if (removeBase64) {
+    dataURL = dataURL.replace('data:image/png;base64,', '')
+  }
   return dataURL
 }
 
@@ -93,56 +94,5 @@ export function base64ToBlob (code) {
 export function downOneImg (imgObj) {
   getRemoteImg(imgObj.url, false).then(res => {
     saveAs(base64ToBlob(res), imgObj.name)
-  })
-}
-
-// 转换链接
-function toDataUrl (src) {
-  return new Promise((resolve, reject) => {
-    src += '?t=cross_origin.*'
-    const xhr = new XMLHttpRequest()
-    xhr.responseType = 'blob'
-    xhr.onload = (rsp) => {
-      if (rsp.target.status === 200) {
-        resolve(rsp.target.response)
-      } else {
-        reject('error')
-      }
-    }
-    xhr.onerror = (err) => {
-      reject(err)
-    }
-    xhr.open('GET', src, true)
-    xhr.send()
-  })
-}
-
-// 获取文件md5信息
-export function getFile (url) {
-  return new Promise(resolve => {
-    toDataUrl(url).then(res => {
-      const render = new FileReader()
-      render.readAsArrayBuffer(res)
-      render.addEventListener('load', e => {
-        const buffer = e.target.result
-        const md = md5(buffer)
-        resolve(md)
-      })
-    }).catch(() => {
-      resolve('')
-    })
-  })
-}
-
-// 文件对象转md5
-export function getFileMd5 (file) {
-  return new Promise(resolve => {
-    const reader = new FileReader()
-    reader.readAsArrayBuffer(file)
-    reader.addEventListener('load', e => {
-      const buffer = e.target.result
-      const md = md5(buffer)
-      resolve(md)
-    })
   })
 }
