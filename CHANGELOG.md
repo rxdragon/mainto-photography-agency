@@ -1,4 +1,4 @@
-# 0.1.0 (2020-03-31)
+# 0.1.0 (2020-04-08)
 
 ### 🌟 新功能
 范围|描述|commitId
@@ -120,6 +120,7 @@
  - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/860e744)
  - | 修复qetagjs | [8cdc2b3](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8cdc2b3)
  - | 修复undefined 处理 | [d855202](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/d855202)
+ - | 修复上传不清晰问题 | [56798ce](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/56798ce)
  - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/de841cf)
  - | 修复上传问题 | [478e86e](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/478e86e)
  - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2c92756)
