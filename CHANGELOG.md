@@ -1,4 +1,4 @@
-# 0.1.0 (2020-04-08)
+# 0.1.0 (2020-05-06)
 
 ### 🌟 新功能
 范围|描述|commitId
@@ -132,6 +132,7 @@
 范围|描述|commitId
 --|--|--
  - | 修改package相关配置 | [8d71e60](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8d71e60)
+ - | 前端代码规范 | [4c1d153](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/4c1d153)
  - | 前端项目规范 | [e68690a](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/e68690a)
 
 
