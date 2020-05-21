@@ -1,11 +1,4 @@
-# 0.1.0 (2020-05-06)
-
-### 🌟 新功能
-范围|描述|commitId
---|--|--
- - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
- - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
-
+# 0.1.0 (2020-05-21)
 
 范围|描述|commitId
 --|--|--
@@ -103,6 +96,14 @@
  - | 增加产品管理 | [abe4796](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/abe4796)
  - | 项目初始化 | [067c038](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/067c038)
  - | Initial commit | [b38b5f6](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/b38b5f6)
+
+
+### 🌟 新功能
+范围|描述|commitId
+--|--|--
+ - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
+ - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/69ecd34)
+ - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
 
 
 ### 🎨 代码样式
