@@ -5,7 +5,7 @@
       <div class="clearfix">
         <ul class="ant-upload-list ant-upload-list-picture-card">
           <!-- 单张照片列表 -->
-          <li v-for="(item, index) in fileList" :key="'fileList' + index" class="list-wrap">
+          <li v-for="(item, index) in fileList" :key="item.sha1" class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info">
                 <photo-box v-if="item.status === 'done' && item.response" :file-obj="item" :img-src="item.response.url" />
@@ -96,6 +96,7 @@ export default {
       previewVisible: false,
       previewImage: '',
       fileList: [],
+      shaList: [], // 用于判断一次性多选文件时间,重复文件判断
       count: 0,
       splitIndex: '',
       splitArray: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
@@ -140,6 +141,8 @@ export default {
         const sha1 = info.sha1
         const hasSamePhoto = this.fileList.find(fileItem => fileItem.name === file.name || fileItem.sha1 === sha1)
         if (hasSamePhoto) throw new Error('重复照片上传')
+        if (this.shaList.indexOf(sha1) > -1) throw new Error('存在相同的照片')
+        this.shaList.push(sha1)
         return Promise.resolve()
       } catch (error) {
         this.$message.warning(error.message || error)
@@ -190,6 +193,8 @@ export default {
     },
     deletePicture (picture, index) {
       this.fileList.splice(index, 1)
+      const idx = this.shaList.indexOf(picture.sha1)
+      this.shaList.splice(idx, 1)
     },
     previewPicture (url) {
       this.previewImage = `${this.getHost}${url}`

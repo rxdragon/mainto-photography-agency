@@ -1,11 +1,4 @@
-# 0.1.0 (2020-05-06)
-
-### 🌟 新功能
-范围|描述|commitId
---|--|--
- - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
- - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
-
+# 0.1.0 (2020-05-22)
 
 范围|描述|commitId
 --|--|--
@@ -105,6 +98,14 @@
  - | Initial commit | [b38b5f6](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/b38b5f6)
 
 
+### 🌟 新功能
+范围|描述|commitId
+--|--|--
+ - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
+ - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/69ecd34)
+ - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
+
+
 ### 🎨 代码样式
 范围|描述|commitId
 --|--|--
@@ -116,6 +117,7 @@
 ### 🐛 Bug 修复
 范围|描述|commitId
 --|--|--
+ - | 上传拍摄,单词选中多张存在重复的图片进行阻断,删除图片时候展示错乱fix | [429722a](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/429722a)
  - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/acad33f)
  - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/860e744)
  - | 修复qetagjs | [8cdc2b3](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8cdc2b3)
