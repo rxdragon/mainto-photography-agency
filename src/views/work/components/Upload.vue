@@ -5,7 +5,7 @@
       <div class="clearfix">
         <ul class="ant-upload-list ant-upload-list-picture-card">
           <!-- 单张照片列表 -->
-          <li v-for="(item, index) in fileList" :key="'fileList' + index" class="list-wrap">
+          <li v-for="(item, index) in fileList" :key="item.sha1" class="list-wrap">
             <div class="ant-upload-list-item ant-upload-list-item-done">
               <div class="ant-upload-list-item-info">
                 <photo-box v-if="item.status === 'done' && item.response" :file-obj="item" :img-src="item.response.url" />

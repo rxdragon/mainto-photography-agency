@@ -24,29 +24,21 @@ export default {
       src: ''
     }
   },
-  watch: {
-    imgSrc () {
-      this.init()
+  created () {
+    if (!this.fileObj) {
+      const imgSrcArr = this.imgSrc.split('/')
+      const isOldPath = imgSrcArr.length <= 5
+      if (isOldPath) {
+        this.src = this.imgSrc
+      } else {
+        this.src = this.handleCompressImg(this.imgSrc)
+      }
+    } else {
+      this.fileData = this.fileObj.originFileObj
+      this.pressImg()
     }
   },
-  created () {
-    this.init()
-  },
   methods: {
-    init () {
-      if (!this.fileObj) {
-        const imgSrcArr = this.imgSrc.split('/')
-        const isOldPath = imgSrcArr.length <= 5
-        if (isOldPath) {
-          this.src = this.imgSrc
-        } else {
-          this.src = this.handleCompressImg(this.imgSrc)
-        }
-      } else {
-        this.fileData = this.fileObj.originFileObj
-        this.pressImg()
-      }
-    },
     handleErrorImg () {
       this.isError = true
     },
