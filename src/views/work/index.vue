@@ -161,6 +161,7 @@ export default {
       Api.work.add(this.params).then(() => {
         this.$message.success('订单提交成功', 2, () => {
           this.$refs.uploadChild.fileList = []
+          this.$refs.uploadChild.resetshaList()
           this.orderInfo = {
             title: '',
             name: '',

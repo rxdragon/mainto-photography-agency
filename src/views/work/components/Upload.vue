@@ -196,6 +196,9 @@ export default {
       const idx = this.shaList.indexOf(picture.sha1)
       this.shaList.splice(idx, 1)
     },
+    resetshaList () {
+      this.shaList = [];
+    },
     previewPicture (url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
