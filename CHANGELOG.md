@@ -155,6 +155,7 @@
 --|--|--
  - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/9e100fd)
  - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8655b7d)
+ - | 改为index绑定sha1 | [4e13e04](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/4e13e04)
 
 
 ### chore
