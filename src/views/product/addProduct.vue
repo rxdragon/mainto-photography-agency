@@ -56,6 +56,7 @@
 <script>
 import Api from '@/api/index.js'
 import { mapGetters, mapActions } from 'vuex'
+import * as PhotoTool from '@/util/photoTool'
 export default {
   data () {
     return {
@@ -80,7 +81,7 @@ export default {
         retouchRequire: this.product.standard,
         simplePhotoPaths: this.fileList.map((item) => {
           const url = item.url || item.response.url
-          const returnUrl = url.replace(/\/(\S*)\//, '')
+          const returnUrl = PhotoTool.handlePicPath(url)
           return returnUrl.replace('https:', '').replace('http:', '')
         })
       }

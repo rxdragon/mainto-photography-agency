@@ -1,4 +1,4 @@
-# 0.1.0 (2020-05-22)
+# 0.1.0 (2020-05-24)
 
 范围|描述|commitId
 --|--|--
@@ -126,6 +126,7 @@
  - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/de841cf)
  - | 修复上传问题 | [478e86e](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/478e86e)
  - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2c92756)
+ - | 提交时候没有通知组件清空sha的数组 | [2281d93](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2281d93)
  - | 解决无数据返回的提示 | [3433e7b](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/3433e7b)
  - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/039cd50)
 

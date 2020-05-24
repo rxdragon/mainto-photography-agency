@@ -63,7 +63,7 @@
             </li>
           </ul>
         </div>
-        <a-modal :visible="previewVisible" :footer="null" @cancel="previewVisible = false">
+        <a-modal :visible="previewVisible" :footer="null" @cancel="resetPreviewImage">
           <img style="width: 100%;" :src="previewImage">
         </a-modal>
       </section>
@@ -127,6 +127,10 @@ export default {
     showModel (url) {
       this.previewImage = `${this.getHost}${url}`
       this.previewVisible = true
+    },
+    resetPreviewImage () {
+      this.previewVisible = false
+      this.previewImage = ''
     },
     reviewOrder () {
       this.loading = true
