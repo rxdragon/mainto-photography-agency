@@ -1,22 +1,22 @@
 <template>
   <div id="workRecord">
     <section class="content">
-      <a-row class="search">
-        <a-col :span="8">
+      <a-row  class="search">
+        <div class="search-item" >
           <span class="tip">选择日期: </span>
           <a-range-picker :disabled-date="disabledDate" @change="dateChange" />
-        </a-col>
-        <a-col :span="7">
+        </div>
+        <div class="search-item" >
           <span class="tip">订单标题: </span>
           <a-input v-model="search.title" placeholder="请输入订单标题" style="width: 75%;" />
-        </a-col>
-        <a-col :span="7">
+        </div>
+        <div class="search-item" >
           <span class="tip">顾客姓名: </span>
           <a-input v-model="search.customerName" placeholder="请输入顾姓名" style="width: 75%;" />
-        </a-col>
-        <a-col :span="2" style="text-align: right;">
+        </div>
+        <div class="search-item"  style="text-align: right;">
           <a-button type="primary" @click="searchOrder(1)">查 询</a-button>
-        </a-col>
+        </div>
       </a-row>
       <div class="table">
         <template>

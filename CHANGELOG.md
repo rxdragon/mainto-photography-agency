@@ -1,11 +1,4 @@
-# 0.1.0 (2020-05-06)
-
-### 🌟 新功能
-范围|描述|commitId
---|--|--
- - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
- - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
-
+# 0.1.0 (2020-05-25)
 
 范围|描述|commitId
 --|--|--
@@ -105,6 +98,14 @@
  - | Initial commit | [b38b5f6](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/b38b5f6)
 
 
+### 🌟 新功能
+范围|描述|commitId
+--|--|--
+ - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
+ - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/69ecd34)
+ - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
+
+
 ### 🎨 代码样式
 范围|描述|commitId
 --|--|--
@@ -116,6 +117,8 @@
 ### 🐛 Bug 修复
 范围|描述|commitId
 --|--|--
+ - | 上传拍摄,单词选中多张存在重复的图片进行阻断,删除图片时候展示错乱fix | [429722a](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/429722a)
+ - | 产品管理上传和展示图片错误,预览的逻辑修改,搜索框样式修改 | [40ab9cc](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/40ab9cc)
  - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/acad33f)
  - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/860e744)
  - | 修复qetagjs | [8cdc2b3](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8cdc2b3)
@@ -124,6 +127,7 @@
  - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/de841cf)
  - | 修复上传问题 | [478e86e](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/478e86e)
  - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2c92756)
+ - | 提交时候没有通知组件清空sha的数组 | [2281d93](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/2281d93)
  - | 解决无数据返回的提示 | [3433e7b](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/3433e7b)
  - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/039cd50)
 
@@ -153,6 +157,7 @@
 --|--|--
  - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/9e100fd)
  - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8655b7d)
+ - | 改为index绑定sha1 | [4e13e04](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/4e13e04)
 
 
 ### chore
