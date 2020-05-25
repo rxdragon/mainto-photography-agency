@@ -12,7 +12,7 @@
           <a-col v-for="(item, index) in product.simple_images" :key="index" class="pictureWrap" :span="6" :offset="1">
             <div class="container-wrap">
               <div class="img-wrap">
-                <photo-box :file-obj="item" :img-src="`${getHost}${item}${$cutDown}`" />
+                <photo-box :img-src="`${getHost}${item}${$cutDown}`" />
               </div>
               <div class="mask">
                 <a-icon type="eye" class="bigger-icon" @click="showModel(item)" />
