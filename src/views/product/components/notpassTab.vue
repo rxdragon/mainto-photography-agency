@@ -107,7 +107,7 @@ export default {
           id: record.id,
           name: record.name,
           standard: record.retouch_require,
-          url: record.simple_photo_paths
+          url: JSON.stringify(record.simple_photo_paths)
         }
       })
     },

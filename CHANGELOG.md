@@ -1,4 +1,4 @@
-# 0.1.0 (2020-05-24)
+# 0.1.0 (2020-05-25)
 
 范围|描述|commitId
 --|--|--
@@ -118,6 +118,7 @@
 范围|描述|commitId
 --|--|--
  - | 上传拍摄,单词选中多张存在重复的图片进行阻断,删除图片时候展示错乱fix | [429722a](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/429722a)
+ - | 产品管理上传和展示图片错误,预览的逻辑修改,搜索框样式修改 | [40ab9cc](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/40ab9cc)
  - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/acad33f)
  - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/860e744)
  - | 修复qetagjs | [8cdc2b3](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8cdc2b3)

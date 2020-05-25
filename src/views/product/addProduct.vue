@@ -80,7 +80,7 @@ export default {
         name: this.product.name,
         retouchRequire: this.product.standard,
         simplePhotoPaths: this.fileList.map((item) => {
-          const url = item.url || item.response.url
+          const url = (item.response && item.response.url) || item.name
           const returnUrl = PhotoTool.handlePicPath(url)
           return returnUrl.replace('https:', '').replace('http:', '')
         })
@@ -141,7 +141,7 @@ export default {
         name: this.$route.query.name,
         standard: this.$route.query.standard
       }
-      this.$route.query.url.map((item) => {
+      JSON.parse(this.$route.query.url).map((item) => {
         this.fileList.push({
           uid: this.$route.query.name,
           status: 'done',
