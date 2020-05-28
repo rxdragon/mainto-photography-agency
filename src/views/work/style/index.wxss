@@ -1,0 +1,171 @@
+#work {
+  margin: 24px;
+  padding: 24px;
+  background: #fff;
+}
+#work input::-webkit-input-placeholder,
+#work .ant-select-selection__placeholder {
+  font-size: 13px;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.25);
+}
+#work .ant-upload-list-item-actions {
+  top: 120px;
+}
+#work h4 {
+  text-align: left;
+  margin-bottom: 14px;
+}
+#work h4 span {
+  display: inline-block;
+  vertical-align: middle;
+}
+#work h4 .line {
+  width: 2px;
+  height: 18px;
+  background-color: #4669FB;
+  margin-right: 10px;
+}
+#work .text-tip {
+  padding: 16px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.85);
+  background: #e6f7ff;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  border: 1px solid #91d5ff;
+}
+#work .text-tip b {
+  height: 22px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 22px;
+  display: block;
+}
+#work .text-tip span {
+  margin-top: 4px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.65);
+  display: block;
+}
+#work .content .upload {
+  margin-bottom: 26px;
+}
+#work .content .upload .list-wrap {
+  min-height: 340px;
+  width: 250px;
+  padding: 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  background-color: #f5f7fa;
+}
+#work .content .upload .list-wrap p {
+  text-align: left;
+  margin-top: 10px;
+}
+#work .content .upload .list-wrap .picture-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+  padding: 2px 0;
+  margin: 0;
+  opacity: 0.5;
+  text-align: center;
+}
+#work .content .upload .list-wrap .picture-count .ant-input-group-wrapper {
+  width: 70%;
+  vertical-align: middle;
+  text-align: center;
+}
+#work .content .upload .list-wrap .picture-count .ant-input-number {
+  width: 70%;
+}
+#work .content .upload .list-wrap .picture-product .ant-select {
+  width: 70%;
+}
+#work .content .upload .list-wrap .picture-product .concat {
+  width: 55%;
+}
+#work .content .upload .ant-upload-list-item-info {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+#work .content .upload .ant-upload-list-item-info img {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#work .content .upload .ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
+#work .content .upload .ant-upload-list-picture-card {
+  display: flex;
+  flex-wrap: wrap;
+}
+#work .content .upload .ant-upload-list-picture-card .ant-upload-list-item-info::before {
+  left: 0;
+  height: 250px;
+}
+#work .content .upload .ant-upload-list-picture-card .ant-upload-list-item {
+  width: 234px;
+  height: 250px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  float: none;
+}
+#work .content .upload .ant-upload-list-picture-card .list-wrap {
+  margin: 0 20px 20px 0;
+}
+#work .content .upload .ant-upload-select-picture-card {
+  width: 250px;
+  min-height: 340px;
+}
+#work .content .upload .ant-upload-select-picture-card .ant-upload-btn {
+  width: 100%;
+  height: 100%;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px;
+}
+#work .content .upload .ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
+#work .order-info {
+  margin-bottom: 40px;
+}
+#work .order-info .child-item {
+  padding-left: 12px;
+  margin-bottom: 10px;
+}
+#work .order-info .child-item .title {
+  min-width: 73px;
+  display: inline-block;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFangSC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.85);
+}
+#work .footer {
+  height: 60px;
+  line-height: 60px;
+  width: 100%;
+  text-align: left;
+}
