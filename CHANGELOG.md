@@ -1,4 +1,4 @@
-# 0.1.0 (2020-07-17)
+# 0.1.0 (2020-08-19)
 
 范围|描述|commitId
 --|--|--
@@ -104,6 +104,7 @@
  - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
  - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/69ecd34)
  - | 更改ci配置 | [8863c99](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8863c99)
+ - | 更改框架 | [b7749db](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/b7749db)
  - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/c0c8f42)
 
 
