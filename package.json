@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "serve-dev": "vue-cli-service serve --mode staging",
+    "serve": "vue-cli-service serve --mode dev",
+    "serve-release": "vue-cli-service serve --mode release",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "cz": "yarn log && git add . && git cz",
     "log": "conventional-changelog --config ./node_modules/vue-cli-plugin-commitlint/lib/log -i CHANGELOG.md -s -r 0",
-    "opsbuild": "vue-cli-service build --mode staging",
+    "opsbuild": "vue-cli-service build --mode development",
     "stylelint": "stylelint 'src/**/*.vue' --config '.stylelintrc.js' --fix",
     "relbuild": "vue-cli-service build --mode development"
   },
