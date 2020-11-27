@@ -30,7 +30,7 @@
               </a-select>
             </p>
             <p v-if="needSplit(item)" class="picture-product">
-              <a-select v-model="item.splice_position" class="concat" placeholder="选择拼接类型">
+              <a-select v-model="item.splice_mark" class="concat" placeholder="选择拼接类型">
                 <a-select-option
                   v-for="(positionItem, positionIndex) in splitArray"
                   :key="positionIndex"
@@ -40,7 +40,7 @@
                 </a-select-option>
               </a-select>
               <a-input-number
-                v-model="item.splice_mark"
+                v-model="item.splice_position"
                 style="width: 40%; margin-left: 4%;"
                 :min="1"
                 :max="99"
