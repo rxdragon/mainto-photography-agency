@@ -122,7 +122,7 @@ export default {
   },
   methods: {
     download (url) {
-      window.open(`${url}?_upd=true`)
+      window.location = `${url}?attname=`
     },
     showModel (url) {
       this.previewImage = `${this.getHost}${url}`
