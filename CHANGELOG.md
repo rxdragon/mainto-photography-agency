@@ -1,4 +1,4 @@
-# 0.1.0 (2020-12-15)
+# 0.1.0 (2021-01-03)
 
 范围|描述|commitId
 --|--|--
@@ -102,6 +102,7 @@
 范围|描述|commitId
 --|--|--
  - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/7ef7099)
+ - | 增加临时版本 | [085dfcd](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/085dfcd)
  - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/69ecd34)
  - | 更改ci配置 | [8863c99](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8863c99)
  - | 更改框架 | [b7749db](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/b7749db)
@@ -161,6 +162,7 @@
 ### 🚀 性能优化
 范围|描述|commitId
 --|--|--
+ - | 优化下载，不单独弹窗 | [175ccd7](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/175ccd7)
  - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/9e100fd)
  - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8655b7d)
  - | 改为index绑定sha1 | [4e13e04](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/4e13e04)

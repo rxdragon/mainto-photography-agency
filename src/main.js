@@ -6,8 +6,11 @@ import store from './store/index'
 import 'ant-design-vue/dist/antd.less'
 import './assets/style/reset.css'
 import promiseFinally from 'promise.prototype.finally'
+import get from 'lodash/get'
 
 promiseFinally.shim()
+window._ = { get }
+
 sessionStorage.clear()
 Vue.prototype.$cutDown = '!thumb.small.50'
 Vue.prototype.routeView = (address) => {
