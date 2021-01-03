@@ -12,7 +12,7 @@
         <h4><span class="line" /><span>临时产品信息</span></h4>
         <a-col :span="24" class="child-item">
           <span class="title">产品信息: </span>
-          <product-select style="width: 80%;" placeholder="请选中产品" @change="onTemporaryProductChange" />
+          <product-select ref="productSelect" style="width: 80%;" placeholder="请选中产品" :value="temporaryInfo.temporaryProduct" @change="onTemporaryProductChange" />
         </a-col>
         <a-col :span="24" class="child-item">
           <span class="title">订单号: </span>
@@ -113,7 +113,7 @@ export default {
       submit: false,
       visible: true,
       temporaryInfo: {
-        temporaryProduct: '', // 临时产品
+        temporaryProduct: undefined, // 临时产品
         orderNum: '', // 海马体订单号
         storeName: '', // 门店名字
         photographer: '', // 摄影师
@@ -175,7 +175,6 @@ export default {
      * @description 当临时产品变更
      */
     onTemporaryProductChange (value) {
-      console.log(value)
       this.temporaryInfo.temporaryProduct = value
     },
     /**
@@ -190,12 +189,8 @@ export default {
       const hasPimples = typeof this.params.retouchClaim.pimples === 'boolean'
       if (!hasPimples) return false
       for (const photo of this.params.photoData) {
-        if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) {
-          return false
-        }
-        if (!photo.productId || !photo.peopleNum) {
-          return false
-        }
+        if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) return false
+        if (!photo.productId || !photo.peopleNum) return false
       }
       if (this.isTemporaryAccount) {
         for (const item in this.temporaryInfo) {
@@ -214,8 +209,9 @@ export default {
       // 针对临时账号处理
       if (this.isTemporaryAccount) {
         const temporaryInfoValues = Object.values(this.temporaryInfo)
-        const newTitle = temporaryInfoValues.join('-')
-        req.title = `${newTitle}-${req.title}`
+        const newTitle = temporaryInfoValues.join('|')
+        req.title = `${newTitle}|${req.title}`
+        req.retouchNote = `${this.temporaryInfo.temporaryProduct}|${req.retouchNote}`
       }
       Api.work.add(req).then(() => {
         this.$message.success('订单提交成功', 2, () => {
@@ -233,7 +229,7 @@ export default {
             }
           }
           this.temporaryInfo = {
-            temporaryProduct: '', // 临时产品
+            temporaryProduct: undefined, // 临时产品
             orderNum: '', // 海马体订单号
             storeName: '', // 门店名字
             photographer: '', // 摄影师

@@ -22,7 +22,6 @@ export function getProductList () {
   try {
     const saveKey = 'cloud-product'
     const data = sessionStorage.getItem(saveKey)
-    console.log(JSON.parse(data), 'sessionStorage data')
     return JSON.parse(data)
   } catch (error) {
     return null

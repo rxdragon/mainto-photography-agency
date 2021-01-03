@@ -22,7 +22,6 @@ export const PriductName = {
 export async function getCloudProductApi () {
   const cacheProductData = SessionTool.getProductList()
   if (cacheProductData) return Object.freeze(cacheProductData)
-  console.log(cacheProductData, 'cacheProductData')
   
   const { msg } = await axios({
     url: `${process.env.VUE_APP_BASE_URL}/project_cloud/common/getAllProduct`,
@@ -37,8 +36,8 @@ export async function getCloudProductApi () {
   }
   msg.forEach(productItem => {
     createData[productItem.retouch_standard].push({
-      label: `${productItem.name}-${PriductName[productItem.retouch_standard]}`,
-      value: `${productItem.name}-${productItem.id}`
+      label: `${productItem.name}|${PriductName[productItem.retouch_standard]}`,
+      value: `${productItem.name}|${productItem.id}`
     })
   })
   SessionTool.setProductList(createData)
