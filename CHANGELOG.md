@@ -1,4 +1,4 @@
-# 0.1.0 (2020-12-15)
+# 0.1.0 (2021-01-03)
 
 范围|描述|commitId
 --|--|--
@@ -161,6 +161,7 @@
 ### 🚀 性能优化
 范围|描述|commitId
 --|--|--
+ - | 优化下载，不单独弹窗 | [175ccd7](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/175ccd7)
  - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/9e100fd)
  - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/8655b7d)
  - | 改为index绑定sha1 | [4e13e04](https://code.hzmantu.com/mantu-tech/fed/mainto-photography-agency/commits/4e13e04)
