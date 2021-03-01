@@ -93,6 +93,9 @@
       </div>
     </section>
     <section class="footer">
+      <a-checkbox :checked="separateOrder" @change="onSeparateChange">
+        需要拆单
+      </a-checkbox>
       <a-button type="primary" @click="submitCloud">提交云端</a-button>
     </section>
   </div>
@@ -129,7 +132,8 @@ export default {
           face: 0,
           pimples: ''
         }
-      }
+      },
+      separateOrder: false
     }
   },
   computed: {
@@ -190,6 +194,10 @@ export default {
       if (!hasPimples) return false
       for (const photo of this.params.photoData) {
         if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) return false
+        if (photo.spliceMark && !photo.splicePosition) {
+          this.$message.error('请填写拼接序号')
+          return false
+        }
         if (!photo.productId || !photo.peopleNum) return false
       }
       if (this.isTemporaryAccount) {
@@ -199,6 +207,15 @@ export default {
       }
       return true
     },
+    /**
+     * @description 需要拆弹
+     */
+    onSeparateChange (e) {
+      this.separateOrder = e.target.checked
+    },
+    /**
+     * @description 提交订单
+     */
     async submitCloud () {
       const isAllFinish = this.$refs.uploadChild.getChildPhotos()
       if (!isAllFinish) return
@@ -213,6 +230,12 @@ export default {
         req.title = `${newTitle}|${req.title}`
         req.retouchNote = `${this.temporaryInfo.temporaryProduct}|${req.retouchNote}`
       }
+
+      // 是否拆单
+      if (this.separateOrder) {
+        req.splitSize = 10
+      }
+
       Api.work.add(req).then(() => {
         this.$message.success('订单提交成功', 2, () => {
           this.$refs.uploadChild.fileList = []
@@ -235,6 +258,7 @@ export default {
             photographer: '', // 摄影师
             uploader: '', // 上传人
           }
+          this.separateOrder = false
           this.$emit('loading', false)
         })
       }).catch((e) => {
@@ -242,6 +266,9 @@ export default {
         this.$emit('loading', false)
       })
     },
+    /**
+     * @description 监听loading事件
+     */
     sendLoding (state) {
       this.$emit('loading', state)
     }
@@ -250,4 +277,8 @@ export default {
 </script>
 <style lang="less" scoped>
 @import './style/index.less';
+
+.footer {
+  user-select: none;
+}
 </style>
