@@ -194,6 +194,10 @@ export default {
       if (!hasPimples) return false
       for (const photo of this.params.photoData) {
         if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) return false
+        if (photo.spliceMark && !photo.splicePosition) {
+          this.$message.error('请填写拼接序号')
+          return false
+        }
         if (!photo.productId || !photo.peopleNum) return false
       }
       if (this.isTemporaryAccount) {

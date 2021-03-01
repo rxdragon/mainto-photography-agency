@@ -9,6 +9,7 @@
  - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/69ecd34)
  - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/c0c8f42)
  - | 优化清空问题 | [0f72bca](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0f72bca)
+ - | 增加拆单功能 | [0a2b657](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0a2b657)
  - | 增加临时版本 | [085dfcd](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/085dfcd)
  - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/7ef7099)
 
