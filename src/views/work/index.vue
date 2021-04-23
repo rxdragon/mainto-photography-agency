@@ -7,19 +7,45 @@
         <a-alert v-if="visible" message="温馨提示" description="1、若要进行照片拼接，需选择标签对照片标记；如标签“拼接A”先后标记了照片1、2，则表示这两张照片需先后被拼接在一起" type="info" closable :after-close="handleClose" :style="{textAlign: 'left', marginBottom: '24px'}" />
         <Upload ref="uploadChild" @loading="sendLoding" @sendPhotos="getPhotos" />
       </div>
+      <!-- 临时额外信息 -->
+      <div class="temporary-info" v-if="isTemporaryAccount">
+        <h4><span class="line" /><span>临时产品信息</span></h4>
+        <a-col :span="24" class="child-item">
+          <span class="title">产品信息: </span>
+          <product-select ref="productSelect" style="width: 80%;" placeholder="请选中产品" :value="temporaryInfo.temporaryProduct" @change="onTemporaryProductChange" />
+        </a-col>
+        <a-col :span="24" class="child-item">
+          <span class="title">订单号: </span>
+          <a-input v-model.trim="temporaryInfo.orderNum" placeholder="请输入订单号" style="width: 80%;" />
+        </a-col>
+        <a-col :span="24" class="child-item">
+          <span class="title">门店名: </span>
+          <a-input v-model.trim="temporaryInfo.storeName" placeholder="请输入门店名" style="width: 80%;" />
+        </a-col>
+        <a-col :span="24" class="child-item">
+          <span class="title">摄影师: </span>
+          <a-input v-model.trim="temporaryInfo.photographer" placeholder="请输入摄影师" style="width: 80%;" />
+        </a-col>
+        <a-col :span="24" class="child-item">
+          <span class="title">上传人: </span>
+          <a-input v-model.trim="temporaryInfo.uploader" placeholder="请输入上传人信息" style="width: 80%;" />
+        </a-col>
+      </div>
+      <!-- 订单信息 -->
       <div class="order-info">
         <h4><span class="line" /><span>订单信息</span></h4>
         <a-row>
           <a-col :span="24" class="child-item">
             <span class="title">顾客姓名: </span>
-            <a-input v-model="orderInfo.name" placeholder="请输入顾客姓名" style="width: 80%;" />
+            <a-input v-model.trim="orderInfo.name" placeholder="请输入顾客姓名" style="width: 80%;" />
           </a-col>
           <a-col :span="24" class="child-item">
             <span class="title">订单标题: </span>
-            <a-input v-model="orderInfo.title" placeholder="请输入订单标题" style="width: 80%;" />
+            <a-input v-model.trim="orderInfo.title" placeholder="请输入订单标题" style="width: 80%;" />
           </a-col>
         </a-row>
       </div>
+      <!-- 修图要求 -->
       <div class="order-info">
         <h4><span class="line" /><span>修图要求</span></h4>
         <a-row class="child-item">
@@ -50,10 +76,11 @@
         <a-row class="child-item">
           <a-col :span="24">
             <span class="title">修图备注: </span>
-            <a-input v-model="orderInfo.retouchNote" placeholder="请输入修图备注" style="width: 80%;" />
+            <a-input v-model.trim="orderInfo.retouchNote" placeholder="请输入修图备注" style="width: 80%;" />
           </a-col>
         </a-row>
       </div>
+      <!-- 取片日期 -->
       <div class="order-info">
         <h4><span class="line" /><span>取片日期</span></h4>
         <a-row class="child-item">
@@ -66,6 +93,9 @@
       </div>
     </section>
     <section class="footer">
+      <a-checkbox :checked="separateOrder" @change="onSeparateChange">
+        需要拆单
+      </a-checkbox>
       <a-button type="primary" @click="submitCloud">提交云端</a-button>
     </section>
   </div>
@@ -74,15 +104,24 @@
 import Api from '@/api/index.js'
 import Upload from './components/Upload.vue'
 import * as PhotoTool from '@/util/photoTool'
+import ProductSelect from '@/components/SelectComponents/ProductSelect'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Work',
-  components: { Upload },
+  components: { Upload, ProductSelect },
   data () {
     return {
       photoList: [],
       submit: false,
       visible: true,
+      temporaryInfo: {
+        temporaryProduct: undefined, // 临时产品
+        orderNum: '', // 海马体订单号
+        storeName: '', // 门店名字
+        photographer: '', // 摄影师
+        uploader: '', // 上传人
+      },
       orderInfo: {
         title: '',
         name: '',
@@ -93,10 +132,17 @@ export default {
           face: 0,
           pimples: ''
         }
-      }
+      },
+      separateOrder: false
     }
   },
   computed: {
+    ...mapGetters(['getUser']),
+    // 是否是临时账号
+    isTemporaryAccount () {
+      const nickName = _.get(this.getUser, 'nick') || ''
+      return nickName.includes('临时')
+    },
     params () {
       return {
         title: this.orderInfo.title,
@@ -130,6 +176,12 @@ export default {
       })
     },
     /**
+     * @description 当临时产品变更
+     */
+    onTemporaryProductChange (value) {
+      this.temporaryInfo.temporaryProduct = value
+    },
+    /**
      * @description 验证参数
      */
     emptyParams () {
@@ -141,24 +193,50 @@ export default {
       const hasPimples = typeof this.params.retouchClaim.pimples === 'boolean'
       if (!hasPimples) return false
       for (const photo of this.params.photoData) {
-        if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) {
+        if (!Number(photo.peopleNum) && Number(photo.peopleNum) !== 0) return false
+        if (photo.spliceMark && !photo.splicePosition) {
+          this.$message.error('请填写拼接序号')
           return false
         }
-        if (!photo.productId || !photo.peopleNum) {
-          return false
+        if (!photo.productId || !photo.peopleNum) return false
+      }
+      if (this.isTemporaryAccount) {
+        for (const item in this.temporaryInfo) {
+          if (!this.temporaryInfo[item]) return false
         }
       }
       return true
     },
+    /**
+     * @description 需要拆弹
+     */
+    onSeparateChange (e) {
+      this.separateOrder = e.target.checked
+    },
+    /**
+     * @description 提交订单
+     */
     async submitCloud () {
       const isAllFinish = this.$refs.uploadChild.getChildPhotos()
       if (!isAllFinish) return
       // TODO: 后续增补Verification模块
-      if (!this.emptyParams()) {
-        return this.$message.error('请填写完整信息')
-      }
+      if (!this.emptyParams()) return this.$message.error('请填写完整信息')
       this.$emit('loading', true)
-      Api.work.add(this.params).then(() => {
+      const req = JSON.parse(JSON.stringify(this.params))
+      // 针对临时账号处理
+      if (this.isTemporaryAccount) {
+        const temporaryInfoValues = Object.values(this.temporaryInfo)
+        const newTitle = temporaryInfoValues.join('|')
+        req.title = `${newTitle}|${req.title}`
+        req.retouchNote = `${this.temporaryInfo.temporaryProduct}|${req.retouchNote}`
+      }
+
+      // 是否拆单
+      if (this.separateOrder) {
+        req.splitSize = 10
+      }
+
+      Api.work.add(req).then(() => {
         this.$message.success('订单提交成功', 2, () => {
           this.$refs.uploadChild.fileList = []
           this.$refs.uploadChild.resetshaList()
@@ -173,6 +251,14 @@ export default {
               pimples: ''
             }
           }
+          this.temporaryInfo = {
+            temporaryProduct: undefined, // 临时产品
+            orderNum: '', // 海马体订单号
+            storeName: '', // 门店名字
+            photographer: '', // 摄影师
+            uploader: '', // 上传人
+          }
+          this.separateOrder = false
           this.$emit('loading', false)
         })
       }).catch((e) => {
@@ -180,6 +266,9 @@ export default {
         this.$emit('loading', false)
       })
     },
+    /**
+     * @description 监听loading事件
+     */
     sendLoding (state) {
       this.$emit('loading', state)
     }
@@ -188,4 +277,8 @@ export default {
 </script>
 <style lang="less" scoped>
 @import './style/index.less';
+
+.footer {
+  user-select: none;
+}
 </style>

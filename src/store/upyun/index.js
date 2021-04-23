@@ -5,11 +5,11 @@ export default {
     config: {
       token: ''
     },
-    host: ''
+    host: process.env.VUE_APP_DOMAIN
   },
   getters: {
     getUpyun: state => state.config,
-    getHost: state => state.host || 'https://cloud-dev.cdn-qn.hzmantu.com/upload_dev/'
+    getHost: state => state.host
   },
   actions: {
     initUpyun ({ commit }) {

@@ -22,6 +22,8 @@
 import { mapGetters } from 'vuex'
 import { Icon } from 'ant-design-vue'
 import Api from '@/api/index.js'
+import * as SessionTool from '@/util/sessionTool'
+
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'
 })
@@ -96,6 +98,7 @@ export default {
       this.$confirm({
         title: '是否确认退出?',
         onOk () {
+          SessionTool.removeSession()
           Api.user.loginOut().then((res) => {
             if (res.success) {
               VM.$message.success('登出中...', 2, () => {

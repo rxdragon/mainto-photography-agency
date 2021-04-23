@@ -25,12 +25,12 @@
             </p>
             <p class="picture-product">
               选择产品:
-              <a-select v-model="item.product_id" show-search placeholder="请选择产品类型">
+              <a-select v-model="item.product_id" show-search placeholder="请选择产品类型" @change="onProductChange(item)">
                 <a-select-option v-for="(child, childIndex) in productList.msg" :key="childIndex" :value="child.cloud_product_id">{{ child.name }}</a-select-option>
               </a-select>
             </p>
             <p v-if="needSplit(item)" class="picture-product">
-              <a-select v-model="item.splice_position" class="concat" placeholder="选择拼接类型">
+              <a-select v-model="item.splice_mark" class="concat" placeholder="选择拼接类型">
                 <a-select-option
                   v-for="(positionItem, positionIndex) in splitArray"
                   :key="positionIndex"
@@ -40,7 +40,7 @@
                 </a-select-option>
               </a-select>
               <a-input-number
-                v-model="item.splice_mark"
+                v-model="item.splice_position"
                 style="width: 40%; margin-left: 4%;"
                 :min="1"
                 :max="99"
@@ -130,6 +130,16 @@ export default {
     changeImagePath (url) {
       const imgPath = this.getHost + url + this.$cutDown
       return imgPath
+    },
+    /**
+     * @description 监听产品变化
+     */
+    onProductChange (fileItem) {
+      const isSplitProduct = this.needSplit(fileItem)
+      if (!isSplitProduct) {
+        fileItem.splice_mark = null
+        fileItem.splice_position = null
+      }
     },
     /**
      * @description 上传前生命周期
