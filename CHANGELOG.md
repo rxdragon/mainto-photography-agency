@@ -1,9 +1,83 @@
-# 0.1.0 (2021-03-17)
+# 0.1.0 (2021-05-08)
+
+### 🌟 新功能
+范围|描述|commitId
+--|--|--
+ - | 更改环境变量 | [cb07e28](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/cb07e28)
+ - | 更改框架 | [b7749db](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/b7749db)
+ - | 更改ci配置 | [8863c99](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8863c99)
+ - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/69ecd34)
+ - | 更新产品切换操作复位操作 | [32e75da](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/32e75da)
+ - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/c0c8f42)
+ - | 优化清空问题 | [0f72bca](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0f72bca)
+ - | 增加拆单功能 | [0a2b657](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0a2b657)
+ - | 增加临时版本 | [085dfcd](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/085dfcd)
+ - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/7ef7099)
+
+
+### 🎨 代码样式
+范围|描述|commitId
+--|--|--
+ - | 格式化代码 | [3d8ef17](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/3d8ef17)
+ - | 前端项目规范 | [d27c268](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/d27c268)
+ - | 修改css格式 | [0b4f09c](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0b4f09c)
+
+
+### 🐛 Bug 修复
+范围|描述|commitId
+--|--|--
+ - | 产品管理上传和展示图片错误,预览的逻辑修改,搜索框样式修改 | [40ab9cc](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/40ab9cc)
+ - | 产品管理中拒绝后重新提交图片路径不对,重新提交后的页面刷新后报错 | [2fe5d4c](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2fe5d4c)
+ - | 解决无数据返回的提示 | [3433e7b](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/3433e7b)
+ - | 上传拍摄,单词选中多张存在重复的图片进行阻断,删除图片时候展示错乱fix | [429722a](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/429722a)
+ - | 提交时候没有通知组件清空sha的数组 | [2281d93](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2281d93)
+ - | 修复标记位置 和 顺畅倒桩问题 | [9e7e720](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/9e7e720)
+ - | 修复默认值不正确的问题 | [734300d](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/734300d)
+ - | 修复上传不清晰问题 | [56798ce](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/56798ce)
+ - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/de841cf)
+ - | 修复上传问题 | [478e86e](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/478e86e)
+ - | 修复验证只有拼接没有序号的可以提交问题 | [2ac3698](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2ac3698)
+ - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2c92756)
+ - | 修复qetagjs | [8cdc2b3](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8cdc2b3)
+ - | 修复undefined 处理 | [d855202](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/d855202)
+ - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/860e744)
+ - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/acad33f)
+ - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/039cd50)
+
+
+### 📝 文档
+范围|描述|commitId
+--|--|--
+ - | 前端代码规范 | [4c1d153](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/4c1d153)
+ - | 前端项目规范 | [e68690a](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/e68690a)
+ - | 修改package相关配置 | [8d71e60](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8d71e60)
+
+
+### 📦 持续集成
+范围|描述|commitId
+--|--|--
+ - | 更改ci配置 | [b74b8e8](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/b74b8e8)
+
+
+### 🚀 性能优化
+范围|描述|commitId
+--|--|--
+ - | 改为index绑定sha1 | [4e13e04](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/4e13e04)
+ - | 优化下载，不单独弹窗 | [175ccd7](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/175ccd7)
+ - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/9e100fd)
+ - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8655b7d)
+
+
+### chore
+范围|描述|commitId
+--|--|--
+ - | 删除upyun模块，删除upload脚本 | [57aeb21](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/57aeb21)
+
 
 范围|描述|commitId
 --|--|--
- - | fix render | [5b6d1fb](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/5b6d1fb)
  - | 修复防水墙 | [eb3f93c](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/eb3f93c)
+ - | 更改release打包配置 | [90516e3](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/90516e3)
  - | 去除console | [29a44e5](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/29a44e5)
  - | 切换七牛云 | [f660c79](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/f660c79)
  - | 增加新的搜索和上传 | [8c64f53](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8c64f53)
@@ -49,7 +123,7 @@
  - | limit date range | [3a0fb86](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/3a0fb86)
  - | update page title | [611fee4](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/611fee4)
  - | fix repeat add product | [89b28d5](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/89b28d5)
- - | 更改release打包配置 | [90516e3](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/90516e3)
+ - | fix render | [5b6d1fb](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/5b6d1fb)
  - | update custom | [d1a5c6d](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/d1a5c6d)
  - | 更新名称 | [0e2ce55](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0e2ce55)
  - | 增加图片放大功能 | [2de0915](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2de0915)
@@ -98,83 +172,10 @@
  - | Initial commit | [b38b5f6](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/b38b5f6)
 
 
-### 🌟 新功能
-范围|描述|commitId
---|--|--
- - | ui调整 | [7ef7099](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/7ef7099)
- - | 优化清空问题 | [0f72bca](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0f72bca)
- - | 增加临时版本 | [085dfcd](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/085dfcd)
- - | 增加拆单功能 | [0a2b657](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0a2b657)
- - | 更换新的接口url(老的url证书6月过期) | [69ecd34](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/69ecd34)
- - | 更改ci配置 | [8863c99](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8863c99)
- - | 更改框架 | [b7749db](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/b7749db)
- - | 更改环境变量 | [cb07e28](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/cb07e28)
- - | 添加环境变量 | [c0c8f42](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/c0c8f42)
-
-
-### 🎨 代码样式
-范围|描述|commitId
---|--|--
- - | 修改css格式 | [0b4f09c](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/0b4f09c)
- - | 前端项目规范 | [d27c268](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/d27c268)
- - | 格式化代码 | [3d8ef17](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/3d8ef17)
-
-
-### 🐛 Bug 修复
-范围|描述|commitId
---|--|--
- - | 上传拍摄,单词选中多张存在重复的图片进行阻断,删除图片时候展示错乱fix | [429722a](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/429722a)
- - | 产品管理上传和展示图片错误,预览的逻辑修改,搜索框样式修改 | [40ab9cc](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/40ab9cc)
- - | 产品管理中拒绝后重新提交图片路径不对,重新提交后的页面刷新后报错 | [2fe5d4c](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2fe5d4c)
- - | 优化上传照片验证 | [acad33f](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/acad33f)
- - | 修图页面切换功能 | [860e744](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/860e744)
- - | 修复qetagjs | [8cdc2b3](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8cdc2b3)
- - | 修复undefined 处理 | [d855202](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/d855202)
- - | 修复上传不清晰问题 | [56798ce](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/56798ce)
- - | 修复上传图片不可提交等 | [de841cf](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/de841cf)
- - | 修复上传问题 | [478e86e](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/478e86e)
- - | 修复再次上传失败 | [2c92756](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2c92756)
- - | 修复标记位置 和 顺畅倒桩问题 | [9e7e720](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/9e7e720)
- - | 修复验证只有拼接没有序号的可以提交问题 | [2ac3698](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2ac3698)
- - | 修复默认值不正确的问题 | [734300d](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/734300d)
- - | 提交时候没有通知组件清空sha的数组 | [2281d93](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/2281d93)
- - | 解决无数据返回的提示 | [3433e7b](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/3433e7b)
- - | 重命名预发变量 | [039cd50](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/039cd50)
-
-
-### 📝 文档
-范围|描述|commitId
---|--|--
- - | 修改package相关配置 | [8d71e60](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8d71e60)
- - | 前端代码规范 | [4c1d153](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/4c1d153)
- - | 前端项目规范 | [e68690a](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/e68690a)
-
-
-### 📦 持续集成
-范围|描述|commitId
---|--|--
- - | 更改ci配置 | [b74b8e8](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/b74b8e8)
-
-
 ### 🔧 测试
 范围|描述|commitId
 --|--|--
  - | 修改预发请求地址 | [712f88b](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/712f88b)
-
-
-### 🚀 性能优化
-范围|描述|commitId
---|--|--
- - | 优化下载，不单独弹窗 | [175ccd7](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/175ccd7)
- - | 优化样式 | [9e100fd](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/9e100fd)
- - | 优化样式，显示全部使用缩略 | [8655b7d](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/8655b7d)
- - | 改为index绑定sha1 | [4e13e04](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/4e13e04)
-
-
-### chore
-范围|描述|commitId
---|--|--
- - | 删除upyun模块，删除upload脚本 | [57aeb21](https://code.hzmantu.com/mantu-tech/web-frontend/mainto-photography-agency/commits/57aeb21)
 
 
 ### opt

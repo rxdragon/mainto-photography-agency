@@ -46,7 +46,7 @@
             <span class="tip">{{ standardText[product.retouch_standard] || '' }}</span>
           </a-col>
           <a-col :span="6">
-            <span class="tip">{{ weightState[product.weight_level] }}</span>
+            <span class="tip">{{ product.weightLevel }}</span>
           </a-col>
           <a-col :span="6">
             <span class="tip">{{ product.need_template === 0 ? '不需要' : '需要' }}</span>
@@ -111,13 +111,6 @@ export default {
         kids: '海马体儿童',
         mainto: '缦图摄影'
       },
-      weightState: {
-        weight_first: '一类产品',
-        weight_second: '二类产品',
-        weight_third: '三类产品',
-        weight_fourth: '四类产品',
-        weight_fifth: '五类产品'
-      },
       loading: true,
       product: {}
     }
@@ -138,7 +131,12 @@ export default {
       Api.product.detail({
         id: this.$route.params.id
       }).then((res) => {
-        this.product = res.msg
+        console.log(res.msg)
+        const createData = {
+          ...res.msg,
+          weightLevel: _.get(res, 'msg.weight_setting.name') || '异常'
+        }
+        this.product = createData
       }).catch((e) => {
         this.$message.error(e.data.error_msg)
       }).finally(() => {
